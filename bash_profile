@@ -34,6 +34,7 @@ LESS="-XRFM"
 if [ "x$BENS_PROFILE_HAS_RUN" == "x" ]; then
     pathmunge $HOME/bin
     pathmunge $HOME/bin/$BINTYPE
+    pathmunge $HOME/bin/iworkeng after
     pathmunge /sbin after
     pathmunge /usr/sbin/after
     pathmunge /Developer/Tools after
@@ -58,6 +59,9 @@ fi
 export USERNAME BASH_ENV PATH PS1
 # export P4USER P4EDITOR P4CONFIG
 export PAGER LESS HOSTNAME
+HISTSIZE=1000000
+export HISTSIZE
+shopt -s histappend
 
 unset LS_COLORS
 
@@ -76,3 +80,5 @@ export MANPATH
 if [ -d /sw/bin ]; then
     . /sw/bin/init.sh
 fi
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*

@@ -89,8 +89,11 @@ alias l="ls -p$COLORARG"
 alias ls="ls -p$COLORARG"
 alias la="ls -Ap$COLORARG"
 alias ll="ls -lp$COLORARG"
+alias indigohost='/Library/Application\ Support/Perceptive\ Automation/Indigo\ 6/IndigoPluginHost.app/Contents/MacOS/IndigoPluginHost'
 alias siri="sudo"
 
 if [ -f $HOME/.git-completion.bash ]; then
     . $HOME/.git-completion.bash
 fi
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
