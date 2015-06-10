@@ -2,7 +2,7 @@
 
 # Source global definitions
 if [ -f /etc/bashrc ]; then
-	. /etc/bashrc
+    . /etc/bashrc
 fi
 
 #----------------------------------------------------------------------
@@ -56,19 +56,19 @@ function edit ()
 
 if [ -n "$PS1" ]; then
     if [ "x$BENS_PROFILE_HAS_RUN" == "x" ]; then
-	. $HOME/.bash_profile
+        . $HOME/.bash_profile
     fi
     if [ "$TERM" == "dumb" ]; then
-	PS1='${HOSTNAME%%.*}\$ '
+        PS1='${HOSTNAME%%.*}\$ '
     elif [ "$TERM" == "screen" ]; then
-	PS1='\[\e[34;1m\]\W\$\[\e[0m\] '
-	echo -ne "\033k${HOSTNAME%%.*}\033\\"
-	unset PROMPT_COMMAND
+        PS1='\[\e[34;1m\]\W\$\[\e[0m\] '
+        echo -ne "\033k${HOSTNAME%%.*}\033\\"
+        unset PROMPT_COMMAND
     else
-	PS1='\[\e[34;1m\]\W\$\[\e[0m\] '
-	if [ -z "$PROMPT_COMMAND" ]; then
-	    PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/$HOME/~}\007"'
-	fi
+        PS1='\[\e[34;1m\]\W\$\[\e[0m\] '
+        if [ -z "$PROMPT_COMMAND" ]; then
+            PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/$HOME/~}\007"'
+        fi
     fi
 fi
 
