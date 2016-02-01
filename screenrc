@@ -1,0 +1,9 @@
+echo -n "\033]0;screen@$HOSTNAME\007"
+escape ^]]
+bindkey -k k7 prev
+bindkey -k k8 next
+#unsetenv DISPLAY
+caption always "%{kw}%?%-Lw%?%{bw}%n*%f %t%?(%u)%?%{kw}%?%+Lw%?"
+#hardstatus alwayslastline "%{dd}%t%20=%{dd}%35=%{%dd}host: %H %65=%{ddb}%M%d %90=%{ddb}%C%a%="
+startup_message off
+defscrollback 1000

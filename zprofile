@@ -32,6 +32,7 @@ BINTYPE=$(echo ${OSTYPE}-${HOSTTYPE} | sed -e 's/gnu-i.86/gnu-x86/')
 USERNAME=""
 PAGER=less
 LESS="-XRFM"
+CCACHE_PREFIX=icecc
 
 pathmunge $HOME/bin
 pathmunge $HOME/bin/$BINTYPE
@@ -43,7 +44,7 @@ pathmunge /opt/local/bin after
 pathmunge /usr/X11R6/bin after
 
 export USERNAME PATH PS1
-export PAGER LESS HOSTNAME
+export PAGER LESS HOSTNAME CCACHE_PREFIX
 
 unset LS_COLORS
 
