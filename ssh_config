@@ -1,0 +1,5 @@
+Host *
+	CheckHostIP no
+
+Host djehuti.com
+	User djehuti
