@@ -54,3 +54,7 @@ else
     MANPATH=/usr/share/man:/usr/bin/man:/usr/local/man:/usr/local/share/man
 fi
 export MANPATH
+
+if [ -f ${HOME}/.ansible_hosts ]; then
+    export ANSIBLE_INVENTORY=${HOME}/.ansible_hosts
+fi
