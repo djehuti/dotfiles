@@ -122,9 +122,19 @@ case $(uname -s) in
     *) COLORARG=""
 esac
 
+if [ "`uname`" = "Darwin" ]; then
+	compctl -f -x 'p[2]' -s "`/bin/ls -d1 /Applications/*/*.app /Applications/*.app | sed 's|^.*/\([^/]*\)\.app.*|\\1|;s/ /\\\\ /g'`" -- open
+	alias run='open -a'
+fi
+
+cdpath=( ${HOME} ${HOME}/src ${HOME}/Vagrants ${HOME}/Vagrants/UATC ${HOME}/Dropbox/src )
+
 alias l="ls -p$COLORARG"
 alias ls="ls -p$COLORARG"
 alias la="ls -Ap$COLORARG"
 alias ll="ls -lp$COLORARG"
-alias indigohost='/Library/Application\ Support/Perceptive\ Automation/Indigo\ 6/IndigoPluginHost.app/Contents/MacOS/IndigoPluginHost'
 alias siri="sudo"
+
+if [ -f ${HOME}/.iterm2_shell_integration.zsh ]; then
+    source ${HOME}/.iterm2_shell_integration.zsh
+fi

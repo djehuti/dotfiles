@@ -21,3 +21,5 @@
 	tool = Kaleidoscope
 [fetch]
 	prune = true
+[advice]
+	statusHints = false
