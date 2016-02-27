@@ -1,6 +1,7 @@
 XTerm*faceName: Menlo
 XTerm*faceSize: 8
 XTerm*cursorColor: #ff0000
+XTerm*Utf8: 1
 
 
 ! Solarized color scheme for the X Window System
