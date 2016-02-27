@@ -1,3 +1,4 @@
+# -*-mode:shell-script-*-
 # ~/Dropbox/dotfiles/bash_profile
 
 # User specific environment and startup programs
@@ -11,13 +12,13 @@ esac
 
 pathmunge () {
     if [ -d "$1" ]; then
-	if ! echo $PATH | egrep $QARG "(^|:)$1($|:)" ; then
-	    if [ "$2" = "after" ] ; then
-		PATH=$PATH:$1
-	    else
-		PATH=$1:$PATH
-	    fi
-	fi
+        if ! echo $PATH | egrep $QARG "(^|:)$1($|:)" ; then
+            if [ "$2" = "after" ] ; then
+                PATH=$PATH:$1
+            else
+                PATH=$1:$PATH
+            fi
+        fi
     fi
 }
 
@@ -53,7 +54,7 @@ fi
 
 # Get the aliases and functions
 if [ -f ~/.bashrc ]; then
-	. ~/.bashrc
+    . ~/.bashrc
 fi
 
 export USERNAME BASH_ENV PATH PS1

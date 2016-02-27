@@ -1,3 +1,4 @@
+# -*-mode:shell-script-*-
 # ~/Dropbox/dotfiles/bashrc
 
 # Source global definitions

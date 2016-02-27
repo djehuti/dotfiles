@@ -1,5 +1,6 @@
 Host *
 	CheckHostIP no
+	SendEnv TERM_PROGRAM
 
 Host djehuti.com
 	User djehuti

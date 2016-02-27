@@ -1,6 +1,6 @@
 [user]
 	name = Ben Cox
-	email = cox@djehuti.com
+	email = bcox@uberatc.com
 [color]
 	ui = auto
 [core]
@@ -19,6 +19,8 @@
 	prompt = false
 [diff]
 	tool = Kaleidoscope
+[push]
+	default = simple
 [fetch]
 	prune = true
 [advice]

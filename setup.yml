@@ -1,0 +1,33 @@
+---
+
+- hosts: localhost
+  user: bcox
+  tasks:
+    - name: link dotfiles to home
+      file: src={{ dotfiles }}/{{ item.src }} dest=~/.{{ item.dest }} state=link
+      with_items:
+        - { src: 'Xresources',       dest: 'Xresources' }
+        - { src: 'bash_profile',     dest: 'bash_profile' }
+        - { src: 'bashrc',           dest: 'bashrc' }
+        - { src: 'editorconfig',     dest: 'editorconfig' }
+        - { src: 'elisp',            dest: 'elisp' }
+        - { src: 'emacs',            dest: 'emacs' }
+        - { src: 'gitconfig',        dest: 'gitconfig' }
+        - { src: 'gitignore',        dest: 'gitignore' }
+        - { src: 'inputrc',          dest: 'inputrc' }
+        - { src: 'iterm2_tmux.conf', dest: 'iterm2_tmux.conf' }
+        - { src: 'python',           dest: 'python' }
+        - { src: 'screenrc',         dest: 'screenrc' }
+        - { src: 'zshenv',           dest: 'zshenv' }
+        - { src: 'zshrc',            dest: 'zshrc' }
+        - { src: 'zprofile',         dest: 'zprofile' }
+        - { src: 'zpreztorc',        dest: 'zpreztorc' }
+    - file: src={{ prezto }} dest=~/.zprezto state=link
+    - file: path=~/.zinit.d state=directory
+    - name: link zinit.d files to home
+      file: src={{ dotfiles}}/zinit.d/{{ item.src }} dest=~/.zinit.d/{{ item.dest }} state=link
+      with_items:
+        - { src: '15-git-rprompt',              dest: '-15-git-rprompt' }
+        - { src: '50pythonpath',                dest: '50pythonpath' }
+        - { src: '90prezto',                    dest: '90prezto' }
+        - { src: '99_iterm2_shell_integration', dest: '99_iterm2_shell_integration' }

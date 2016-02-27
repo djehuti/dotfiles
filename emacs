@@ -1,0 +1,7 @@
+(setq inhibit-startup-message t)
+(setq elisp-dir (expand-file-name ".elisp" "~"))
+(add-to-list 'load-path elisp-dir)
+(setq user-init-file (expand-file-name "basic-setup.el" elisp-dir))
+(setq custom-file (expand-file-name "custom.el" elisp-dir))
+(load-file user-init-file)
+(load-file custom-file)

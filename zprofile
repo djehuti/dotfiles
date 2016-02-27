@@ -1,3 +1,4 @@
+# -*-mode:shell-script-*-
 # ~/Dropbox/dotfiles/zprofile
 
 # User specific environment and startup programs
@@ -28,6 +29,7 @@ pathmunge () {
     fi
 }
 
+EDITOR=emacs
 BINTYPE=$(echo ${OSTYPE}-${HOSTTYPE} | sed -e 's/gnu-i.86/gnu-x86/')
 USERNAME=""
 PAGER=less
@@ -43,7 +45,7 @@ pathmunge /usr/local/bin after
 pathmunge /opt/local/bin after
 pathmunge /usr/X11R6/bin after
 
-export USERNAME PATH PS1
+export USERNAME PATH PS1 EDITOR
 export PAGER LESS HOSTNAME CCACHE_PREFIX
 
 unset LS_COLORS

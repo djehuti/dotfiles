@@ -1,0 +1,5 @@
+set gfn=Menlo:h13
+set guicursor+=a:blinkon0
+set guioptions=rb
+highlight Cursor guifg=white guibg=red
+highlight clear CursorLineNr

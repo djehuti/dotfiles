@@ -1,0 +1,4 @@
+# Add ~/.python to PYTHONPATH
+
+PYTHONPATH="${HOME}/.python${PYTHONPATH+:}${PYTHONPATH}"
+export PYTHONPATH
