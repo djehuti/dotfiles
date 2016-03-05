@@ -28,6 +28,7 @@
       file: src={{ dotfiles}}/zinit.d/{{ item.src }} dest=~/.zinit.d/{{ item.dest }} state=link
       with_items:
         - { src: '15-git-rprompt',              dest: '-15-git-rprompt' }
+        - { src: '40at_bridge',                 dest: '40at_bridge' }
         - { src: '50pythonpath',                dest: '50pythonpath' }
         - { src: '90prezto',                    dest: '90prezto' }
         - { src: '99_iterm2_shell_integration', dest: '99_iterm2_shell_integration' }

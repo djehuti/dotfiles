@@ -1,0 +1,5 @@
+[[ -n "$DISPLAY" ]] && {
+	xdpyinfo | grep -q Apple-WM && {
+		export NO_AT_BRIDGE=1
+	}
+}

@@ -25,7 +25,7 @@
 
 ;; Miscellaneous preferences
 (setq
- diary-file "~/.diary"
+ diary-file "~/Dropbox/org/diary"
  require-final-newline nil)
 (make-variable-buffer-local 'require-final-newline)
 (setq-default show-trailing-whitespace t)
@@ -334,7 +334,7 @@
 
 ;; Allow user to easily make the backspace key work.
 (defun remap-help () "Switch HELP from C-h to M-?." (interactive)
-  (setq help-char ?\M-?)
+  ;(setq help-char ?\M-?)
   (global-set-key "\e?" 'help-command)
   (global-set-key "\^h" 'delete-backward-char)
   (global-set-key "\e\^h" 'backward-kill-word)
@@ -352,7 +352,7 @@
   (define-key ctl-x-map "h" 'remap-help)
   (message "HELP is on C-h again."))
 ; C-x h is normally mark-whole-buffer.
-(remap-help)
+;(remap-help)
 
 
 ;; This function can be useful in text files;
@@ -401,6 +401,17 @@
 
 ;; Let F12 do toggle-truncate-lines
 (global-set-key [(f12)] 'toggle-truncate-lines)
+
+;; Org Mode
+(require 'org)
+;; Standard key bindings
+(global-set-key "\C-cl" 'org-store-link)
+(global-set-key "\C-ca" 'org-agenda)
+(global-set-key "\C-cb" 'org-iswitchb)
+(setq org-log-done 'time)
+(setq org-src-fontify-natively t)
+(setq org-agenda-files (list "~/Dropbox/org/OrgStart.org"
+                             "~/Dropbox/org/notes.org"))
 
 
 ;; This allows me to swap the positions of windows on the screen.
@@ -489,6 +500,9 @@
 (define-key ctl-x-map "\C-n" 'set-n-columns)
 (define-key ctl-x-map "\C-h" 'set-n-rows)
 
+(load-library "color-theme")
+(load-library "color-theme-solarized")
+
 (if emacs24-p
     (progn
       (require 'package)
@@ -512,6 +526,8 @@
                                ))
                    (setq initial-frame-alist white-frame-alist)
                    (setq default-frame-alist white-frame-alist)
+                   (color-theme-solarized-light)
+                   (set-face-background 'default "#ffffff")
                    ))
              (if osxgui-p
                  (progn
@@ -531,15 +547,21 @@
                                ))
                    (setq initial-frame-alist sized-frame-alist)
                    (setq default-frame-alist sized-frame-alist)
-                   (load-library "color-theme")
-                   (load-library "color-theme-solarized")
                    (color-theme-solarized-light)
                    ))
              (if xwindow-p
                  (progn
-                   (if mac-p
-                       (setq fontname "Menlo-7")
-                     (setq fontname "DejaVu Sans Mono-10"))
+                   (cond
+                    ((find-font (font-spec :name "Menlo"))
+                     (setq fontname "Menlo-7"))
+                    ((find-font (font-spec :name "DejaVu Sans Mono"))
+                     (set-frame-font "DejaVu Sans Mono-8"))
+                    ((find-font (font-spec :name "inconsolata"))
+                     (set-frame-font "inconsolata-8"))
+                    ((find-font (font-spec :name "Lucida Console"))
+                     (set-frame-font "Lucida Console-8"))
+                    ((find-font (font-spec :name "courier"))
+                     (set-frame-font "courier-8")))
                    (if do-separate-minibuffer
                        (progn
                          (setq the-minibuffer-frame
@@ -558,8 +580,6 @@
                                ))
                    (setq initial-frame-alist sized-frame-alist)
                    (setq default-frame-alist sized-frame-alist)
-                   (load-library "color-theme")
-                   (load-library "color-theme-solarized")
                    (color-theme-solarized-light)
                    ))
              ))
