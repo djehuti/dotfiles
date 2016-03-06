@@ -1,0 +1,53 @@
+#!/usr/bin/python
+
+
+"""Fetch a git repo periodically and report status."""
+
+
+from __future__ import print_function
+
+
+import argparse
+import djehuti.git
+import subprocess
+import sys
+import time
+
+
+CLEAR='/usr/bin/clear'
+
+def clear_screen():
+    subprocess.call([CLEAR])
+
+
+def showstatus(delay, repo):
+    while True:
+        clear_screen()
+        djehuti.git.check_workspaces(repo)
+        print('\nFetching...', end='')
+        sys.stdout.flush()
+        status = djehuti.git.fetch(repo)
+        print('done (return code %s).' % status)
+        time.sleep(delay)
+
+
+def main(argv=None):
+    if argv is None:
+        argv = sys.argv
+    parser = argparse.ArgumentParser(description=globals()['__doc__'])
+    parser.add_argument('--repo', '-r', help='Repo location', default='.')
+    parser.add_argument('--interval', '-i', help='Fetch interval', type=int, default=30)
+    args = parser.parse_args(argv[1:])
+    try:
+        repo = djehuti.git.real_git_repo(args.repo)
+        showstatus(args.interval, repo)
+    except djehuti.git.CheckWorkspacesError as e:
+        print(e.value)
+        return 1
+    except KeyboardInterrupt:
+        pass
+    return 0
+
+
+if __name__ == '__main__':
+    sys.exit(main())

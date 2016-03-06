@@ -1,0 +1,5 @@
+#!/bin/bash
+
+GIT=/usr/bin/git
+
+${GIT} branch -vvv | ctw

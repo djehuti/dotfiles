@@ -1,0 +1,26 @@
+#!/bin/bash
+
+pipe=/tmp/signalpipe
+
+if [[ "$1" ]] ; then
+    pipe="$1"
+    shift
+fi
+
+trap "rm -f $pipe" EXIT
+
+if [[ ! -p $pipe ]]; then
+    mkfifo $pipe
+fi
+
+while true
+do
+    if read line <$pipe; then
+        if [[ "$line" == 'quit' ]]; then
+            break
+        fi
+        exit 1
+    fi
+done
+
+exit 0

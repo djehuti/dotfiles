@@ -1,0 +1,19 @@
+#!/bin/bash
+
+CUT="/usr/bin/cut"
+EXPAND="/usr/bin/expand"
+STTY="/bin/stty -F"
+
+[[ "$(uname)" = "Darwin" ]] && {
+    STTY="/bin/stty -f"
+}
+
+COLS=$(${STTY} /dev/tty size | ${CUT} -d' ' -f 2)
+
+if [ $# -ge 1 ]
+then
+    COLS="$1"
+    shift
+fi
+
+${EXPAND} | ${CUT} -c1-${COLS}

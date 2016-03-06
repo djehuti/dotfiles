@@ -1,0 +1,31 @@
+#!/usr/bin/python
+
+"""Print some information about the workspaces checked out from this repo."""
+
+from __future__ import print_function
+
+import argparse
+import djehuti.git
+import sys
+
+__author__ = 'bcox'
+
+
+def main(argv=None):
+    if argv is None:
+        argv = sys.argv
+    parser = argparse.ArgumentParser(description=globals()['__doc__'])
+    parser.add_argument('--repo', '-r', help='Repo location', default='.')
+    args = parser.parse_args(argv[1:])
+    try:
+        djehuti.git.check_workspaces(args.repo)
+    except djehuti.git.CheckWorkspacesError as e:
+        print(e.value)
+        return 1
+    except KeyboardInterrupt:
+        pass
+    return 0
+
+
+if __name__ == '__main__':
+    sys.exit(main())

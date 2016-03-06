@@ -16,19 +16,35 @@
         - { src: 'gitignore',        dest: 'gitignore' }
         - { src: 'inputrc',          dest: 'inputrc' }
         - { src: 'iterm2_tmux.conf', dest: 'iterm2_tmux.conf' }
-        - { src: 'python',           dest: 'python' }
         - { src: 'screenrc',         dest: 'screenrc' }
         - { src: 'zshenv',           dest: 'zshenv' }
         - { src: 'zshrc',            dest: 'zshrc' }
         - { src: 'zprofile',         dest: 'zprofile' }
         - { src: 'zpreztorc',        dest: 'zpreztorc' }
-    - file: src={{ prezto }} dest=~/.zprezto state=link
-    - file: path=~/.zinit.d state=directory
+        - { src: 'prezto',           dest: 'zprezto' }
+    - name: create .zinit.d directory
+      file: path=~/.zinit.d state=directory
     - name: link zinit.d files to home
-      file: src={{ dotfiles}}/zinit.d/{{ item.src }} dest=~/.zinit.d/{{ item.dest }} state=link
+      file: src={{ dotfiles }}/zinit.d/{{ item.src }} dest=~/.zinit.d/{{ item.dest }} state=link
       with_items:
         - { src: '15-git-rprompt',              dest: '-15-git-rprompt' }
         - { src: '40at_bridge',                 dest: '40at_bridge' }
         - { src: '50pythonpath',                dest: '50pythonpath' }
         - { src: '90prezto',                    dest: '90prezto' }
         - { src: '99_iterm2_shell_integration', dest: '99_iterm2_shell_integration' }
+    - name: create bin directory
+      file: path=~/bin state=directory
+    - name: link bin files into home
+      file: src={{ dotfiles }}/bin/{{ item.src }} dest=~/bin/{{ item.dest }} state=link
+      with_items:
+        - { src: 'python',               dest: 'python' }
+        - { src: 'edit',                 dest: 'edit' }
+        - { src: 'launch',               dest: 'launch' }
+        - { src: 'bbedit_w',             dest: 'bbedit_w' }
+        - { src: 'ctw',                  dest: 'ctw' }
+        - { src: 'gbv',                  dest: 'gbv' }
+        - { src: 'signal',               dest: 'signal' }
+        - { src: 'waitfor',              dest: 'waitfor' }
+        - { src: 'check_workspaces',     dest: 'check_workspaces' }
+        - { src: 'git_workspace_status', dest: 'git_workspace_status' }
+        - { src: 'git-new-workdir',      dest: 'git-new-workdir' }
