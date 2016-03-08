@@ -1,3 +1,5 @@
+emacs.font: Menlo-8
+
 XTerm*faceName: Menlo
 XTerm*faceSize: 8
 XTerm*cursorColor: #ff0000

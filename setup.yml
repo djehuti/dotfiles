@@ -38,9 +38,7 @@
       file: src={{ dotfiles }}/bin/{{ item.src }} dest=~/bin/{{ item.dest }} state=link
       with_items:
         - { src: 'python',               dest: 'python' }
-        - { src: 'edit',                 dest: 'edit' }
         - { src: 'launch',               dest: 'launch' }
-        - { src: 'bbedit_w',             dest: 'bbedit_w' }
         - { src: 'ctw',                  dest: 'ctw' }
         - { src: 'gbv',                  dest: 'gbv' }
         - { src: 'signal',               dest: 'signal' }

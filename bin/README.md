@@ -46,14 +46,6 @@ wide and you `cat` something through `ctw` that is 120 columns wide,
 it will cut it off at 80 columns instead of wrapping. `gbv` just runs
 `git branch -vv | ctw`.
 
-  * `edit`
-
-Useful as an external editor for git/arc/whatever if you use
-emacs-server. If you have an emacs running with a server started, it
-opens the file to be edited in that emacs instead of firing up a new
-one. With `-w`, it waits for the server to finish; without, it
-doesn't. (`git config --global core.editor "edit -w"`)
-
   * `launch`
 
 Running `launch X` is the same as running

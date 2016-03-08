@@ -29,7 +29,7 @@ pathmunge () {
     fi
 }
 
-EDITOR=emacs
+EDITOR='emacsclient -a= -c -t'
 BINTYPE=$(echo ${OSTYPE}-${HOSTTYPE} | sed -e 's/gnu-i.86/gnu-x86/')
 USERNAME=""
 PAGER=less
