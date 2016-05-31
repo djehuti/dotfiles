@@ -2,3 +2,6 @@
 *~
 .DS_Store
 *.pyc
+xcuserdata
+.idea
+*.iml

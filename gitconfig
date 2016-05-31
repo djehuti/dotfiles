@@ -4,7 +4,7 @@
 [color]
 	ui = auto
 [core]
-	excludesfile = /Users/bcox/.gitignore
+	excludesfile = /home/bcox/.gitignore
 [mergetool "Kaleidoscope"]
 	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
 	trustexitcode = true

@@ -32,17 +32,22 @@
 
 (font-lock-add-keywords 'c++-mode
  '(
-   ("\\(// *TODO.*$\\)" 1 font-lock-warning-face prepend)
-   ("\\(/\\* *TODO.*$\\)" 1 font-lock-warning-face prepend)
-   ("\\(/\\* *TODO.*\\*/\\)" 1 font-lock-warning-face prepend)
+   ("// *\\(TODO.*$\\)" 1 font-lock-warning-face prepend)
+   ("/\\* *\\(TODO.*$\\)" 1 font-lock-warning-face prepend)
+   ("/\\* *\\(TODO.*\\)\\*/" 1 font-lock-warning-face prepend)
    ("\\<\\(public\\|private\\|protected\\):" . font-lock-keyword-face)
    )
 )
 (font-lock-add-keywords 'c-mode
  '(
-   ("\\(// *TODO.*$\\)" 1 font-lock-warning-face prepend)
-   ("\\(/\\* *TODO.*$\\)" 1 font-lock-warning-face prepend)
-   ("\\(/\\* *TODO.*\\*/\\)" 1 font-lock-warning-face prepend)
+   ("// *\\(TODO.*$\\)" 1 font-lock-warning-face prepend)
+   ("/\\* *\\(TODO.*$\\)" 1 font-lock-warning-face prepend)
+   ("/\\* *\\(TODO.*\\)\\*/" 1 font-lock-warning-face prepend)
+   )
+)
+(font-lock-add-keywords 'python-mode
+ '(
+   ("# *\\(TODO.*$\\)" 1 font-lock-warning-face prepend)
    )
 )
 
@@ -215,6 +220,7 @@
 (global-set-key "\C-cl" (function org-store-link))
 (global-set-key "\C-ca" (function org-agenda))
 (global-set-key "\C-cb" (function org-iswitchb))
+(global-set-key "\C-cc" (function org-capture))
 
 
 ;; This allows me to swap the positions of windows on the screen.
@@ -301,6 +307,7 @@
         (require 'flycheck)
         (require 'company)
         (require 'rtags)
+        (require 'projectile)
         (require 'editorconfig))
       (declare-function company-complete "company.el" nil)
       ;(package-install 'flycheck)
@@ -331,6 +338,7 @@
       (define-key c-mode-base-map (kbd "M-i") (function rtags-imenu))
       (define-key c-mode-base-map (kbd "C-M-i") (function company-complete))
       (editorconfig-mode 1)
+      (projectile-global-mode)
       (defun bens-fix-tty-colors ()
         "Fix the colors on the TTY and reload the Solarized theme."
         ;; I set up my terminals so that the background color *is* the Solarized Light

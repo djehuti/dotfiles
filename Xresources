@@ -1,7 +1,13 @@
-emacs.font: Menlo-8
+Xft.dpi: 96
+Xft.antialias: true
+Xft.rgba: rgb
+Xft.hinting: true
+Xft.hintstyle: hintslight
+
+emacs.font: 7x14
 
 XTerm*faceName: Menlo
-XTerm*faceSize: 8
+XTerm*faceSize: 10
 XTerm*cursorColor: #ff0000
 XTerm*Utf8: 1
 

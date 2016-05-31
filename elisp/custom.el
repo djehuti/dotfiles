@@ -9,8 +9,11 @@
  ;; If there is more than one, they won't work right.
  '(blink-cursor-mode nil)
  '(column-number-mode t)
- '(custom-safe-themes (quote ("d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" default)))
+ '(custom-safe-themes
+   (quote
+    ("d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" default)))
  '(enable-recursive-minibuffers t)
+ '(flycheck-flake8-maximum-line-length 120)
  '(fringe-mode (quote (4 . 4)) nil (fringe))
  '(icomplete-mode t nil (icomplete))
  '(indicate-buffer-boundaries (quote right))
@@ -33,6 +36,17 @@
  '(rst-indent-literal-minimized 4)
  '(rst-indent-literal-normal 4)
  '(rst-indent-width 4)
+ '(safe-local-variable-values
+   (quote
+    ((flycheck-clang-language-standard "c++11")
+     (flycheck-gcc-language-standard "c++11")
+     (flycheck-gcc-include-path
+      ("/home/bcox/src/av/source" "/home/bcox/src/av/deps"))
+     (flycheck-gcc-include-path
+      (quote
+       ("/home/bcox/src/av/source" "/home/bcox/src/av/deps")))
+     (flycheck-gcc-include-path
+      (list "/home/bcox/src/av/source" "/home/bcox/src/av/deps")))))
  '(scroll-bar-mode nil)
  '(scroll-step 1)
  '(tool-bar-mode nil)

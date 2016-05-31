@@ -29,7 +29,8 @@ pathmunge () {
     fi
 }
 
-EDITOR='emacsclient -a= -c -t'
+#EDITOR='emacsclient -a= -c -t'
+EDITOR=emacsclient
 BINTYPE=$(echo ${OSTYPE}-${HOSTTYPE} | sed -e 's/gnu-i.86/gnu-x86/')
 USERNAME=""
 PAGER=less
@@ -41,6 +42,7 @@ pathmunge $HOME/bin/$BINTYPE
 pathmunge /sbin after
 pathmunge /usr/sbin/after
 pathmunge /Developer/Tools after
+pathmunge /usr/local/sbin after
 pathmunge /usr/local/bin after
 pathmunge /opt/local/bin after
 pathmunge /usr/X11R6/bin after
