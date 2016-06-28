@@ -37,3 +37,6 @@ indent_style = tab
 indent_style = space
 mode = Ruby
 indent_size = 2
+
+[*.php]
+indent_size = 2
