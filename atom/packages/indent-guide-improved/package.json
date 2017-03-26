@@ -1,0 +1,70 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "/private/var/folders/hv/3lg6p46n7cq1yxy73rjcp_9h000fqw/T/d-117222-8135-158upux/package.tgz",
+        "scope": null,
+        "escapedName": null,
+        "name": null,
+        "rawSpec": "/private/var/folders/hv/3lg6p46n7cq1yxy73rjcp_9h000fqw/T/d-117222-8135-158upux/package.tgz",
+        "spec": "/private/var/folders/hv/3lg6p46n7cq1yxy73rjcp_9h000fqw/T/d-117222-8135-158upux/package.tgz",
+        "type": "local"
+      },
+      "/private/var/folders/hv/3lg6p46n7cq1yxy73rjcp_9h000fqw/T/apm-install-dir-117222-8135-18fkg47"
+    ]
+  ],
+  "_from": "../d-117222-8135-158upux/package.tgz",
+  "_id": "indent-guide-improved@1.4.12",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/indent-guide-improved",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "/private/var/folders/hv/3lg6p46n7cq1yxy73rjcp_9h000fqw/T/d-117222-8135-158upux/package.tgz",
+    "scope": null,
+    "escapedName": null,
+    "name": null,
+    "rawSpec": "/private/var/folders/hv/3lg6p46n7cq1yxy73rjcp_9h000fqw/T/d-117222-8135-158upux/package.tgz",
+    "spec": "/private/var/folders/hv/3lg6p46n7cq1yxy73rjcp_9h000fqw/T/d-117222-8135-158upux/package.tgz",
+    "type": "local"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "file:../d-117222-8135-158upux/package.tgz",
+  "_shasum": "0d73c447ddb23e5bc354c138d4a7ce97a3868046",
+  "_shrinkwrap": null,
+  "_spec": "/private/var/folders/hv/3lg6p46n7cq1yxy73rjcp_9h000fqw/T/d-117222-8135-158upux/package.tgz",
+  "_where": "/private/var/folders/hv/3lg6p46n7cq1yxy73rjcp_9h000fqw/T/apm-install-dir-117222-8135-18fkg47",
+  "author": {
+    "name": "Akihiro HARAI"
+  },
+  "bugs": {
+    "url": "https://github.com/harai/indent-guide-improved/issues"
+  },
+  "dependencies": {
+    "lodash": "^3.9.3"
+  },
+  "description": "This draws indent guide more correctly and understandably.",
+  "devDependencies": {},
+  "engines": {
+    "atom": ">=1.13.0-beta0"
+  },
+  "homepage": "https://github.com/harai/indent-guide-improved#readme",
+  "keywords": [
+    "indentation",
+    "ruler",
+    "ui"
+  ],
+  "license": "MIT",
+  "main": "./lib/indent-guide-improved",
+  "name": "indent-guide-improved",
+  "optionalDependencies": {},
+  "readme": "# indent-guide-improved package\n\nThis Atom Editor package draws indent guide more correctly and understandably.\n\n# Features\n\n* Active guide and stack guides are emphasized.\n* Guides break just before the trailing blank lines.\n\n![screenshot](https://raw.githubusercontent.com/harai/indent-guide-improved/master/doc/demo.gif)\n\n# Configuration\n\nYou can change the color of guides by adding styles to [your stylesheet](https://atom.io/docs/latest/customizing-atom), such as the following:\n\n```sass\n.indent-guide-improved {\n  background-color: gray;\n  &.indent-guide-stack {\n    background-color: cyan;\n    &.indent-guide-active {\n      background-color: blue;\n    }\n  }\n}\n```\n\n# Notice\n\n* Original \"Show Indent Guide\" feature is automatically switched off when this package is activated.\n* Please check \"Use Shadow DOM\" in Settings.\n",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/harai/indent-guide-improved.git"
+  },
+  "version": "1.4.12"
+}

@@ -30,6 +30,7 @@
  '(ns-antialias-text t)
  '(ns-command-modifier (quote meta))
  '(ns-right-command-modifier (quote super))
+ '(org-agenda-files (quote ("~/Dropbox/org/uatc.org")))
  '(partial-completion-mode nil)
  '(rst-indent-comment 4)
  '(rst-indent-field 4)

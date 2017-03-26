@@ -7,8 +7,17 @@
 from __future__ import print_function
 
 
+import os.path
+import sys
+
+try:
+    import djehuti.git
+except ImportError:
+    bin_dir = os.path.split(os.path.abspath(__file__))[0]
+    sys.path.insert(0, os.path.join(bin_dir, 'python'))
+    import djehuti.git
+
 import argparse
-import djehuti.git
 import subprocess
 import sys
 import time

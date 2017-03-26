@@ -1,0 +1,94 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "/private/var/folders/hv/3lg6p46n7cq1yxy73rjcp_9h000fqw/T/d-117222-24400-18x70pq/package.tgz",
+        "scope": null,
+        "escapedName": null,
+        "name": null,
+        "rawSpec": "/private/var/folders/hv/3lg6p46n7cq1yxy73rjcp_9h000fqw/T/d-117222-24400-18x70pq/package.tgz",
+        "spec": "/private/var/folders/hv/3lg6p46n7cq1yxy73rjcp_9h000fqw/T/d-117222-24400-18x70pq/package.tgz",
+        "type": "local"
+      },
+      "/private/var/folders/hv/3lg6p46n7cq1yxy73rjcp_9h000fqw/T/apm-install-dir-117222-24400-x89jia"
+    ]
+  ],
+  "_from": "../d-117222-24400-18x70pq/package.tgz",
+  "_id": "ide-haskell-repl@0.6.0",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/ide-haskell-repl",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "/private/var/folders/hv/3lg6p46n7cq1yxy73rjcp_9h000fqw/T/d-117222-24400-18x70pq/package.tgz",
+    "scope": null,
+    "escapedName": null,
+    "name": null,
+    "rawSpec": "/private/var/folders/hv/3lg6p46n7cq1yxy73rjcp_9h000fqw/T/d-117222-24400-18x70pq/package.tgz",
+    "spec": "/private/var/folders/hv/3lg6p46n7cq1yxy73rjcp_9h000fqw/T/d-117222-24400-18x70pq/package.tgz",
+    "type": "local"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "file:../d-117222-24400-18x70pq/package.tgz",
+  "_shasum": "b3bb5059b95633501a5572a4dd664faeb506475c",
+  "_shrinkwrap": null,
+  "_spec": "/private/var/folders/hv/3lg6p46n7cq1yxy73rjcp_9h000fqw/T/d-117222-24400-18x70pq/package.tgz",
+  "_where": "/private/var/folders/hv/3lg6p46n7cq1yxy73rjcp_9h000fqw/T/apm-install-dir-117222-24400-x89jia",
+  "activationHooks": [
+    "language-haskell:grammar-used"
+  ],
+  "bugs": {
+    "url": "https://github.com/atom-haskell/ide-haskell-repl/issues"
+  },
+  "consumedServices": {
+    "ide-haskell-upi": {
+      "description": "Uses ide-haskell's unified pluggable interface",
+      "versions": {
+        "^0.2.0": "consumeUPI"
+      }
+    }
+  },
+  "dependencies": {
+    "atom-haskell-utils": "^0.9.0",
+    "atom-highlight": "^0.3.0",
+    "fuzzaldrin": "^2.1.0",
+    "sub-atom": "^1.0.0",
+    "tree-kill": "^1.0.0",
+    "underscore-plus": "^1.6.6"
+  },
+  "description": "Haskell REPL support for ide-haskell",
+  "deserializers": {
+    "IdeHaskellReplView": "createReplView"
+  },
+  "devDependencies": {},
+  "engines": {
+    "atom": ">=1.13.0 <2.0.0"
+  },
+  "homepage": "https://github.com/atom-haskell/ide-haskell-repl#readme",
+  "keywords": [
+    "ide-haskell",
+    "ide",
+    "haskell",
+    "repl"
+  ],
+  "license": "MIT",
+  "main": "./lib/ide-haskell-repl",
+  "name": "ide-haskell-repl",
+  "optionalDependencies": {},
+  "providedServices": {
+    "autocomplete.provider": {
+      "versions": {
+        "3.0.0": "autocompleteProvider_3_0_0"
+      }
+    }
+  },
+  "readme": "# IDE-Haskell REPL\n\n***This package is in beta.***\n\nThis package provides a way to interact with ghci (or, more precisely, `cabal repl` or `stack ghci`) from Atom.\n\n![image](https://cloud.githubusercontent.com/assets/7275622/10709920/4fb7ff4a-7a48-11e5-831c-78e3fd0812b5.png)\n\n## Repl backend selection\n\nide-haskell-repl will try to automatically select the correct repl backend (`stack`/`cabal`/`ghci`) based on current builder chosen in `ide-haskell-cabal`. You can choose `none` builder to use `ghci` in plain projects (a.k.a. projects with no `*.cabal` file).\n\nIf `ide-haskell-cabal` is unavailable (e.g. disabled), ide-haskell-repl will fall back to `defaultRepl` specified in settings.\n\n## Using on Windows\n\nOn Windows, interrupting ghci will kill it. There is no good solution to this problem at the moment, but there is a \"bad\" solution.\n\nYou need to get `ghci-wrapper.exe` executable from https://github.com/atom-haskell/win-ghci-wrapper/releases (or if you don't trust random binaries you've downloaded from the Internet, you can build it from source -- you only really need ghc for that)\n\nThen you need to specify full path to this executable in `ghciWrapperPath` setting of this package.\n\nFor example, if you placed `ghci-wrapper.exe` in `C:\\Downloads` directory, you need to put `C:\\Downloads\\ghci-wrapper.exe` in `ghciWrapperPath` setting.\n\nFinally, restart any open REPL sessions.\n\n## Repl-specific commands\n\nTo send command, or move through history, you can use the following commands when focused on repl command editor:\n\n* `ide-haskell-repl:exec-command`\n* `ide-haskell-repl:history-back`\n* `ide-haskell-repl:history-forward`\n* `ide-haskell-repl:ghci-reload`\n\nNote that this commands are bound specifically to repl editor, which has CSS selector of `atom-text-editor.ide-haskell-repl`.\n\nYou can rebind those in your keymap, e.g.\n\n```\n\"atom-text-editor.ide-haskell-repl\":\n  'ctrl-enter': 'ide-haskell-repl:exec-command'\n  'ctrl-up': 'ide-haskell-repl:history-back'\n  'ctrl-down': 'ide-haskell-repl:history-forward'\n```\n\nJust don't forget to disable default bindings in ide-haskell-repl settings, if you don't want them.\n\n## License\n\nCopyright © 2015 Atom-Haskell.\n\nSee [LICENSE.md][LICENSE] for details.\n\n[LICENSE]: https://github.com/atom-haskell/ide-haskell-repl/blob/master/LICENSE.md\n\nContributors:\n\n* Nikolay Yakimov\n* yaeti\n* Yakov Borevich\n* soiamsoNG\n",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/atom-haskell/ide-haskell-repl.git"
+  },
+  "version": "0.6.0"
+}

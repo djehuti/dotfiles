@@ -340,16 +340,9 @@
       (editorconfig-mode 1)
       (projectile-global-mode)
       (defun bens-fix-tty-colors ()
-        "Fix the colors on the TTY and reload the Solarized theme."
-        ;; I set up my terminals so that the background color *is* the Solarized Light
-        ;; background color. Instead of having Emacs send an approximate color to my
-        ;; tty as the default face background color, tell it that this one is an exact
-        ;; match so it will just use that.
-        (tty-color-define "brightwhite" 15 (list 64768 62976 58112))
-        ;; Gotta reload the theme after changing the TTY color def.
-        (load-theme 'sanityinc-solarized-light))
-      ;; This loads the theme for graphical displays and for initial tty frames.
-      (add-hook 'after-init-hook 'bens-fix-tty-colors)
+        "Fix the colors on the TTY."
+        (unless (display-graphic-p (selected-frame))
+          (set-face-background 'default "unspecified-bg" (selected-frame))))
       ;; This is here for Emacs 24.3, which I'm running on Ubuntu 14.04 at work.
       (if emacs243-p
           (progn

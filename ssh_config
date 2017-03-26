@@ -1,5 +1,8 @@
 Host *
-	CheckHostIP no
+    UseKeychain yes
+    AddKeysToAgent yes
+    IdentityFile ~/.ssh/id_rsa
+    CheckHostIP no
 	SendEnv TERM_PROGRAM
 	SendEnv COLORTERM
 

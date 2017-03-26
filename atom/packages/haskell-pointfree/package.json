@@ -1,0 +1,69 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "/private/var/folders/hv/3lg6p46n7cq1yxy73rjcp_9h000fqw/T/d-117222-24290-tbl5gj/package.tgz",
+        "scope": null,
+        "escapedName": null,
+        "name": null,
+        "rawSpec": "/private/var/folders/hv/3lg6p46n7cq1yxy73rjcp_9h000fqw/T/d-117222-24290-tbl5gj/package.tgz",
+        "spec": "/private/var/folders/hv/3lg6p46n7cq1yxy73rjcp_9h000fqw/T/d-117222-24290-tbl5gj/package.tgz",
+        "type": "local"
+      },
+      "/private/var/folders/hv/3lg6p46n7cq1yxy73rjcp_9h000fqw/T/apm-install-dir-117222-24290-1sgy3nj"
+    ]
+  ],
+  "_from": "../d-117222-24290-tbl5gj/package.tgz",
+  "_id": "haskell-pointfree@0.2.0",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/haskell-pointfree",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "/private/var/folders/hv/3lg6p46n7cq1yxy73rjcp_9h000fqw/T/d-117222-24290-tbl5gj/package.tgz",
+    "scope": null,
+    "escapedName": null,
+    "name": null,
+    "rawSpec": "/private/var/folders/hv/3lg6p46n7cq1yxy73rjcp_9h000fqw/T/d-117222-24290-tbl5gj/package.tgz",
+    "spec": "/private/var/folders/hv/3lg6p46n7cq1yxy73rjcp_9h000fqw/T/d-117222-24290-tbl5gj/package.tgz",
+    "type": "local"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "file:../d-117222-24290-tbl5gj/package.tgz",
+  "_shasum": "81ca44cd549a6238c73450f1b055e062898fd3d0",
+  "_shrinkwrap": null,
+  "_spec": "/private/var/folders/hv/3lg6p46n7cq1yxy73rjcp_9h000fqw/T/d-117222-24290-tbl5gj/package.tgz",
+  "_where": "/private/var/folders/hv/3lg6p46n7cq1yxy73rjcp_9h000fqw/T/apm-install-dir-117222-24290-1sgy3nj",
+  "bugs": {
+    "url": "https://github.com/atom-haskell/atom-haskell-pointfree/issues"
+  },
+  "dependencies": {
+    "atom-space-pen-views": "^2.0.3"
+  },
+  "description": "Convert selection to pointfree or pointful representation",
+  "devDependencies": {},
+  "engines": {
+    "atom": ">=0.174.0 <2.0.0"
+  },
+  "homepage": "https://github.com/atom-haskell/atom-haskell-pointfree#readme",
+  "keywords": [
+    "ide-haskell",
+    "ide",
+    "haskell",
+    "pointfree",
+    "pointful"
+  ],
+  "license": "MIT",
+  "main": "./lib/haskell-pointfree",
+  "name": "haskell-pointfree",
+  "optionalDependencies": {},
+  "readme": "# haskell-pointfree package\n\nThis extremely simple utility calls pointfree and pointful\nwith current selection and shows their output, allowing you to\npreview, choose and then replace current selection with said\noutput (or not)\n\nThis package includes pointfree and pointful executables compiled to JavaScript with ghcjs compiler. These are used, when `pointfreePath` and `pointfulPath` are `pointfree.js` and `pointful.js` respectively (this is the default). If you want to use proper binaries, change package settings. If binaries are in `PATH` you may only need to remove `.js` extension.\n\nDefault shortcuts:\n\n* ctrl+alt+shift+f: toggle preview panel\n\n![Screenshot](https://raw.githubusercontent.com/lierdakil/atom-haskell-pointfree/master/screen.png)\n",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/atom-haskell/atom-haskell-pointfree.git"
+  },
+  "version": "0.2.0"
+}
