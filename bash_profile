@@ -26,9 +26,6 @@ BINTYPE=$(echo ${OSTYPE}-${HOSTTYPE} | sed -e 's/gnu-i.86/gnu-x86/')
 BASH_ENV=$HOME/.bashrc
 USERNAME=""
 PS1='\[\e[34;1m\]bash\$\[\e[0m\] '
-#P4USER=bcox
-#P4EDITOR=emacs
-#P4CONFIG=P4ENV
 PAGER=less
 LESS="-XRFM"
 
@@ -58,7 +55,6 @@ if [ -f ~/.bashrc ]; then
 fi
 
 export USERNAME BASH_ENV PATH PS1
-# export P4USER P4EDITOR P4CONFIG
 export PAGER LESS HOSTNAME
 HISTSIZE=1000000
 export HISTSIZE
@@ -76,10 +72,5 @@ else
 fi
 export MANPATH
 # ...end of PRC-Tools for Mac OS X additions.
-
-# Fink
-if [ -d /sw/bin ]; then
-    . /sw/bin/init.sh
-fi
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*

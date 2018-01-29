@@ -37,6 +37,15 @@ PAGER=less
 LESS="-XRFM"
 CCACHE_PREFIX=icecc
 
+export USERNAME PATH PS1 EDITOR
+export PAGER LESS HOSTNAME CCACHE_PREFIX
+
+GOPATH=${HOME}/gocode
+UBER_LDAP_UID=bcox
+UBER_HOME=${HOME}/Uber
+UBER_OWNER=bcox@uber.com
+export GOPATH UBER_LDAP_UID UBER_HOME UBER_OWNER
+
 pathmunge $HOME/bin
 pathmunge $HOME/bin/$BINTYPE
 pathmunge /sbin after
@@ -47,8 +56,8 @@ pathmunge /usr/local/bin after
 pathmunge /opt/local/bin after
 pathmunge /usr/X11R6/bin after
 
-export USERNAME PATH PS1 EDITOR
-export PAGER LESS HOSTNAME CCACHE_PREFIX
+GOPATH=$HOME/gocode
+export GOPATH
 
 unset LS_COLORS
 
