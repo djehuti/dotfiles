@@ -10,6 +10,10 @@
 (put 'upcase-region 'disabled nil)
 
 
+;; UTF-8 is in for 2018.
+(prefer-coding-system 'utf-8)
+
+
 ;; Display tab characters with an alternate background color.
 (progn (make-face 'tab-face)
        (set-face-background 'tab-face "#ccd8ff")
@@ -123,6 +127,8 @@
 (setq auto-mode-alist
       (append '(("Makefile$" . fundamental-mode)
                 ("\\.toml$" . fundamental-mode)
+                ("BUILD$" . bazel-mode)
+                ("WORKSPACE$" . bazel-mode)
                 ("Construct$" . perl-mode)
                 ("Conscript$" . perl-mode)
                 ("\\.m$" . objc-mode)
@@ -216,6 +222,24 @@
 
 ;; Org Mode
 (require 'org)
+;; Org directory
+(setq org-directory "~/Dropbox/org")
+(setq org-default-notes-file (concat org-directory "/notes.org"))
+(setq org-agenda-include-diary t)
+;; Links
+(setq org-link-abbrev-alist
+      '(("phab" . "https://code.int.uberatc.com/%s")
+         ("google"    . "http://www.google.com/search?q=")))
+;; Tags
+(setq org-tag-alist '(("@Me" . ?m) ("@Chad" . ?c) ("@Davy" . ?d) ("@Ijaz" . ?i)
+                      ("@Gopi" . ?g) ("@Jeff" . ?j) ("@Ilya" . ?y) ("@Frank" . ?f)
+                      ("@Maurizio" . ?z) ("@Elliott" . ?e)
+                      ("BUG" . ?G)
+                      (:startgroup . nil)
+                      ("Work" . ?W) ("Personal" . ?P) ("SPM" . ?S)
+                      (:endgroup . nil)))
+;; Drawers
+(setq org-drawers '("PROPERTIES" "CLOCK" "LOGBOOK" "RESULTS" "NOTES"))
 ;; Standard key bindings
 (global-set-key "\C-cl" (function org-store-link))
 (global-set-key "\C-ca" (function org-agenda))
@@ -291,64 +315,85 @@
 (define-key ctl-x-map "\C-n" 'set-n-columns)
 (define-key ctl-x-map "\C-h" 'set-n-rows)
 
+(setenv "LANG" "en_US.UTF-8")
+(defun mosh (args)
+  "Connect to a remote host with mosh."
+  (interactive
+   (list (read-from-minibuffer "mosh " nil nil nil 'my-mosh-history)))
+  (let* ((switches (split-string-and-unquote args))
+         (name (concat "mosh " args))
+         (termbuf (apply 'make-term name "/usr/local/bin/mosh" nil switches)))
+    (set-buffer termbuf)
+    (term-mode)
+    (term-char-mode)
+    (switch-to-buffer termbuf)))
 
-(defvar emacs24-p  (not (null (string-match "^24\\." emacs-version))) "True if we are running Emacs 24.")
-(defvar emacs243-p  (not (null (string-match "^24\\.3\\." emacs-version))) "True if we are running Emacs 24.3.")
-(defvar emacs245-p  (not (null (string-match "^24\\.5\\." emacs-version))) "True if we are running Emacs 24.5.")
-(if emacs24-p
-    (progn
-      (set-language-environment "Latin-1")
-      (eval-when-compile
-        (require 'package)
-        (add-to-list 'package-archives
-                     '("melpa" . "http://stable.melpa.org/packages/") t)
-        (package-initialize)
-        (require 'cmake-mode)
-        (require 'flycheck)
-        (require 'company)
-        (require 'rtags)
-        (require 'projectile)
-        (require 'editorconfig))
-      (declare-function company-complete "company.el" nil)
-      ;(package-install 'flycheck)
-      (add-hook 'c-mode-common-hook 'flycheck-mode)
-      (add-hook 'c-mode-common-hook 'company-mode)
-      (add-hook 'python-mode-hook 'flycheck-mode)
-      (add-hook 'python-mode-hook 'company-mode)
-      (add-hook 'lisp-mode-hook 'flycheck-mode)
-      (add-hook 'lisp-mode-hook 'company-mode)
-      (add-hook 'emacs-lisp-mode-hook 'flycheck-mode)
-      (add-hook 'emacs-lisp-mode-hook 'company-mode)
-      (add-hook 'lisp-interaction-mode-hook 'flycheck-mode)
-      (add-hook 'lisp-interaction-mode-hook 'company-mode)
-      (add-hook 'cmake-mode-hook
-                '(lambda ()
-                   (setq indent-tabs-mode nil)
-                   (flycheck-mode)
-                   (company-mode)
-                   (setq cmake-tab-width 4)))
-      (setq rtags-autostart-diagnostics t)
-      (setq rtags-completions-enabled t)
-      (push 'company-rtags company-backends)
-      (rtags-enable-standard-keybindings)
-      (define-key c-mode-base-map (kbd "M-=") (function rtags-symbol-type))
-      (define-key c-mode-base-map (kbd "M-.") (function rtags-find-symbol-at-point))
-      (define-key c-mode-base-map (kbd "M-,") (function rtags-find-references-current-file))
-      (define-key c-mode-base-map (kbd "M-/") (function rtags-find-all-references-at-point))
-      (define-key c-mode-base-map (kbd "M-i") (function rtags-imenu))
-      (define-key c-mode-base-map (kbd "C-M-i") (function company-complete))
-      (editorconfig-mode 1)
-      (projectile-global-mode)
-      (defun bens-fix-tty-colors ()
-        "Fix the colors on the TTY."
-        (unless (display-graphic-p (selected-frame))
-          (set-face-background 'default "unspecified-bg" (selected-frame))))
-      ;; This is here for Emacs 24.3, which I'm running on Ubuntu 14.04 at work.
-      (if emacs243-p
-          (progn
-            (add-hook 'term-setup-hook 'bens-fix-tty-colors)
-            (add-hook 'after-make-frame-functions '(lambda (frame) (bens-fix-tty-colors)))))
-      ;; This is here for Emacs 24.5, which I'm running on my Mac.
-      (if emacs245-p (add-hook 'tty-setup-hook 'bens-fix-tty-colors))))
+(defun ssh (args)
+  "Connect to a remote host with ssh."
+  (interactive
+   (list (read-from-minibuffer "ssh " nil nil nil 'my-ssh-history)))
+  (let* ((switches `("-A" . ,(split-string-and-unquote args)))
+         (name (concat "ssh " args))
+         (termbuf (apply 'make-term name "/usr/bin/ssh" nil switches)))
+    (set-buffer termbuf)
+    (term-mode)
+    (term-char-mode)
+    (switch-to-buffer termbuf)))
+
+(defun bens-fix-tty-colors ()
+  "Fix the colors on the TTY."
+  (interactive)
+  (unless (display-graphic-p (selected-frame))
+    (set-face-background 'default "unspecified-bg" (selected-frame))))
+
+;(defvar emacs24-p  (not (null (string-match "^24\\." emacs-version))) "True if we are running Emacs 24.")
+;(defvar emacs243-p  (not (null (string-match "^24\\.3\\." emacs-version))) "True if we are running Emacs 24.3.")
+;(defvar emacs245-p  (not (null (string-match "^24\\.5\\." emacs-version))) "True if we are running Emacs 24.5.")
+
+(set-language-environment "Latin-1")
+
+(eval-when-compile
+  (require 'package)
+  (add-to-list 'package-archives
+               '("melpa" . "http://stable.melpa.org/packages/") t)
+  (package-initialize)
+  ;(require 'cmake-mode)
+  ;(require 'flycheck)
+  (require 'company)
+  (require 'rtags)
+  (require 'projectile)
+  (require 'editorconfig))
+
+;; company stuff
+(declare-function company-complete "company.el" nil)
+(add-hook 'c-mode-common-hook 'company-mode)
+(add-hook 'python-mode-hook 'company-mode)
+(add-hook 'lisp-mode-hook 'company-mode)
+(add-hook 'emacs-lisp-mode-hook 'company-mode)
+(add-hook 'lisp-interaction-mode-hook 'company-mode)
+
+;; flycheck stuff
+;(package-install 'flycheck)
+;(add-hook 'c-mode-common-hook 'flycheck-mode)
+;(add-hook 'python-mode-hook 'flycheck-mode)
+;(add-hook 'lisp-mode-hook 'flycheck-mode)
+;(add-hook 'emacs-lisp-mode-hook 'flycheck-mode)
+;(add-hook 'lisp-interaction-mode-hook 'flycheck-mode)
+
+;; rtags stuff
+(setq rtags-autostart-diagnostics t)
+(setq rtags-completions-enabled t)
+(push 'company-rtags company-backends)
+(rtags-enable-standard-keybindings)
+(define-key c-mode-base-map (kbd "M-=") (function rtags-symbol-type))
+(define-key c-mode-base-map (kbd "M-.") (function rtags-find-symbol-at-point))
+(define-key c-mode-base-map (kbd "M-,") (function rtags-find-references-current-file))
+(define-key c-mode-base-map (kbd "M-/") (function rtags-find-all-references-at-point))
+(define-key c-mode-base-map (kbd "M-i") (function rtags-imenu))
+(define-key c-mode-base-map (kbd "C-M-i") (function company-complete))
+
+(editorconfig-mode 1)
+
+(projectile-global-mode)
 
 ;;; basic-setup.el ends here
