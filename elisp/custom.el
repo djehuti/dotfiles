@@ -37,6 +37,7 @@
 ]* ?[#$] ")
  '(flycheck-flake8-maximum-line-length 120)
  '(fringe-mode (quote (4 . 4)) nil (fringe))
+ '(goto-address-highlight-p t)
  '(icomplete-mode t nil (icomplete))
  '(indicate-buffer-boundaries (quote right))
  '(inhibit-startup-screen t)
@@ -56,7 +57,7 @@
  '(org-src-fontify-natively t)
  '(package-selected-packages
    (quote
-    (markdown-mode ## yaml-mode rtags projectile php-mode magit flycheck flx-ido editorconfig company color-theme-sanityinc-solarized cmake-mode)))
+    (go-mode bazel-mode json-mode markdown-mode ## yaml-mode rtags projectile php-mode magit flycheck flx-ido editorconfig company color-theme-sanityinc-solarized cmake-mode)))
  '(partial-completion-mode nil)
  '(rst-indent-comment 4)
  '(rst-indent-field 4)

@@ -14,13 +14,13 @@
 (prefer-coding-system 'utf-8)
 
 
-;; Display tab characters with an alternate background color.
+;; Display tab characters with an alternate background color, except in Go.
 (progn (make-face 'tab-face)
        (set-face-background 'tab-face "#ccd8ff")
        (make-face 'cr-face)
        (set-face-foreground 'cr-face "#ffffff")
        (set-face-background 'cr-face "#f08080")
-       (defvar colortab-display-table (make-display-table) "Display table for coloring tab characters.")
+       (defvar colortab-display-table (make-display-table) "Display table for coloring CR and tab characters.")
        (aset colortab-display-table 9
              (vector
               (make-glyph-code 9 'tab-face)
@@ -31,6 +31,12 @@
               (make-glyph-code 77 'cr-face)
               ))
        (setq standard-display-table colortab-display-table)
+       (defvar go-display-table (make-display-table) "Display table for coloring CR characters.")
+       (aset colortab-display-table 13
+             (vector
+              (make-glyph-code 94 'cr-face)
+              (make-glyph-code 77 'cr-face)
+              ))
 )
 
 
@@ -149,6 +155,9 @@
                    truncate-lines t)))
 (add-hook 'lisp-interaction-mode-hook '(lambda () (setq c-tab-always-indent nil)))
 (add-hook 'rst-mode-hook '(lambda () (setq indent-tabs-mode nil)))
+(add-hook 'go-mode-hook '(lambda () (progn
+                                      (setq tab-width 4)
+                                      (setq buffer-display-table go-display-table))))
 
 ;; And use font-lock for all relevant modes.
 (global-font-lock-mode 1)
@@ -245,6 +254,12 @@
 (global-set-key "\C-ca" (function org-agenda))
 (global-set-key "\C-cb" (function org-iswitchb))
 (global-set-key "\C-cc" (function org-capture))
+
+
+(define-globalized-minor-mode my-global-goto-address-mode goto-address-mode
+  (lambda () (goto-address-mode 1)))
+
+(my-global-goto-address-mode 1)
 
 
 ;; This allows me to swap the positions of windows on the screen.
