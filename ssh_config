@@ -3,8 +3,8 @@ Host *
     AddKeysToAgent yes
     IdentityFile ~/.ssh/id_rsa
     CheckHostIP no
-	SendEnv TERM_PROGRAM
-	SendEnv COLORTERM
+    SendEnv TERM_PROGRAM
+    SendEnv COLORTERM
 
 Host djehuti.com
-	User djehuti
+    User djehuti
