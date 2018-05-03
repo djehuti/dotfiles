@@ -5,6 +5,7 @@ alias a=alias
 alias h=history
 alias j=jobs
 alias siri="sudo"
+alias tags="tools/actions/generate_compile_commands_json.py"
 
 if [ "`uname`" = "Darwin" ]; then
     compctl -f -x 'p[2]' -s "`/bin/ls -d1 /Applications/*/*.app /Applications/*.app | sed 's|^.*/\([^/]*\)\.app.*|\\1|;s/ /\\\\ /g'`" -- open

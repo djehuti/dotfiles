@@ -31,7 +31,7 @@ pathmunge () {
 
 #EDITOR='emacsclient -a= -c -t'
 EDITOR=emacsclient
-BINTYPE=$(echo ${OSTYPE}-${HOSTTYPE} | sed -e 's/gnu-i.86/gnu-x86/')
+BINTYPE=$(echo ${OSTYPE}-${MACHTYPE} | sed -e 's/gnu-i.86/gnu-x86/')
 USERNAME=""
 PAGER=less
 LESS="-XRFM"
@@ -41,10 +41,7 @@ export USERNAME PATH PS1 EDITOR
 export PAGER LESS HOSTNAME CCACHE_PREFIX
 
 GOPATH=${HOME}/gocode
-UBER_LDAP_UID=bcox
-UBER_HOME=${HOME}/Uber
-UBER_OWNER=bcox@uber.com
-export GOPATH UBER_LDAP_UID UBER_HOME UBER_OWNER
+export GOPATH
 
 pathmunge $HOME/bin
 pathmunge $HOME/bin/$BINTYPE
@@ -55,9 +52,6 @@ pathmunge /usr/local/sbin after
 pathmunge /usr/local/bin after
 pathmunge /opt/local/bin after
 pathmunge /usr/X11R6/bin after
-
-GOPATH=$HOME/gocode
-export GOPATH
 
 unset LS_COLORS
 
