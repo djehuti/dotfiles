@@ -64,64 +64,41 @@
 
 ;; Helper for compilation. Close the compilation window if
 ;; there was no error at all.
-(eval-when-compile (require 'compile))
-(defun compilation-exit-autoclose (status code msg)
-  "Close the compilation window if the compile exits successfully.  STATUS.  CODE.  MSG."
-  ;; If M-x compile exits with a 0
-  (when (and (eq status 'exit) (zerop code))
-    ;; then bury the *compilation* buffer, so that C-x b doesn't go there
-    (bury-buffer)
-    ;; and delete the *compilation* window
-    (delete-window (get-buffer-window (get-buffer "*compilation*"))))
-  ;; Always return the anticipated result of compilation-exit-message-function
-  (cons msg code))
+;; (eval-when-compile (require 'compile))
+;; (defun compilation-exit-autoclose (status code msg)
+;;   "Close the compilation window if the compile exits successfully.  STATUS.  CODE.  MSG."
+;;   ;; If M-x compile exits with a 0
+;;   (when (and (eq status 'exit) (zerop code))
+;;     ;; then bury the *compilation* buffer, so that C-x b doesn't go there
+;;     (bury-buffer)
+;;     ;; and delete the *compilation* window
+;;     (delete-window (get-buffer-window (get-buffer "*compilation*"))))
+;;   ;; Always return the anticipated result of compilation-exit-message-function
+;;   (cons msg code))
 ;; Specify my function (maybe I should have done a lambda function)
-(setq compilation-exit-message-function 'compilation-exit-autoclose)
+;;(setq compilation-exit-message-function 'compilation-exit-autoclose)
 
 
 ;; set C-mode indentation style
 
 (c-add-style "cox" '("stroustrup"
                      (indent-tabs-mode nil)
+                     (c-basic-offset . 4)
                      (c-tab-always-indent nil)
-                     (c-indent-level . 4)
-                     (c-continued-statement-offset . 4)
+                     (c-indent-level . +)
+                     (c-continued-statement-offset . +)
                      (c-brace-offset . 0)
                      (c-brace-imaginary-offset . 0)
                      (c-argdecl-indent . 0)
-                     (c-label-offset . -4)
-                     (c-basic-offset . 4)))
-
-;--------------------------------------;
-; C++ Indentation, Thanks to Joe Lisee ;
-;--------------------------------------;
-
-(c-add-style "uatc-c-style"
-  '((c-auto-newline                 . nil)
-    (c-basic-offset                 . 4)
-    (c-comment-only-line-offset     . 0)
-    (c-hanging-braces-alist         . ((substatement-open after)
-                                       (brace-list-open)))
-    (c-offsets-alist                . ((arglist-close . c-lineup-arglist)
-                                       (case-label . 2)
-                                       (substatement-open . 0)
-                                       (block-open . 0) ; no space before {
-                                       (inline-open . 0) ; no space before {
-                                       (knr-argdecl-intro . -)
-                                       (innamespace . 0)))
-    (c-hanging-colons-alist         . ((member-init-intro before)
-                                       (inher-intro)
-                                       (case-label after)
-                                       (label after)
-                                       (access-label after)))
-    (c-cleanup-list                 . (scope-operator
-                                       empty-defun-braces
-                                       defun-close-semi))))
+                     (c-label-offset . -)
+                     (c-offsets-alist (comment-intro . 0)
+                                      (access-label . -3)
+                                      (innamespace . 0))))
 
 (setq-default indent-tabs-mode nil)
 (c-set-offset 'comment-intro 0)
 (eval-when-compile (require 'cc-vars))
-(setq c-default-style "uatc-c-style")
+(setq c-default-style "cox")
 
 
 ;; Use rust-mode.
@@ -199,8 +176,8 @@
   (interactive)
   (save-excursion
     (goto-char (point-max))
-    (delete-blank-lines)
-    (forward-line -1)
+    (delete-blank-lines) 
+   (forward-line -1)
     (delete-blank-lines))
   (message "Blanks removed from eof."))
 ; C-c C-f is a user key.
@@ -237,13 +214,10 @@
 (setq org-agenda-include-diary t)
 ;; Links
 (setq org-link-abbrev-alist
-      '(("phab" . "https://code.int.uberatc.com/%s")
+      '(("phab" . "https://aurora.phacility.com/%s")
          ("google"    . "http://www.google.com/search?q=")))
 ;; Tags
-(setq org-tag-alist '(("@Me" . ?m) ("@Chad" . ?c) ("@Davy" . ?d) ("@Ijaz" . ?i)
-                      ("@Gopi" . ?g) ("@Jeff" . ?j) ("@Ilya" . ?y) ("@Frank" . ?f)
-                      ("@Maurizio" . ?z) ("@Elliott" . ?e)
-                      ("BUG" . ?G)
+(setq org-tag-alist '(("BUG" . ?G)
                       (:startgroup . nil)
                       ("Work" . ?W) ("Personal" . ?P) ("SPM" . ?S)
                       (:endgroup . nil)))
@@ -287,12 +261,12 @@
         (switch-to-buffer b1)))))
 ; C-c w is a user key.
 (global-set-key "\C-cw" 'swap-windows)
+(global-set-key "\C-cq" 'bury-buffer)
 
 
 ;; Setup some key preferences.
 (define-key ctl-x-map     "\C-b"     'buffer-menu)
 (define-key ctl-x-map     "f"        'auto-fill-mode)
-(define-key esc-map       "g"        'goto-line)
 (define-key esc-map       "o"        'overwrite-mode)
 (define-key ctl-x-map     "%"        'query-replace-regexp)
 (define-key text-mode-map "\C-cf"    'fundamental-mode)
@@ -329,6 +303,8 @@
 
 (define-key ctl-x-map "\C-n" 'set-n-columns)
 (define-key ctl-x-map "\C-h" 'set-n-rows)
+(add-to-list 'default-frame-alist '(width  . 101))
+(add-to-list 'default-frame-alist '(height . 50))
 
 (setenv "LANG" "en_US.UTF-8")
 (defun mosh (args)
@@ -361,54 +337,120 @@
   (unless (display-graphic-p (selected-frame))
     (set-face-background 'default "unspecified-bg" (selected-frame))))
 
+(defun insert-aurora-copyright (arg)
+  "Insert an Aurora copyright notice with the current year.
+With prefix ARG, use that year."
+  (interactive "P")
+  (let ((current-year (if arg
+                          arg
+                        (nth 5 (decode-time)))))
+    (save-excursion
+      (goto-char (point-min))
+      (insert
+       (format
+        "Copyright Aurora Innovation, Inc., %d, All rights reserved.\n"
+        current-year))
+      (comment-region (point-min) (point)))))
+(define-key ctl-x-map "\M-c" 'insert-aurora-copyright)
+
+
 ;(defvar emacs24-p  (not (null (string-match "^24\\." emacs-version))) "True if we are running Emacs 24.")
 ;(defvar emacs243-p  (not (null (string-match "^24\\.3\\." emacs-version))) "True if we are running Emacs 24.3.")
 ;(defvar emacs245-p  (not (null (string-match "^24\\.5\\." emacs-version))) "True if we are running Emacs 24.5.")
 
 (set-language-environment "Latin-1")
 
+(require 'package)
+;;(add-to-list 'package-archives
+;;             '("melpa" . "http://melpa.org/packages/") t)
+;;(add-to-list 'package-archives
+;;             '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+(package-initialize)
+
+;; manually install use-package package manager
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+;; configure use-package
+(setq use-package-always-ensure t)  ;; always download and install packages
+(setq use-package-always-pin "melpa")  ;; prefer latest
 (eval-when-compile
-  (require 'package)
-  (add-to-list 'package-archives
-               '("melpa" . "http://stable.melpa.org/packages/") t)
-  (package-initialize)
-  ;(require 'cmake-mode)
-  ;(require 'flycheck)
-  (require 'company)
-  (require 'rtags)
-  (require 'projectile)
-  (require 'editorconfig))
+  (require 'use-package))
+(require 'bind-key)
+(require 'diminish)
 
-;; company stuff
-(declare-function company-complete "company.el" nil)
-(add-hook 'c-mode-common-hook 'company-mode)
-(add-hook 'python-mode-hook 'company-mode)
-(add-hook 'lisp-mode-hook 'company-mode)
-(add-hook 'emacs-lisp-mode-hook 'company-mode)
-(add-hook 'lisp-interaction-mode-hook 'company-mode)
-
+;; YouCompleteMe
+(use-package ycmd
+  :init
+  ;; (set-variable 'ycmd-global-config "~/dotfiles/ycmd_conf.py")
+  (set-variable 'ycmd-extra-conf-whitelist `("~/src/av/*"))
+  (set-variable 'ycmd-server-command `("python" ,(file-truename "~/src/ycmd/ycmd")))
+  :config
+  (ycmd-setup)
+  (add-hook 'after-init-hook #'global-ycmd-mode))
+  
 ;; flycheck stuff
-;(package-install 'flycheck)
-;(add-hook 'c-mode-common-hook 'flycheck-mode)
-;(add-hook 'python-mode-hook 'flycheck-mode)
-;(add-hook 'lisp-mode-hook 'flycheck-mode)
-;(add-hook 'emacs-lisp-mode-hook 'flycheck-mode)
-;(add-hook 'lisp-interaction-mode-hook 'flycheck-mode)
+(use-package flycheck
+  :config
+  (global-flycheck-mode)
+  (add-hook 'c++-mode-hook
+            (lambda()
+              (setq flycheck-gcc-language-standard "c++14")
+              (setq flycheck-clang-language-standard "c++14")))
+  (add-hook 'c-mode-hook
+            (lambda()
+              (setq flycheck-gcc-language-standard "c11")
+              (setq flycheck-clang-language-standard "c11")))
+  (use-package flycheck-ycmd
+    :config
+    (flycheck-ycmd-setup))
+  (use-package flycheck-rust))
 
-;; rtags stuff
-(setq rtags-autostart-diagnostics t)
-(setq rtags-completions-enabled t)
-(push 'company-rtags company-backends)
-(rtags-enable-standard-keybindings)
-(define-key c-mode-base-map (kbd "M-=") (function rtags-symbol-type))
-(define-key c-mode-base-map (kbd "M-.") (function rtags-find-symbol-at-point))
-(define-key c-mode-base-map (kbd "M-,") (function rtags-find-references-current-file))
-(define-key c-mode-base-map (kbd "M-/") (function rtags-find-all-references-at-point))
-(define-key c-mode-base-map (kbd "M-i") (function rtags-imenu))
-(define-key c-mode-base-map (kbd "C-M-i") (function company-complete))
+;; C++
+;; auto-formatting
+(use-package clang-format)
+(global-set-key "\C-cl" 'clang-format-buffer)
 
-(editorconfig-mode 1)
+(use-package projectile
+  :config
+  (projectile-global-mode))
 
-(projectile-global-mode)
+;; company code autocomplete
+(use-package company
+  :defer
+  :init (global-company-mode)
+  :bind ("TAB" . company-indent-or-complete-common)
+  :config
+  (setq company-idle-delay 1.2)
+  (setq company-minimum-prefix-length 2)
+
+  (setq company-backends (delete 'company-semantic company-backends))
+  (setq company-backends (delete 'company-clang company-backends))
+
+  (use-package company-c-headers
+    :config
+    (add-to-list 'company-c-headers-path-system "/usr/include/c++/5"))
+  (add-to-list 'company-backends 'company-c-headers)
+
+  (use-package company-ycmd
+    :config
+    (company-ycmd-setup))
+
+  ;; TODO: remove in favor of ycm jedi completion
+  ;; (use-package company-jedi
+  ;;  :config
+  ;;  (add-to-list 'company-backends 'company-jedi))
+
+  (use-package company-lua)
+  (use-package company-racer)
+  (use-package company-web)
+  (use-package web-completion-data))
+
+(use-package editorconfig
+  :diminish
+  (editorconfig-mode . "")
+  :config
+  (editorconfig-mode 1))
 
 ;;; basic-setup.el ends here

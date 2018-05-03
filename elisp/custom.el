@@ -35,8 +35,8 @@
                       (quote default)))))))))
  '(eshell-prompt-regexp "^[^#$
 ]* ?[#$] ")
- '(flycheck-flake8-maximum-line-length 120)
- '(fringe-mode (quote (4 . 4)) nil (fringe))
+ '(flycheck-flake8-maximum-line-length 100)
+ '(fringe-mode (quote (8 . 8)) nil (fringe))
  '(goto-address-highlight-p t)
  '(icomplete-mode t nil (icomplete))
  '(indicate-buffer-boundaries (quote right))
@@ -57,7 +57,7 @@
  '(org-src-fontify-natively t)
  '(package-selected-packages
    (quote
-    (go-mode bazel-mode json-mode markdown-mode ## yaml-mode rtags projectile php-mode magit flycheck flx-ido editorconfig company color-theme-sanityinc-solarized cmake-mode)))
+    (go-mode bazel-mode json-mode markdown-mode ## yaml-mode rtags projectile php-mode magit flycheck flx-ido editorconfig company color-theme-sanityinc-solarized cmake-mode use-package)))
  '(partial-completion-mode nil)
  '(rst-indent-comment 4)
  '(rst-indent-field 4)
@@ -67,14 +67,7 @@
  '(safe-local-variable-values
    (quote
     ((flycheck-clang-language-standard "c++11")
-     (flycheck-gcc-language-standard "c++11")
-     (flycheck-gcc-include-path
-      ("/home/bcox/src/av/source" "/home/bcox/src/av/deps"))
-     (flycheck-gcc-include-path
-      (quote
-       ("/home/bcox/src/av/source" "/home/bcox/src/av/deps")))
-     (flycheck-gcc-include-path
-      (list "/home/bcox/src/av/source" "/home/bcox/src/av/deps")))))
+     (flycheck-gcc-language-standard "c++11"))))
  '(scroll-bar-mode nil)
  '(scroll-step 1)
  '(tool-bar-mode nil)
