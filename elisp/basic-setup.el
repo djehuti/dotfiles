@@ -100,6 +100,8 @@
 (eval-when-compile (require 'cc-vars))
 (setq c-default-style "cox")
 
+(require 'ido)
+(ido-mode t)
 
 ;; Use rust-mode.
 (autoload 'rust-mode "rust-mode" nil t)
@@ -361,10 +363,10 @@ With prefix ARG, use that year."
 (set-language-environment "Latin-1")
 
 (require 'package)
-;;(add-to-list 'package-archives
-;;             '("melpa" . "http://melpa.org/packages/") t)
-;;(add-to-list 'package-archives
-;;             '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.org/packages/") t)
+(add-to-list 'package-archives
+             '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 (package-initialize)
 
 ;; manually install use-package package manager
