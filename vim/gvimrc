@@ -1,5 +1,6 @@
-set gfn=Menlo:h13
+set gfn="Ubuntu Mono 12"
 set guicursor+=a:blinkon0
-set guioptions=rb
+set guioptions=mrb
 highlight Cursor guifg=white guibg=red
 highlight clear CursorLineNr
+highlight Folded gui=italic guibg=#eee8d5 guifg=#93a1a1
