@@ -1,0 +1,3 @@
+env | grep -e '^APP' | grep -q -i jetbr && {
+    export INSIDE_JETBRAINS_IDE=1
+}
