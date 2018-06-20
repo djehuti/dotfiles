@@ -8,6 +8,7 @@
         - { src: 'Xresources',       dest: 'Xresources' }
         - { src: 'bash_profile',     dest: 'bash_profile' }
         - { src: 'bashrc',           dest: 'bashrc' }
+        - { src: 'dircolors',        dest: 'dircolors' }
         - { src: 'editorconfig',     dest: 'editorconfig' }
         - { src: 'elisp',            dest: 'elisp' }
         - { src: 'emacs',            dest: 'emacs' }
