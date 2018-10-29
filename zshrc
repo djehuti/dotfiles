@@ -1,6 +1,8 @@
 # -*-mode:shell-script-*-
 # ~/Dropbox/dotfiles/zshrc
 
+set -o emacs
+
 alias a=alias
 alias h=history
 alias j=jobs
@@ -24,3 +26,4 @@ if [ -d ${HOME}/.zinit.d/ ]; then
     done
     unset f
 fi
+

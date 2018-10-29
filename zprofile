@@ -30,7 +30,12 @@ pathmunge () {
 }
 
 #EDITOR='emacsclient -a= -c -t'
-EDITOR=emacsclient
+#EDITOR=emacsclient
+if [ -f /usr/bin/gedit ]; then
+    EDITOR=gedit
+else
+    EDITOR=emacs
+fi
 BINTYPE=$(echo ${OSTYPE}-${MACHTYPE} | sed -e 's/gnu-i.86/gnu-x86/')
 USERNAME=""
 PAGER=less
