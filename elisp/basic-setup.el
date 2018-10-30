@@ -147,12 +147,14 @@
   (let ((dirname (if (file-directory-p fpath) fpath
                    (substring (file-name-directory fpath) 0
                               (1- (length (file-name-directory fpath))))))
+        (lastdir nil)
         (foundit nil)
         (gitdir nil))
-    (while (not (or foundit (string= dirname "")))
+    (while (not (or foundit (string= dirname "") (string= dirname lastdir)))
       (setq gitdir (concat dirname "/.git"))
       (if (file-directory-p gitdir)
           (setq foundit t)
+        (setq lastdir dirname)
         (setq dirname (file-name-directory dirname))
         (setq dirname (substring dirname 0 (1- (length dirname))))))
     foundit))
