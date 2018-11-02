@@ -121,6 +121,7 @@
                 ("\\.pl$" . perl-mode)
                 ("\\.ph$" . perl-mode)
                 ("\\.pm$" . perl-mode)
+                ("\\.cl$" . lisp-mode)
                 ("\\.x$" . c-mode)
                 ("\\.vbs$" . fundamental-mode)
                 ("\\.rs$" . rust-mode))
@@ -456,5 +457,10 @@ With prefix ARG, use that year."
   (editorconfig-mode . "")
   :config
   (editorconfig-mode 1))
+
+(require 'slime)
+(require 'slime-autoloads)
+(add-to-list 'slime-contribs 'slime-fancy)
+(setq inferior-lisp-program (if (string= system-type "windows-nt") "C:/FIXME" "/usr/bin/clisp"))
 
 ;;; basic-setup.el ends here
