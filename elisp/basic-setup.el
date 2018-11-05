@@ -461,6 +461,10 @@ With prefix ARG, use that year."
 (require 'slime)
 (require 'slime-autoloads)
 (add-to-list 'slime-contribs 'slime-fancy)
-(setq inferior-lisp-program (if (string= system-type "windows-nt") "C:/FIXME" "/usr/bin/clisp"))
+
+(setq inferior-lisp-program
+      (if (string= system-type "windows-nt")
+          "clisp.exe" ; This relies on it being on the PATH, which is not great.
+        "/usr/bin/clisp"))
 
 ;;; basic-setup.el ends here
