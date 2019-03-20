@@ -89,7 +89,7 @@ zstyle ':prezto:module:gnu-utility' prefix 'g'
 # Set the prompt theme to load.
 # Setting it to 'random' loads a random theme.
 # Auto set to 'off' on dumb terminals.
-if [ -z "$INSIDE_JETBRAINS_IDE" ]
+if [ -z "$INSIDE_JETBRAINS_IDE" ] && [ "${TERM}" != "eterm-color" ]
 then
     zstyle ':prezto:module:prompt' theme 'djehuti'
 else
