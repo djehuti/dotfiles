@@ -220,7 +220,8 @@
 ;; Links
 (setq org-link-abbrev-alist
       '(("phab" . "https://aurora.phacility.com/%s")
-         ("google"    . "http://www.google.com/search?q=")))
+        ("jira" . "https://jira.int.aurora.tech/browse/%s")
+        ("google"    . "http://www.google.com/search?q=")))
 ;; Tags
 (setq org-tag-alist '(("BUG" . ?G)
                       (:startgroup . nil)
@@ -359,9 +360,9 @@ With prefix ARG, use that year."
 (define-key ctl-x-map "\M-c" 'insert-aurora-copyright)
 
 
-;(defvar emacs24-p  (not (null (string-match "^24\\." emacs-version))) "True if we are running Emacs 24.")
-;(defvar emacs243-p  (not (null (string-match "^24\\.3\\." emacs-version))) "True if we are running Emacs 24.3.")
-;(defvar emacs245-p  (not (null (string-match "^24\\.5\\." emacs-version))) "True if we are running Emacs 24.5.")
+(defvar emacs24-p  (not (null (string-match "^24\\." emacs-version))) "True if we are running Emacs 24.")
+(defvar emacs243-p  (not (null (string-match "^24\\.3\\." emacs-version))) "True if we are running Emacs 24.3.")
+(defvar emacs245-p  (not (null (string-match "^24\\.5\\." emacs-version))) "True if we are running Emacs 24.5.")
 
 (set-language-environment "Latin-1")
 
@@ -443,9 +444,9 @@ With prefix ARG, use that year."
     (company-ycmd-setup))
 
   ;; TODO: remove in favor of ycm jedi completion
-  ;; (use-package company-jedi
-  ;;  :config
-  ;;  (add-to-list 'company-backends 'company-jedi))
+  (use-package company-jedi
+   :config
+   (add-to-list 'company-backends 'company-jedi))
 
   (use-package company-lua)
   (use-package company-racer)

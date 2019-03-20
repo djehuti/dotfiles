@@ -12,7 +12,7 @@
  '(custom-safe-themes
    (quote
     ("d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" default)))
- '(diary-file "~/Dropbox/org/diary")
+ '(diary-file "~/org/diary")
  '(enable-recursive-minibuffers t)
  '(eshell-prompt-function
    (lambda nil
@@ -53,7 +53,7 @@
  '(ns-antialias-text t)
  '(ns-command-modifier (quote meta))
  '(ns-right-command-modifier (quote super))
- '(org-agenda-files (quote ("~/Dropbox/org/today.org")))
+ '(org-agenda-files (quote ("~/org/agenda.org")))
  '(org-src-fontify-natively t)
  '(package-selected-packages
    (quote
@@ -88,7 +88,7 @@
  '(font-lock-type-face ((t (:foreground "#b58900"))))
  '(font-lock-variable-name-face ((t (:foreground "#268bd2"))))
  '(font-lock-warning-face ((t (:foreground "#dc322f" :bold t))))
- '(hl-line ((t (:background "#eeeedd"))))
+ '(hl-line ((t (:background "#073642"))))
  '(isearch ((t (:background "#859900" :foreground "#fdf6e3"))))
  '(mode-line ((t (:background "#93a1a1" :foreground "#002b36"))))
  '(mode-line-inactive ((t (:background "#93a1a1" :foreground1 "#93a1a1"))))
