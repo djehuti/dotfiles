@@ -9,6 +9,7 @@
  ;; If there is more than one, they won't work right.
  '(blink-cursor-mode nil)
  '(column-number-mode t)
+ '(custom-enabled-themes (quote (sanityinc-solarized-dark)))
  '(custom-safe-themes
    (quote
     ("d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" default)))
@@ -44,7 +45,7 @@
  '(initial-scratch-message nil)
  '(line-move-visual nil)
  '(line-number-mode t)
- '(menu-bar-mode nil)
+ '(menu-bar-mode t)
  '(minibuffer-max-depth nil)
  '(mouse-avoidance-mode (quote jump) nil (avoid))
  '(mouse-wheel-mode t)
