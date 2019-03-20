@@ -3,6 +3,10 @@
 ;;;   Blah.
 ;;; Code:
 
+;; Use ycmd if I'm not on Windows.
+(setq use-ycmd (not (string= system-type "windows-nt")))
+(setq use-jedi (not (string= system-type "windows-nt")))
+
 
 ;; Let me do all sorts of dangerous (NOT!) stuff.
 (put 'eval-expression 'disabled nil)
@@ -387,14 +391,15 @@ With prefix ARG, use that year."
 (require 'diminish)
 
 ;; YouCompleteMe
-(use-package ycmd
-  :init
-  ;; (set-variable 'ycmd-global-config "~/dotfiles/ycmd_conf.py")
-  (set-variable 'ycmd-extra-conf-whitelist `("~/src/av/*"))
-  (set-variable 'ycmd-server-command `("python" ,(file-truename "~/src/ycmd/ycmd")))
-  :config
-  (ycmd-setup)
-  (add-hook 'after-init-hook #'global-ycmd-mode))
+(if use-ycmd
+    (use-package ycmd
+      :init
+      ;; (set-variable 'ycmd-global-config "~/dotfiles/ycmd_conf.py")
+      (set-variable 'ycmd-extra-conf-whitelist `("~/src/av/*"))
+      (set-variable 'ycmd-server-command `("python" ,(file-truename "~/src/ycmd/ycmd")))
+      :config
+      (ycmd-setup)
+      (add-hook 'after-init-hook #'global-ycmd-mode)))
   
 ;; flycheck stuff
 (use-package flycheck
@@ -408,9 +413,10 @@ With prefix ARG, use that year."
             (lambda()
               (setq flycheck-gcc-language-standard "c11")
               (setq flycheck-clang-language-standard "c11")))
-  (use-package flycheck-ycmd
-    :config
-    (flycheck-ycmd-setup))
+  (if use-ycmd
+      (use-package flycheck-ycmd
+        :config
+        (flycheck-ycmd-setup)))
   (use-package flycheck-rust))
 
 ;; C++
@@ -439,14 +445,16 @@ With prefix ARG, use that year."
     (add-to-list 'company-c-headers-path-system "/usr/include/c++/5"))
   (add-to-list 'company-backends 'company-c-headers)
 
-  (use-package company-ycmd
-    :config
-    (company-ycmd-setup))
+  (if use-ycmd
+      (use-package company-ycmd
+        :config
+        (company-ycmd-setup)))
 
   ;; TODO: remove in favor of ycm jedi completion
-  (use-package company-jedi
-   :config
-   (add-to-list 'company-backends 'company-jedi))
+  (if use-jedi
+      (use-package company-jedi
+        :config
+        (add-to-list 'company-backends 'company-jedi)))
 
   (use-package company-lua)
   (use-package company-racer)
