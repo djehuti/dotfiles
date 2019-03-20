@@ -57,7 +57,7 @@
  '(org-src-fontify-natively t)
  '(package-selected-packages
    (quote
-    (slime go-mode bazel-mode json-mode markdown-mode ## yaml-mode rtags projectile php-mode magit flycheck flx-ido editorconfig company color-theme-sanityinc-solarized cmake-mode use-package)))
+    (csound-mode slime go-mode bazel-mode json-mode markdown-mode ## yaml-mode rtags projectile php-mode magit flycheck flx-ido editorconfig company color-theme-sanityinc-solarized cmake-mode use-package)))
  '(partial-completion-mode nil)
  '(rst-indent-comment 4)
  '(rst-indent-field 4)
