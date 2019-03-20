@@ -1,0 +1,9 @@
+#!/bin/bash
+
+TTYSWITCH=""
+
+if [ -z "${DISPLAY}" ]; then
+    TTYSWITCH="-t"
+fi
+
+/usr/bin/emacsclient -c ${TTYSWITCH} -a "" "$@"
