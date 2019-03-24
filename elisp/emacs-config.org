@@ -1,0 +1,737 @@
+#+TITLE: Ben's Emacs Configuration
+
+* Preamble
+
+Flycheck wants all this stuff to appear at the beginning of an emacs-lisp
+file. I might as well indulge it. Having this as the first block in the file
+makes it appear at the top of the file when tangled.
+
+#+BEGIN_SRC emacs-lisp
+  ;;; emacs-config.org --- Ben's Emacs Configuration
+  ;;; Commentary:
+  ;;;    This file /is/ commentary.
+  ;;; Code:
+#+END_SRC
+
+* Basic Emacs Options
+
+Set up some very basic Emacs behavior options: no startup message/screen, no
+initial contents in scratch buffer, don't beep, etc.
+
+#+BEGIN_SRC emacs-lisp
+  (setq inhibit-startup-message t
+        inhibit-startup-screen t
+        initial-scratch-message nil
+        ring-bell-function 'ignore)
+
+  (put 'eval-expression 'disabled nil)
+  (put 'narrow-to-region 'disabled nil)
+  (put 'upcase-region 'disabled nil)
+
+  (winner-mode t)
+  (global-display-line-numbers-mode)
+
+  (set-language-environment "UTF-8")
+  (prefer-coding-system 'utf-8)
+  (setenv "LANG" "en_US.UTF-8")
+
+  (setq-default indicate-empty-lines t)
+#+END_SRC
+
+This section sets up my personal info for sending mail and such.
+
+#+BEGIN_SRC emacs-lisp
+  (setq user-full-name "Ben Cox"
+        send-mail-function 'smtpmail-send-it
+        smtpmail-smtp-service 587)
+  (if (eq bcox-emacs-mode 'home)
+      (setq user-mail-address "cox@djehuti.com"
+            smtpmail-mail-server "smtp.fastmail.com")
+    (setq user-mail-address "bcox@aurora.tech"
+          smtpmail-mail-server "smtp.gmail.com"))
+#+END_SRC
+
+On Windows, I want to use the "Apps" key as Super.
+
+#+BEGIN_SRC emacs-lisp
+  (if (eq system-type 'windows-nt)
+      (progn
+        (setq w32-apps-modifier 'super)))
+#+END_SRC
+
+** Miscellaneous packages and prefs
+
+#+BEGIN_SRC emacs-lisp
+  (defvar bcox-dropbox-dir (if (eq system-type 'windows-nt)
+                             "C:/Users/cox/Dropbox"
+                           "/data/Dropbox")
+    "The location of my Dropbox directory.")
+  (defvar bcox-copyright-org (if (eq bcox-emacs-mode 'home)
+                               "Ben Cox"
+                             "Aurora Innovation, Inc.")
+    "Copyright owner to insert in copyright notices.")
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  ;; Use ycmd if I'm not on Windows.
+  (defvar bcox-use-ycmd (not (eq system-type 'windows-nt))
+    "Whether or not to use ycmd.")
+
+  ;; Same with Jedi.
+  (defvar bcox-use-jedi (not (eq system-type 'windows-nt))
+    "Whether or not to use Jedi.")
+
+  (require 'package)
+  (add-to-list 'package-archives
+               '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+  (add-to-list 'package-archives
+               '("melpa" . "http://melpa.org/packages/") t)
+  (package-initialize)
+
+  ;; manually install use-package package manager
+  (unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package))
+
+  ;; configure use-package
+  (setq use-package-always-ensure t)  ;; always download and install packages
+  (setq use-package-always-pin "melpa-stable")  ;; prefer stable
+  (eval-when-compile
+    (require 'use-package))
+  (require 'bind-key)
+  (require 'diminish)
+
+  (use-package editorconfig
+    :diminish
+    (editorconfig-mode . "")
+    :config
+    (editorconfig-mode 1))
+
+  (use-package projectile
+    :config
+    (projectile-global-mode))
+
+  (use-package ido
+    :config
+    (ido-mode t))
+
+  (use-package hl-line
+    :config
+    (global-hl-line-mode 1))
+
+  (define-globalized-minor-mode my-global-goto-address-mode goto-address-mode
+    (lambda () (goto-address-mode 1)))
+  (my-global-goto-address-mode 1)
+
+  ;; YouCompleteMe
+  (use-package ycmd
+    :if bcox-use-ycmd
+    :init
+    ;; (set-variable 'ycmd-global-config "~/dotfiles/ycmd_conf.py")
+    (set-variable 'ycmd-extra-conf-whitelist `("~/src/av/*"))
+    (set-variable 'ycmd-server-command `("python" ,(file-truename "~/src/ycmd/ycmd")))
+    :config
+    (add-hook 'after-init-hook #'global-ycmd-mode))
+
+  ;; flycheck stuff
+  (use-package flycheck
+    :config
+    (global-flycheck-mode)
+    (add-hook 'c++-mode-hook
+              (lambda ()
+                (setq flycheck-gcc-language-standard "c++14")
+                (setq flycheck-clang-language-standard "c++14")))
+    (add-hook 'c-mode-hook
+              (lambda ()
+                (setq flycheck-gcc-language-standard "c11")
+                (setq flycheck-clang-language-standard "c11")))
+    (use-package flycheck-ycmd
+      :if bcox-use-ycmd
+      :config
+      (flycheck-ycmd-setup))
+    (use-package flycheck-rust))
+
+  ;; company code autocomplete
+  (use-package company
+    :defer
+    :init (global-company-mode)
+    :bind ("TAB" . company-indent-or-complete-common)
+    :config
+    (setq company-idle-delay 1.2)
+    (setq company-minimum-prefix-length 2)
+
+    (setq company-backends (delete 'company-semantic company-backends))
+    (setq company-backends (delete 'company-clang company-backends))
+
+    (use-package company-c-headers
+      :config
+      (add-to-list 'company-c-headers-path-system "/usr/include/c++/5"))
+    (add-to-list 'company-backends 'company-c-headers)
+
+    (use-package company-ycmd
+      :if bcox-use-ycmd
+      :config
+      (company-ycmd-setup))
+
+    ;; TODO: remove in favor of ycm jedi completion
+    (use-package company-jedi
+      :if bcox-use-jedi
+      :config
+      (add-to-list 'company-backends 'company-jedi))
+
+    (use-package company-lua)
+    (use-package company-racer)
+    (use-package company-web)
+    (use-package web-completion-data))
+#+END_SRC
+
+** Making Backups
+
+Emacs likes to make backup files, in ~filename~~ files. This is fine, but inside
+a version-controlled (git) directory, it's overkill. Also in ~/tmp~ or other
+temp directories.
+
+#+BEGIN_SRC emacs-lisp
+  ;; Determines whether a file is in a git repo.
+  (defun is-file-under-git (fpath)
+    "Return t if FPATH is under Git control, nil otherwise."
+    (let ((dirname (if (file-directory-p fpath) fpath
+                     (substring (file-name-directory fpath) 0
+                                (1- (length (file-name-directory fpath))))))
+          (lastdir nil)
+          (foundit nil)
+          (gitdir nil))
+      (while (not (or foundit (string= dirname "") (string= dirname lastdir)))
+        (setq gitdir (concat dirname "/.git"))
+        (if (file-directory-p gitdir)
+            (setq foundit t)
+          (setq lastdir dirname)
+          (setq dirname (file-name-directory dirname))
+          (setq dirname (substring dirname 0 (1- (length dirname))))))
+      foundit))
+
+  ;; Emacs 19 and later uses this predicate to determine,
+  ;; based on a file's name, whether to make a backup.
+  ;; This function avoids making backups of files in /tmp and /usr/tmp.
+  (setq backup-enable-predicate
+        '(lambda (name)
+           (cond ((< (length name) 5) t)
+                 ;; TODO(bcox): Make the /tmp things work on Windows.
+                 ((string-equal "/tmp/" (substring name 0 5)) nil)
+                 ((< (length name) 9) t)
+                 ((string-equal "/usr/tmp/" (substring name 0 9)) nil)
+                 ((is-file-under-git name) nil)
+                 (t))))
+#+END_SRC
+
+* Org Mode
+
+#+BEGIN_SRC emacs-lisp
+  ;; Org Mode
+  (require 'org)
+
+  ;; Org directory
+  (setq org-directory (concat bcox-dropbox-dir "/org"))
+  (setq org-default-notes-file (concat org-directory "/notes.org"))
+  (setq org-agenda-include-diary t)
+
+  ;; Diary/Agenda
+  (setq diary-file (concat org-directory "/diary")
+        org-agenda-files (list org-default-notes-file
+                               (concat org-directory "/work.org")
+                               (concat org-directory "/agenda.org")))
+
+  ;; Links
+  (setq org-link-abbrev-alist
+        '(("phab" . "https://aurora.phacility.com/%s")
+          ("jira" . "https://jira.int.aurora.tech/browse/%s")
+          ("google"    . "http://www.google.com/search?q=")))
+
+  ;; Tags
+  (setq org-tag-alist '(("BUG" . ?G)
+                        (:startgroup . nil)
+                        ("Work" . ?W) ("Personal" . ?P) ("SPM" . ?S)
+                        (:endgroup . nil)))
+
+  ;; Drawers
+  (setq org-drawers '("PROPERTIES" "CLOCK" "LOGBOOK" "RESULTS" "NOTES"))
+
+  ;; Standard key bindings
+  (global-set-key "\C-cl" (function org-store-link))
+  (global-set-key "\C-c\C-l" (function org-insert-link))
+  (global-set-key "\C-ca" (function org-agenda))
+  ;(global-set-key "\C-cb" (function org-iswitchb))
+  (global-set-key "\C-cc" (function org-capture))
+
+  (setq org-confirm-babel-evaluate nil)
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . t)
+     (python . t)
+     (haskell . t)
+     (plantuml . t)
+     (dot . t)
+     (js . t)))
+
+  (add-hook 'org-mode-hook
+            (lambda () (setq fill-column 78)))
+  (add-hook 'org-mode-hook
+            (lambda () (auto-fill-mode 1)))
+#+END_SRC
+
+* Programming Mode Stuff
+
+** ~TODO~ Comments 
+
+I like to highlight ~TODO~ comments in my code.
+
+#+BEGIN_SRC emacs-lisp
+  (font-lock-add-keywords 'c++-mode
+   '(
+     ("// *\\(TODO.*$\\)" 1 font-lock-warning-face prepend)
+     ("/\\* *\\(TODO.*$\\)" 1 font-lock-warning-face prepend)
+     ("/\\* *\\(TODO.*\\)\\*/" 1 font-lock-warning-face prepend)
+     )
+  )
+  (font-lock-add-keywords 'c-mode
+   '(
+     ("// *\\(TODO.*$\\)" 1 font-lock-warning-face prepend)
+     ("/\\* *\\(TODO.*$\\)" 1 font-lock-warning-face prepend)
+     ("/\\* *\\(TODO.*\\)\\*/" 1 font-lock-warning-face prepend)
+     )
+  )
+  (font-lock-add-keywords 'python-mode
+   '(
+     ("# *\\(TODO.*$\\)" 1 font-lock-warning-face prepend)
+     )
+  )
+#+END_SRC
+
+** Tabs and CR/LF line-endings
+
+You can use display tables to make certain characters display in different
+faces (or as different characters). I like to create a couple of extra faces
+and display ~TAB~ and ~CR~ (~\r~) characters specially, so they stand out while
+editing source code.
+
+#+BEGIN_SRC emacs-lisp
+  ;; Display tab characters with an alternate background color, except in Go.
+  (progn (make-face 'tab-face)
+         (set-face-background 'tab-face "#859900")
+         (make-face 'cr-face)
+         (set-face-foreground 'cr-face "#002b36")
+         (set-face-background 'cr-face "#859900")
+         (defvar colortab-display-table (make-display-table)
+           "Display table for coloring CR and tab characters.")
+         (aset colortab-display-table 9
+               (vector
+                (make-glyph-code 9 'tab-face)
+                ))
+         (aset colortab-display-table 13
+               (vector
+                (make-glyph-code 94 'cr-face)
+                (make-glyph-code 77 'cr-face)
+                ))
+         (setq standard-display-table colortab-display-table)
+         (defvar go-display-table (make-display-table)
+           "Display table for coloring CR characters.")
+         (aset go-display-table 13
+               (vector
+                (make-glyph-code 94 'cr-face)
+                (make-glyph-code 77 'cr-face)
+                ))
+  )
+#+END_SRC
+
+** Code Style Settings
+
+#+BEGIN_SRC emacs-lisp
+  (c-add-style "cox" '("stroustrup"
+                       (indent-tabs-mode nil)
+                       (c-basic-offset . 4)
+                       (c-tab-always-indent nil)
+                       (c-indent-level . +)
+                       (c-continued-statement-offset . +)
+                       (c-brace-offset . 0)
+                       (c-brace-imaginary-offset . 0)
+                       (c-argdecl-indent . 0)
+                       (c-label-offset . -)
+                       (c-offsets-alist (comment-intro . 0)
+                                        (access-label . -3)
+                                        (innamespace . 0))))
+
+  (setq-default indent-tabs-mode nil)
+  (c-set-offset 'comment-intro 0)
+  (require 'cc-vars)
+  (setq c-default-style "cox")
+
+  (add-hook 'c-mode-common-hook
+            '(lambda ()
+               (setq c-tab-always-indent nil
+                     show-trailing-whitespace t
+                     indent-tabs-mode nil
+                     truncate-lines t)))
+  (add-hook 'lisp-interaction-mode-hook
+            '(lambda ()
+               (setq c-tab-always-indent nil)))
+  (add-hook 'rst-mode-hook
+            '(lambda ()
+               (setq indent-tabs-mode nil)))
+  (add-hook 'go-mode-hook
+            '(lambda ()
+               (setq tab-width 4
+                     buffer-display-table go-display-table)))
+#+END_SRC
+
+For C++ code, I like to run ~clang-format~ on my code.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package clang-format)
+  (add-hook 'c++-mode-hook
+            '(lambda ()
+               (define-key c++-mode-map "\C-c\C-f" 'clang-format-buffer)))
+  (if (eq bcox-emacs-mode 'work)
+      (setq clang-format-executable
+            "/home/bcox/src/av/tools/clang_format_wrapper.sh"))
+#+END_SRC
+
+Some Lisp settings:
+
+#+BEGIN_SRC emacs-lisp
+  (require 'slime)
+  (require 'slime-autoloads)
+  (add-to-list 'slime-contribs 'slime-fancy)
+
+  (setq inferior-lisp-program
+        (if (eq system-type 'windows-nt)
+            "clisp.exe" ; This relies on it being on the PATH, which is not great.
+          "/usr/bin/clisp"))
+#+END_SRC
+
+** Mode Selection
+
+#+BEGIN_SRC emacs-lisp
+  ;; Use rust-mode.
+  (use-package rust-mode)
+
+  (setq auto-mode-alist
+        (append '(("Makefile$" . makefile-mode)
+                  ("\\.toml$" . fundamental-mode)
+                  ("BUILD$" . bazel-mode)
+                  ("WORKSPACE$" . bazel-mode)
+                  ("Construct$" . perl-mode)
+                  ("Conscript$" . perl-mode)
+                  ("\\.m$" . objc-mode)
+                  ("\\.mm$" . objc-mode)
+                  ("\\.pl$" . perl-mode)  ;; not prolog
+                  ("\\.ph$" . perl-mode)
+                  ("\\.pm$" . perl-mode)
+                  ("\\.cl$" . lisp-mode)
+                  ("\\.x$" . c-mode)
+                  ("\\.vbs$" . fundamental-mode)  ;; hoo boy this is old
+                  ("\\.rs$" . rust-mode))
+                auto-mode-alist))
+#+END_SRC
+
+** Miscellaneous Functions for Editing In Specific Modes
+
+#+BEGIN_SRC emacs-lisp
+  ;; This function can be useful in text files;
+  ;; I hate files that have whole bunches of newlines at the end.
+  (defun fix-file-end ()
+    "Remove blank lines from the end of the buffer."
+    (interactive)
+    (save-excursion
+      (goto-char (point-max))
+      (delete-blank-lines)
+     (forward-line -1)
+      (delete-blank-lines))
+    (message "Blanks removed from eof."))
+  ; C-c C-f is a user key.
+  (define-key text-mode-map "\C-c\C-f" 'fix-file-end)
+
+  (defun exit-text-file () "Quit, after killing blank lines from the end."
+    (interactive)
+    (fix-file-end)
+    (save-buffers-kill-emacs))
+  ; C-c C-c is a user key.
+  (define-key text-mode-map "\C-c\C-c" 'exit-text-file)
+
+  ;; Code usually wants a copyright notice.
+  (defun insert-copyright (arg)
+    "Insert a copyright notice with the current year.
+  With prefix ARG, use that year."
+    (interactive "P")
+    (let ((current-year (if arg
+                            arg
+                          (nth 5 (decode-time)))))
+      (save-excursion
+        (goto-char (point-min))
+        (insert
+         (format
+          "Copyright %s, %d, All rights reserved.\n"
+          bcox-copyright-org
+          current-year))
+        (comment-region (point-min) (point)))))
+  (define-key ctl-x-map "\M-c" 'insert-copyright)
+#+END_SRC
+
+* Fonts and such
+
+** Global Font-Lock and Prettify Symbols
+
+#+BEGIN_SRC emacs-lisp
+  (global-font-lock-mode 1)
+  (global-prettify-symbols-mode 1)
+#+END_SRC
+
+** Using Fira Code
+
+[[https://github.com/tonsky/FiraCode][Fira Code]] is a monospaced font with programming ligatures, which I like a fair
+bit.  Unfortunately setting up ligatures in Emacs is non-trivial (unlike in VS
+Code and CLion/IntelliJ, where you just check a box).
+
+Unfortunately Emacs doesn't seem to be able to display /italics/ with Fira Code,
+so I also use Source Code Pro for italic faces (like for comments and such).
+
+I used the
+[[https://github.com/tonsky/FiraCode/wiki/Emacs-instructions][instructions on this page]]
+to get this working.
+
+#+BEGIN_SRC emacs-lisp
+  (defun fira-code-mode--make-alist (list)
+    "Generate prettify-symbols alist from LIST."
+    (let ((idx -1))
+      (mapcar
+       (lambda (s)
+         (setq idx (1+ idx))
+         (let* ((code (+ #Xe100 idx))
+            (width (string-width s))
+            (prefix ())
+            (suffix '(?\s (Br . Br)))
+            (n 1))
+       (while (< n width)
+         (setq prefix (append prefix '(?\s (Br . Bl))))
+         (setq n (1+ n)))
+       (cons s (append prefix suffix (list (decode-char 'ucs code))))))
+       list)))
+
+  (defconst fira-code-mode--ligatures
+    '("www" "**" "***" "**/" "*>" "*/" "\\\\" "\\\\\\"
+      "{DONOTWANT-" "[]" "::" ":::" ":=" "!!" "!=" "!==" "-}"
+      "--" "---" "-->" "->" "->>" "-<" "-<<" "-~"
+      "#{" "#[" "##" "###" "####" "#(" "#?" "#_" "#_("
+      ".-" ".=" ".." "..<" "..." "?=" "??" ";;" "/*"
+      "/**" "/=" "/==" "/>" "//" "///" "&&" "||" "||="
+      "|=" "|>" "^=" "$>" "++" "+++" "+>" "=:=" "=="
+      "===" "==>" "=>" "=>>" "<=" "=<<" "=/=" ">-" ">="
+      ">=>" ">>" ">>-" ">>=" ">>>" "<*" "<*>" "<|" "<|>"
+      "<$" "<$>" "<!--" "<-" "<--" "<->" "<+" "<+>" "<="
+      "<==" "<=>" "<=<" "<>" "<<" "<<-" "<<=" "<<<" "<~"
+      "<~~" "</" "</>" "~@" "~-" "~=" "~>" "~~" "~~>" "%%"
+      "xDONOTWANTx" ":" "+" "+" "*"))
+
+  (defvar fira-code-mode--old-prettify-alist)
+
+  (defun fira-code-mode--enable ()
+    "Enable Fira Code ligatures in current buffer."
+    (setq-local fira-code-mode--old-prettify-alist prettify-symbols-alist)
+    (setq-local prettify-symbols-alist
+                (append (fira-code-mode--make-alist fira-code-mode--ligatures)
+                        fira-code-mode--old-prettify-alist))
+    (prettify-symbols-mode t))
+
+  (defun fira-code-mode--disable ()
+    "Disable Fira Code ligatures in current buffer."
+    (setq-local prettify-symbols-alist fira-code-mode--old-prettify-alist)
+    (prettify-symbols-mode -1))
+
+  (define-minor-mode fira-code-mode
+    "Fira Code ligatures minor mode"
+    :lighter " Fira"
+    (setq-local prettify-symbols-unprettify-at-point 'right-edge)
+    (if fira-code-mode
+        (fira-code-mode--enable)
+      (fira-code-mode--disable)))
+
+  (defun fira-code-mode--setup ()
+    "Setup Fira Code Symbols"
+    (set-fontset-font t '(#Xe100 . #Xe16f) "Fira Code Symbol"))
+  (fira-code-mode--setup)
+
+  (provide 'fira-code-mode)
+#+END_SRC
+
+*** Activate it automatically
+
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'prog-mode-hook #'(lambda () (fira-code-mode 1)))
+  (add-hook 'c-mode-common-hook #'(lambda () (fira-code-mode 1)))
+#+END_SRC
+
+* RSS Reading With Elfeed
+
+#+NAME: elfeed setup
+#+BEGIN_SRC emacs-lisp
+  (setq elfeed-db-directory (concat bcox-dropbox-dir "/elfeed"))
+  (setq elfeed-feeds
+        '("http://blog.plover.com/index.atom"
+          "http://www.kurzweilai.net/blog/feed"
+          "http://feeds.feedburner.com/DUC-TechnicalAlerts"
+          "http://feeds.feedburner.com/longnow"
+          "http://www.stonekettle.com/feeds/posts/default"
+          "http://tleaves.com/feed/"
+          "https://www.schneier.com/blog/atom.xml"
+          "http://www.djehuti.com/feed/"
+          "http://mutable-instruments.net/feed/"
+          "https://www.theverge.com/rss/index.xml"
+          "http://echoes.org/feed/"
+          "http://mutable-states.com/feeds/all.rss.xml"
+          "https://newsroom.uber.com/feed/"
+          "https://theintercept.com/feed/?lang=en"
+          "https://www.wired.com/category/science/feed/"
+          "https://onefoottsunami.com/feed/atom/"
+          "http://feeds.windowscentral.com/wmexperts"
+          "http://feeds.feedburner.com/abseilio"
+          "https://shitpost.plover.com/index.rss"
+          "https://intellijel.com/feed/"
+          "http://talkingpointsmemo.com/account/feed/edblog/UGFpiainqjaKsr3GV1Syd4qMuEiKwqyu93fjrzirr1Mr"
+          "https://www.google.com/alerts/feeds/11915022077819374258/10775703982759143351"
+          "http://daringfireball.net/index.xml"
+          "http://blog.longnow.org"
+          "http://www.synthtopia.com/feed/"))
+#+END_SRC
+
+* Miscellaneous Utility Stuff
+
+#+BEGIN_SRC emacs-lisp
+  ;; This allows me to just nuke a buffer and the window showing it
+  ;; (or frame, if it's the only window in that frame) all in one swell foop.
+  (declare-function server-edit "server.el" nil)
+  (defun kill-buf-n-win () "Kill the current buffer and its associated window."
+    (interactive)
+    (if (and (boundp 'server-buffer-clients) server-buffer-clients)
+        (server-edit)
+      (kill-buffer (current-buffer))
+      (condition-case nil
+          (delete-window)
+        (error (delete-frame)))))
+  ; C-x C-k is normally undefined.
+  (define-key ctl-x-map "\C-k" 'kill-buf-n-win)
+
+  ;; This allows me to swap the positions of windows on the screen.
+  ;; Really it just uses the existing windows and swaps which buffers
+  ;; they're displaying, but the effect is the same.  The selected
+  ;; buffer stays the same (meaning that the cursor is now in the
+  ;; new window on the screen).  Repeated calls to this function will
+  ;; move a buffer around through the window list, like a bubblesort.
+  (defun swap-windows () "Swap this window and the next one."
+    (interactive)
+    (if (one-window-p t)
+        (message "You eeediot!")
+      (save-excursion
+        (let
+            ((w1 (selected-window))
+             (b1 (current-buffer))
+             (w2)
+             (b2))
+          (other-window 1)
+          (setq w2 (selected-window))
+          (setq b2 (current-buffer))
+          (select-window w1)
+          (switch-to-buffer b2)
+          (select-window w2)
+          (switch-to-buffer b1)))))
+  ; C-c w is a user key.
+  (global-set-key "\C-cw" 'swap-windows)
+  (global-set-key "\C-cq" 'bury-buffer)
+
+  (defun bens-fix-tty-colors ()
+    "Fix the colors on the TTY."
+    (interactive)
+    (unless (display-graphic-p (selected-frame))
+      (set-face-background 'default "unspecified-bg" (selected-frame))))
+#+END_SRC
+
+* SSH and Mosh
+
+#+BEGIN_SRC emacs-lisp
+  (declare-function term-mode "term.el" nil)
+  (declare-function term-char-mode "term.el" nil)
+  (defun mosh (args)
+    "Connect to a remote host with mosh, prompting in minibuffer for ARGS."
+    (interactive
+     (list (read-from-minibuffer "mosh " nil nil nil 'my-mosh-history)))
+    (let* ((switches (split-string-and-unquote args))
+           (name (concat "mosh " args))
+           (termbuf (apply 'make-term name "/usr/local/bin/mosh" nil switches)))
+      (set-buffer termbuf)
+      (term-mode)
+      (term-char-mode)
+      (switch-to-buffer termbuf)))
+
+  (defun ssh (args)
+    "Connect to a remote host with ssh, prompting in minibuffer for ARGS."
+    (interactive
+     (list (read-from-minibuffer "ssh " nil nil nil 'my-ssh-history)))
+    (let* ((switches `("-A" . ,(split-string-and-unquote args)))
+           (name (concat "ssh " args))
+           (termbuf (apply 'make-term name "/usr/bin/ssh" nil switches)))
+      (set-buffer termbuf)
+      (term-mode)
+      (term-char-mode)
+      (switch-to-buffer termbuf)))
+#+END_SRC
+
+* Key Bindings
+
+#+BEGIN_SRC emacs-lisp
+  ;; Setup some key preferences.
+  (define-key ctl-x-map     "\C-b"     'buffer-menu)
+  (define-key ctl-x-map     "f"        'auto-fill-mode)
+  ;(define-key esc-map       "o"        'overwrite-mode)
+  (define-key ctl-x-map     "%"        'query-replace-regexp)
+  (define-key text-mode-map "\C-cf"    'fundamental-mode)
+  (global-set-key [end] 'end-of-line)
+  (global-set-key [home] 'beginning-of-line)
+  (global-set-key [C-end] 'end-of-buffer)
+  (global-set-key [C-home] 'beginning-of-buffer)
+  (global-set-key (kbd "C-<tab>") 'indent-rigidly)
+  (global-set-key "\^c\^k" 'compile)
+  (define-key ctl-x-map "t" 'toggle-truncate-lines)
+  (global-set-key [(f12)] 'toggle-truncate-lines)
+  (global-set-key [(meta down)] '(lambda (arg) (interactive "p") (scroll-up arg)))
+  (global-set-key [(meta up)] '(lambda (arg) (interactive "p") (scroll-down arg)))
+  (global-set-key [(super .)] 'speedbar-get-focus)
+  (global-set-key [(super s)] 'speedbar)
+  ;; Eno's Oblique Strategies.
+  (autoload 'os-insert "oblique" nil t)
+  ; C-c o is a user key.
+  (define-key text-mode-map "\C-co" 'os-insert)
+
+  (defun set-n-columns (n)
+    "Make the current frame N columns wide."
+    (interactive "p")
+    (if (= n 1) (setq n 80))
+    (modify-frame-parameters (selected-frame) (list (cons 'width n))))
+  (defun set-n-rows (n)
+    "Make the current frame N rows high."
+    (interactive "p")
+    (if (= n 1) (setq n 50))
+    (modify-frame-parameters (selected-frame) (list (cons 'height n))))
+
+  (define-key ctl-x-map "\C-n" 'set-n-columns)
+  (define-key ctl-x-map "\C-h" 'set-n-rows)
+  (add-to-list 'default-frame-alist '(width  . 101))
+  (add-to-list 'default-frame-alist '(height . 50))
+#+END_SRC
+
+* Postamble
+
+#+BEGIN_SRC emacs-lisp
+  ;;; emacs-config.org ends here
+#+END_SRC
+
+#+STARTUP: showall
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css" />
+#+PROPERTY: header-args :results silent

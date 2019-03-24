@@ -9,6 +9,7 @@
  ;; If there is more than one, they won't work right.
  '(blink-cursor-mode nil)
  '(column-number-mode t)
+ '(line-number-mode nil)
  '(custom-enabled-themes (quote (sanityinc-solarized-dark)))
  '(custom-safe-themes
    (quote
@@ -26,7 +27,7 @@
         (:foreground
          (\,
           (face-foreground
-           (quote eshell-ls-directory-face))))))
+           (quote eshell-ls-directory))))))
       (propertize "$ "
                   (quote face)
                   (\`
@@ -44,8 +45,6 @@
  '(inhibit-startup-screen t)
  '(initial-scratch-message nil)
  '(line-move-visual nil)
- '(line-number-mode t)
- '(menu-bar-mode t)
  '(minibuffer-max-depth nil)
  '(mouse-avoidance-mode (quote jump) nil (avoid))
  '(mouse-wheel-mode t)
@@ -72,15 +71,18 @@
  '(scroll-bar-mode nil)
  '(scroll-step 1)
  '(tool-bar-mode nil)
+ '(menu-bar-mode nil)
  '(vc-follow-symlinks t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(default ((t (:family "Fira Code" :foundry "outline" :slant normal :weight light :height 102 :width normal))))
+ '(italic ((t (:family "Source Code Pro" :foundry "outline" :slant oblique :weight normal :height 102 :width normal))))
  '(cursor ((t (:background "#ff0000"))))
  '(font-lock-builtin-face ((t (:foreground "#859900"))))
- '(font-lock-comment-face ((t (:foreground "#93a1a1" :italic t))))
+ '(font-lock-comment-face ((t (:foreground "#93a1a1" :italic t :family "Source Code Pro"))))
  '(font-lock-constant-face ((t (:foreground "#2aa198"))))
  '(font-lock-function-name-face ((t (:foreground "#268bd2"))))
  '(font-lock-keyword-face ((t (:foreground "#859900"))))
