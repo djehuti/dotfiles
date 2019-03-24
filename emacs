@@ -7,7 +7,7 @@
 ;;; Code:
 
 ;; Mode selection: 'home or 'work.
-(defvar bcox-emacs-mode 'home
+(defvar bcox-emacs-mode 'work
   "Sets whether we are setting up a home ('home) or work ('work) setup.")
 
 (defvar bcox-elisp-dir (expand-file-name ".elisp" "~")
