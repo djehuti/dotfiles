@@ -9,7 +9,7 @@ makes it appear at the top of the file when tangled.
 #+BEGIN_SRC emacs-lisp
   ;;; emacs-config.org --- Ben's Emacs Configuration
   ;;; Commentary:
-  ;;;    This file /is/ commentary.
+  ;;;    This file contains extensive commentary.
   ;;; Code:
 #+END_SRC
 
@@ -245,7 +245,7 @@ temp directories.
   (setq org-link-abbrev-alist
         '(("phab" . "https://aurora.phacility.com/%s")
           ("jira" . "https://jira.int.aurora.tech/browse/%s")
-          ("google"    . "http://www.google.com/search?q=")))
+          ("google" . "http://www.google.com/search?q=")))
 
   ;; Tags
   (setq org-tag-alist '(("BUG" . ?G)
@@ -260,7 +260,6 @@ temp directories.
   (global-set-key "\C-cl" (function org-store-link))
   (global-set-key "\C-c\C-l" (function org-insert-link))
   (global-set-key "\C-ca" (function org-agenda))
-  ;(global-set-key "\C-cb" (function org-iswitchb))
   (global-set-key "\C-cc" (function org-capture))
 
   (setq org-confirm-babel-evaluate nil)
