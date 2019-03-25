@@ -2,9 +2,7 @@
 
 * Preamble
 
-Flycheck wants all this stuff to appear at the beginning of an emacs-lisp
-file. I might as well indulge it. Having this as the first block in the file
-makes it appear at the top of the file when tangled.
+Flycheck wants all this stuff to appear at the beginning of an emacs-lisp file. I might as well indulge it. Having this as the first block in the file makes it appear at the top of the file when tangled.
 
 #+BEGIN_SRC emacs-lisp
   ;;; emacs-config.org --- Ben's Emacs Configuration
@@ -15,8 +13,7 @@ makes it appear at the top of the file when tangled.
 
 * Basic Emacs Options
 
-Set up some very basic Emacs behavior options: no startup message/screen, no
-initial contents in scratch buffer, don't beep, etc.
+Set up some very basic Emacs behavior options: no startup message/screen, no initial contents in scratch buffer, don't beep, etc.
 
 #+BEGIN_SRC emacs-lisp
   (setq inhibit-startup-message t
@@ -187,9 +184,7 @@ On Windows, I want to use the "Apps" key as Super.
 
 ** Making Backups
 
-Emacs likes to make backup files, in ~filename~~ files. This is fine, but inside
-a version-controlled (git) directory, it's overkill. Also in ~/tmp~ or other
-temp directories.
+Emacs likes to make backup files, in ~filename~~ files. This is fine, but inside a version-controlled (git) directory, it's overkill. Also in ~/tmp~ or other temp directories.
 
 #+BEGIN_SRC emacs-lisp
   ;; Determines whether a file is in a git repo.
@@ -227,56 +222,58 @@ temp directories.
 * Org Mode
 
 #+BEGIN_SRC emacs-lisp
-  ;; Org Mode
-  (require 'org)
-
-  ;; Org directory
-  (setq org-directory (concat bcox-dropbox-dir "/org"))
-  (setq org-default-notes-file (concat org-directory "/notes.org"))
-  (setq org-agenda-include-diary t)
-
-  ;; Diary/Agenda
-  (setq diary-file (concat org-directory "/diary")
-        org-agenda-files (list org-default-notes-file
-                               (concat org-directory "/work.org")
-                               (concat org-directory "/agenda.org")))
-
-  ;; Links
-  (setq org-link-abbrev-alist
-        '(("phab" . "https://aurora.phacility.com/%s")
-          ("jira" . "https://jira.int.aurora.tech/browse/%s")
-          ("google" . "http://www.google.com/search?q=")))
-
-  ;; Tags
-  (setq org-tag-alist '(("BUG" . ?G)
-                        (:startgroup . nil)
-                        ("Work" . ?W) ("Personal" . ?P) ("SPM" . ?S)
-                        (:endgroup . nil)))
-
-  ;; Drawers
-  (setq org-drawers '("PROPERTIES" "CLOCK" "LOGBOOK" "RESULTS" "NOTES"))
-
-  ;; Standard key bindings
-  (global-set-key "\C-cl" (function org-store-link))
-  (global-set-key "\C-c\C-l" (function org-insert-link))
-  (global-set-key "\C-ca" (function org-agenda))
-  (global-set-key "\C-cc" (function org-capture))
-
-  (setq org-confirm-babel-evaluate nil)
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((emacs-lisp . t)
-     (python . t)
-     (haskell . t)
-     (ditaa . t)
-     (plantuml . t)
-     (dot . t)
-     (js . t)))
-
-  (add-hook 'org-mode-hook
-            (lambda () (setq fill-column 78)))
-  (add-hook 'org-mode-hook
-            (lambda () (auto-fill-mode 1)))
+  (use-package org
+    :bind
+    ("C-c l" . org-store-link)
+    ("C-c C-l" . org-insert-link)
+    ("C-c a" . org-agenda)
+    ("C-c c" . org-capture)
+    ;; :custom
+    ;; (org-startup-indented t)
+    ;; (org-confirm-babel-evaluate nil)
+    ;; (org-src-fontify-natively t)
+    ;; (org-src-tab-acts-natively t)
+    ;; (org-hide-emphasis-markers t)
+    ;; :custom-face
+    ;; (variable-pitch ((t (:family "Sans Serif" :height 102 :weight light))))
+    ;; (fixed-pitch ((t (:family "Fira Code" :weight normal :height 102 :width normal))))
+    ;; (org-indent ((t (:inherit (org-hide fixed-pitch)))))
+    ;; (org-block ((t (:inherit fixed-pitch :background "#002028" :foreground unspecified))))
+    ;; :hook
+    ;; (org-babel-after-execute . org-redisplay-inline-images)
+    ;; (org-mode . visual-line-mode)
+    ;; (org-mode . variable-pitch-mode)
+    :config
+    (add-hook 'org-babel-after-execute-hook #'org-redisplay-inline-images)
+    (add-hook 'org-mode-hook #'visual-line-mode)
+    (add-hook 'org-mode-hook #'variable-pitch-mode)
+    ;; The above 3 lines should be put back in :hook when we get a suitable version of use-package.
+    (org-babel-do-load-languages
+     'org-babel-load-languages
+     '((emacs-lisp . t)
+       (python . t)
+       (haskell . t)
+       (ditaa . t)
+       (plantuml . t)
+       (dot . t)
+       (js . t)))
+    (setq org-directory (concat bcox-dropbox-dir "/org")
+          org-default-nodes-file (concat org-directory "/notes.org")
+          org-agenda-include-diary t
+          diary-file (concat org-directory "/diary")
+          org-agenda-files (list org-default-notes-file
+                                 (concat org-directory "/work.org")
+                                 (concat org-directory "/agenda.org"))
+          org-link-abbrev-alist '(("phab" . "https://aurora.phacility.com/%s")
+                                  ("jira" . "https://jira.int.aurora.tech/browse/%s")
+                                  ("google" . "http://www.google.com/search?q="))
+          org-tag-alist '(("BUG" . ?G)
+                          (:startgroup . nil)
+                          ("Work" . ?W) ("Personal" . ?P) ("SPM" . ?S)
+                          (:endgroup . nil))
+          org-drawers '("PROPERTIES" "CLOCK" "LOGBOOK" "RESULTS" "NOTES")
+    )
+  )
 #+END_SRC
 
 * Programming Mode Stuff
@@ -309,10 +306,7 @@ I like to highlight ~TODO~ comments in my code.
 
 ** Tabs and CR/LF line-endings
 
-You can use display tables to make certain characters display in different
-faces (or as different characters). I like to create a couple of extra faces
-and display ~TAB~ and ~CR~ (~\r~) characters specially, so they stand out while
-editing source code.
+You can use display tables to make certain characters display in different faces (or as different characters). I like to create a couple of extra faces and display ~TAB~ and ~CR~ (~\r~) characters specially, so they stand out while editing source code.
 
 #+BEGIN_SRC emacs-lisp
   ;; Display tab characters with an alternate background color, except in Go.
@@ -487,16 +481,11 @@ Some Lisp settings:
 
 ** Using Fira Code
 
-[[https://github.com/tonsky/FiraCode][Fira Code]] is a monospaced font with programming ligatures, which I like a fair
-bit.  Unfortunately setting up ligatures in Emacs is non-trivial (unlike in VS
-Code and CLion/IntelliJ, where you just check a box).
+[[https://github.com/tonsky/FiraCode][Fira Code]] is a monospaced font with programming ligatures, which I like a fair bit.  Unfortunately setting up ligatures in Emacs is non-trivial (unlike in VS Code and CLion/IntelliJ, where you just check a box).
 
-Unfortunately Emacs doesn't seem to be able to display /italics/ with Fira Code,
-so I also use Source Code Pro for italic faces (like for comments and such).
+Unfortunately Emacs doesn't seem to be able to display /italics/ with Fira Code, so I also use Source Code Pro for italic faces (like for comments and such).
 
-I used the
-[[https://github.com/tonsky/FiraCode/wiki/Emacs-instructions][instructions on this page]]
-to get this working.
+I used the [[https://github.com/tonsky/FiraCode/wiki/Emacs-instructions][instructions on this page]] to get this working.
 
 #+BEGIN_SRC emacs-lisp
   (defun fira-code-mode--make-alist (list)
@@ -583,7 +572,6 @@ to get this working.
           "http://tleaves.com/feed/"
           "https://www.schneier.com/blog/atom.xml"
           "http://www.djehuti.com/feed/"
-          "http://mutable-instruments.net/feed/"
           "https://www.theverge.com/rss/index.xml"
           "http://echoes.org/feed/"
           "http://mutable-states.com/feeds/all.rss.xml"
@@ -598,7 +586,6 @@ to get this working.
           "http://talkingpointsmemo.com/account/feed/edblog/UGFpiainqjaKsr3GV1Syd4qMuEiKwqyu93fjrzirr1Mr"
           "https://www.google.com/alerts/feeds/11915022077819374258/10775703982759143351"
           "http://daringfireball.net/index.xml"
-          "http://blog.longnow.org"
           "http://www.synthtopia.com/feed/"))
 #+END_SRC
 
