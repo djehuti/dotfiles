@@ -37,7 +37,7 @@
  '(eshell-prompt-regexp "^[^#$
 ]* ?[#$] ")
  '(flycheck-flake8-maximum-line-length 100)
- '(fringe-mode (quote (8 . 8)) nil (fringe))
+ '(fringe-mode (quote (12 . 12)) nil (fringe))
  '(goto-address-highlight-p t)
  '(icomplete-mode t nil (icomplete))
  '(indicate-buffer-boundaries (quote right))
@@ -53,6 +53,8 @@
  '(ns-command-modifier (quote meta))
  '(ns-right-command-modifier (quote super))
  '(org-src-fontify-natively t)
+ '(org-src-tab-acts-natively t)
+ '(org-hide-emphasis-markers t)
  '(package-selected-packages
    (quote
     (csound-mode slime go-mode bazel-mode json-mode markdown-mode ## yaml-mode rtags projectile php-mode magit flycheck flx-ido editorconfig company color-theme-sanityinc-solarized cmake-mode use-package)))
@@ -89,7 +91,10 @@
  '(font-lock-type-face ((t (:foreground "#b58900"))))
  '(font-lock-variable-name-face ((t (:foreground "#268bd2"))))
  '(font-lock-warning-face ((t (:foreground "#dc322f" :bold t))))
+ '(org-block ((t (:foreground unspecified :background "#002028"))))
  '(hl-line ((t (:background "#073642"))))
+ '(line-number ((t (:foreground "#586e75"))))
+ '(line-number-current-line ((t (:background "#586e75" :foreground "#002b36"))))
  '(isearch ((t (:background "#859900" :foreground "#fdf6e3"))))
  '(mode-line ((t (:background "#93a1a1" :foreground "#002b36"))))
  '(mode-line-inactive ((t (:background "#93a1a1" :foreground1 "#93a1a1"))))
