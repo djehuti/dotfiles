@@ -356,25 +356,20 @@ Emacs likes to make backup files, in ~filename~~ files. This is fine, but inside
 I like to highlight ~TODO~ comments in my code.
 
 #+BEGIN_SRC emacs-lisp
-  (font-lock-add-keywords 'c++-mode
-   '(
-     ("// *\\(TODO.*$\\)" 1 font-lock-warning-face prepend)
-     ("/\\* *\\(TODO.*$\\)" 1 font-lock-warning-face prepend)
-     ("/\\* *\\(TODO.*\\)\\*/" 1 font-lock-warning-face prepend)
-     )
-  )
-  (font-lock-add-keywords 'c-mode
-   '(
-     ("// *\\(TODO.*$\\)" 1 font-lock-warning-face prepend)
-     ("/\\* *\\(TODO.*$\\)" 1 font-lock-warning-face prepend)
-     ("/\\* *\\(TODO.*\\)\\*/" 1 font-lock-warning-face prepend)
-     )
-  )
+  (make-face 'bcox-todo-face)
+  (set-face-foreground 'bcox-todo-face "#cb4b16")
+  (font-lock-add-keywords 'c++-mode '(("// *\\(TODO.*$\\)" 1 'bcox-todo-face prepend)
+                                      ("/\\* *\\(TODO.*$\\)" 1 'bcox-todo-face prepend)
+                                      ("/\\* *\\(TODO.*\\)\\*/" 1 'bcox-todo-face prepend))
+                          'set)
+  (font-lock-add-keywords 'c-mode '(("// *\\(TODO.*$\\)" 1 'bcox-todo-face prepend)
+                                    ("/\\* *\\(TODO.*$\\)" 1 'bcox-todo-face prepend)
+                                    ("/\\* *\\(TODO.*\\)\\*/" 1 'bcox-todo-face prepend))
+                          'set)
   (font-lock-add-keywords 'python-mode
-   '(
-     ("# *\\(TODO.*$\\)" 1 font-lock-warning-face prepend)
-     )
-  )
+   '(("# *\\(TODO.*$\\)" 1 'bcox-todo-face prepend)))
+  (font-lock-add-keywords 'emacs-lisp-mode
+   '(("; *\\(TODO.*$\\)" 1 'bcox-todo-face prepend)))
 #+END_SRC
 
 ** Tabs and CR/LF line-endings
