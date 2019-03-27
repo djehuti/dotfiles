@@ -61,6 +61,11 @@ On Windows, I want to use the "Apps" key as Super.
         (setq w32-apps-modifier 'super)))
 #+END_SRC
 
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'default-frame-alist '(width  . 108))
+  (add-to-list 'default-frame-alist '(height .  50))
+#+END_SRC
+
 ** Miscellaneous packages and prefs
 
 #+BEGIN_SRC emacs-lisp
@@ -208,7 +213,7 @@ On Windows, I want to use the "Apps" key as Super.
       :config
       (company-ycmd-setup))
 
-    ;; TODO: remove in favor of ycm jedi completion
+    ;; TODO(bcox): remove in favor of ycm jedi completion
     (use-package company-jedi
       :if bcox-use-jedi
       :config
@@ -294,7 +299,7 @@ Emacs likes to make backup files, in ~filename~~ files. This is fine, but inside
        (dot . t)
        (js . t)))
     (setq org-directory (concat bcox-dropbox-dir "/org")
-          org-default-nodes-file (concat org-directory "/notes.org")
+          org-default-notes-file (concat org-directory "/notes.org")
           org-agenda-include-diary t
           diary-file (concat org-directory "/diary")
           org-agenda-files (list org-default-notes-file
@@ -716,6 +721,7 @@ I used the [[https://github.com/tonsky/FiraCode/wiki/Emacs-instructions][instruc
     "Connect to a remote host with mosh, prompting in minibuffer for ARGS."
     (interactive
      (list (read-from-minibuffer "mosh " nil nil nil 'my-mosh-history)))
+    ;; TODO(bcox): Make this work on Windows too.
     (let* ((switches (split-string-and-unquote args))
            (name (concat "mosh " args))
            (termbuf (apply 'make-term name "/usr/local/bin/mosh" nil switches)))
@@ -728,6 +734,7 @@ I used the [[https://github.com/tonsky/FiraCode/wiki/Emacs-instructions][instruc
     "Connect to a remote host with ssh, prompting in minibuffer for ARGS."
     (interactive
      (list (read-from-minibuffer "ssh " nil nil nil 'my-ssh-history)))
+    ;; TODO(bcox): Make this work on Windows too.
     (let* ((switches `("-A" . ,(split-string-and-unquote args)))
            (name (concat "ssh " args))
            (termbuf (apply 'make-term name "/usr/bin/ssh" nil switches)))
@@ -739,6 +746,8 @@ I used the [[https://github.com/tonsky/FiraCode/wiki/Emacs-instructions][instruc
 
 * Key Bindings
 
+If I start hitting a key sequence and pause, this gives me a little hint window about what things I could type next. Handy!
+
 #+BEGIN_SRC emacs-lisp
   (use-package which-key
     :defer nil
@@ -747,30 +756,53 @@ I used the [[https://github.com/tonsky/FiraCode/wiki/Emacs-instructions][instruc
     (which-key-mode))
 #+END_SRC
 
+Some random key preferences.
+
 #+BEGIN_SRC emacs-lisp
-  ;; Setup some key preferences.
-  (define-key ctl-x-map     "\C-b"     'ibuffer)
-  (define-key ctl-x-map     "f"        'auto-fill-mode)
-  ;(define-key esc-map       "o"        'overwrite-mode)
-  (define-key ctl-x-map     "%"        'query-replace-regexp)
-  (define-key text-mode-map "\C-cf"    'fundamental-mode)
-  (global-set-key [end] 'end-of-line)
-  (global-set-key [home] 'beginning-of-line)
-  (global-set-key [C-end] 'end-of-buffer)
-  (global-set-key [C-home] 'beginning-of-buffer)
-  (global-set-key (kbd "C-<tab>") 'indent-rigidly)
-  (global-set-key "\^c\^k" 'compile)
-  (define-key ctl-x-map "t" 'toggle-truncate-lines)
-  (global-set-key [(f12)] 'toggle-truncate-lines)
-  (global-set-key [(meta down)] '(lambda (arg) (interactive "p") (scroll-up arg)))
-  (global-set-key [(meta up)] '(lambda (arg) (interactive "p") (scroll-down arg)))
-  (global-set-key [(super .)] 'speedbar-get-focus)
-  (global-set-key [(super s)] 'speedbar)
+  (bind-keys*
+    ("C-x C-b" . ibuffer)
+    ("C-x f" . auto-fill-mode)
+    ;; ("M-o" . overwrite-mode)
+    ("C-x %" . query-replace-regexp)
+    ("<delete>" . delete-char)
+    ("<end>" . end-of-line)
+    ("<home>" . beginning-of-line)
+    ("<C-end>" . end-of-buffer)
+    ("<C-home>" . beginning-of-buffer)
+    ("<C-M-left>" . pop-global-mark)
+    ("<M-down>" . (lambda (arg) (interactive "p") (scroll-up arg)))
+    ("<M-up>" . (lambda (arg) (interactive "p") (scroll-down arg)))
+    ("<C-tab>" . indent-rigidly)
+    ("C-c C-k" . compile)
+    ("<f3>" . 'isearch-repeat-forward)
+    ("<S-f3>" . 'isearch-repeat-backward)
+    ("<C-f4>" . delete-frame)
+    ("<f5>" . compile)
+    ("<S-f5>" . recompile)
+    ("<f6>" . make-frame-command)
+    ("<S-f6>" . delete-frame)
+    ("<f7>" . next-error)
+    ("<S-f7>" . previous-error)
+    ("<f9>" . speedbar-get-focus)
+    ("s-." . speedbar-get-focus)
+    ("s-s" . speedbar)
+    ("C-x t" . toggle-truncate-lines)
+    ("C-x g" . magit-status))
+  (bind-keys :map text-mode-map
+    ("C-c f" . fundamental-mode))
+#+END_SRC
+
+Put Oblique Strategies on ~C-c o~:
+
+#+BEGIN_SRC emacs-lisp
   ;; Eno's Oblique Strategies.
   (autoload 'os-insert "oblique" nil t)
   ; C-c o is a user key.
-  (define-key text-mode-map "\C-co" 'os-insert)
+  (bind-keys :map text-mode-map ("C-c o" . os-insert))
+#+END_SRC
 
+#+BEGIN_SRC emacs-lisp
+  ;; Setup some key preferences.
   (defun set-n-columns (n)
     "Make the current frame N columns wide."
     (interactive "p")
@@ -784,12 +816,9 @@ I used the [[https://github.com/tonsky/FiraCode/wiki/Emacs-instructions][instruc
 
   (define-key ctl-x-map "\C-n" 'set-n-columns)
   (define-key ctl-x-map "\C-h" 'set-n-rows)
-  (add-to-list 'default-frame-alist '(width  . 101))
-  (add-to-list 'default-frame-alist '(height . 50))
-  (global-set-key (kbd "C-x g") 'magit-status)
 #+END_SRC
 
-* Postamble
+* Epilogue
 
 #+BEGIN_SRC emacs-lisp
   ;;; emacs-config.org ends here

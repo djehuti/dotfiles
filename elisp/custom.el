@@ -38,10 +38,20 @@
  '(flycheck-flake8-maximum-line-length 100)
  '(fringe-mode (quote (12 . 12)) nil (fringe))
  '(goto-address-highlight-p t)
- '(ibuffer-saved-filter-groups nil)
+ '(ibuffer-saved-filter-groups
+   (quote
+    (("work"
+      ("AV"
+       (saved . "AV"))
+      ("Dotfiles"
+       (filename . "/dotfiles/"))
+      ("Dropbox"
+       (saved . "Dropbox"))))))
  '(ibuffer-saved-filters
    (quote
-    (("Dropbox"
+    (("AV"
+      (filename . "src/av"))
+     ("Dropbox"
       (filename . ".*/Dropbox/"))
      ("programming"
       (or
@@ -97,6 +107,7 @@
  '(org-src-fontify-natively t)
  '(org-src-tab-acts-natively t)
  '(org-startup-indented t)
+ '(org-tags-column 0)
  '(package-archives
    (quote
     (("melpa-stable" . "http://stable.melpa.org/packages/")
@@ -145,19 +156,16 @@
  '(mode-line-buffer-id ((t (:inherit mode-line :foreground "#002b36" :weight bold))))
  '(mode-line-inactive ((t (:background "#93a1a1" :foreground1 "#93a1a1"))))
  '(org-block ((t (:inherit fixed-pitch :background "#002028" :foreground unspecified))))
- '(org-document-title ((t (:inherit default :weight bold :foreground "SystemWindowText" :font "Source Sans Pro" :height 1.5 :underline nil))))
+ '(org-document-title ((t (:inherit default :weight bold :foreground "#839496" :font "Source Sans Pro" :height 1.5 :underline nil))))
  '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
- '(org-level-1 ((t (:inherit default :weight bold :foreground "SystemWindowText" :font "Source Sans Pro" :height 1.3))))
- '(org-level-2 ((t (:inherit default :weight bold :foreground "SystemWindowText" :font "Source Sans Pro" :height 1.2))))
- '(org-level-3 ((t (:inherit default :weight bold :foreground "SystemWindowText" :font "Source Sans Pro" :height 1.1))))
- '(org-level-4 ((t (:inherit default :weight bold :foreground "SystemWindowText" :font "Source Sans Pro"))))
- '(org-level-5 ((t (:inherit default :weight bold :foreground "SystemWindowText" :font "Source Sans Pro"))))
- '(org-level-6 ((t (:inherit default :weight bold :foreground "SystemWindowText" :font "Source Sans Pro"))))
- '(org-level-7 ((t (:inherit default :weight bold :foreground "SystemWindowText" :font "Source Sans Pro"))))
- '(org-level-8 ((t (:inherit default :weight bold :foreground "SystemWindowText" :font "Source Sans Pro"))))
- '(region ((t (:background "#ddddcc"))))
- '(trailing-whitespace ((t (:background "#ccd8ff"))))
- '(variable-pitch ((t (:family "Source Sans Pro" :height 102 :weight light))))
- '(vertical-border ((t (:background "#aaaa99" :foreground "#aaaa99")))))
+ '(org-level-1 ((t (:inherit default :weight bold :foreground "#839496" :font "Source Sans Pro" :height 1.3))))
+ '(org-level-2 ((t (:inherit default :weight bold :foreground "#839496" :font "Source Sans Pro" :height 1.2))))
+ '(org-level-3 ((t (:inherit default :weight bold :foreground "#839496" :font "Source Sans Pro" :height 1.1))))
+ '(org-level-4 ((t (:inherit default :weight bold :foreground "#839496" :font "Source Sans Pro"))))
+ '(org-level-5 ((t (:inherit default :weight bold :foreground "#839496" :font "Source Sans Pro"))))
+ '(org-level-6 ((t (:inherit default :weight bold :foreground "#839496" :font "Source Sans Pro"))))
+ '(org-level-7 ((t (:inherit default :weight bold :foreground "#839496" :font "Source Sans Pro"))))
+ '(org-level-8 ((t (:inherit default :weight bold :foreground "#839496" :font "Source Sans Pro"))))
+ '(variable-pitch ((t (:family "Source Sans Pro" :height 120 :weight normal)))))
 
 ;;; custom.el ends here

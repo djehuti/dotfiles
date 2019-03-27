@@ -1,9 +1,10 @@
 #!/bin/bash
 
+EMACS_DIR=/data/emacs
 TTYSWITCH=""
 
 if [ -z "${DISPLAY}" ]; then
     TTYSWITCH="-t"
 fi
 
-/usr/bin/emacsclient -c ${TTYSWITCH} -a "" "$@"
+${EMACS_DIR}/bin/emacsclient -c ${TTYSWITCH} -a "" "$@"
