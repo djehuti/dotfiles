@@ -150,7 +150,7 @@
  '(hl-line ((t (:background "#073642"))))
  '(isearch ((t (:background "#859900" :foreground "#fdf6e3"))))
  '(italic ((t (:family "Source Code Variable" :foundry "outline" :slant oblique :weight normal :height 102 :width normal))))
- '(line-number ((t (:foreground "#586e75"))))
+ '(line-number ((t (:foreground "#586e75") :background "#073642")))
  '(line-number-current-line ((t (:background "#586e75" :foreground "#002b36"))))
  '(mode-line ((t (:background "#93a1a1" :foreground "#002b36"))))
  '(mode-line-buffer-id ((t (:inherit mode-line :foreground "#002b36" :weight bold))))
