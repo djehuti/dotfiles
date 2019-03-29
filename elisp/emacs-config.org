@@ -19,7 +19,24 @@ Set up some very basic Emacs behavior options: no startup message/screen, no ini
   (setq inhibit-startup-message t
         inhibit-startup-screen t
         initial-scratch-message nil
-        ring-bell-function 'ignore)
+        ring-bell-function 'ignore
+        column-number-mode t
+        line-number-mode nil
+        scroll-conservatively 500
+        enable-recursive-minibuffers t
+        minibuffer-max-depth nil
+        goto-address-highlight-p t
+        next-line-add-newlines nil
+        normal-erase-is-backspace nil
+        custom-safe-themes t
+        vc-follow-symlinks t)
+
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)
+  (blink-cursor-mode -1)
+  (set-scroll-bar-mode nil)
+
+  (setq-default line-move-visual nil)
 
   (put 'eval-expression 'disabled nil)
   (put 'narrow-to-region 'disabled nil)
@@ -27,6 +44,7 @@ Set up some very basic Emacs behavior options: no startup message/screen, no ini
 
   (winner-mode t)
   (show-paren-mode)
+  (delete-selection-mode)
 
   (set-language-environment "UTF-8")
   (prefer-coding-system 'utf-8)
@@ -112,6 +130,12 @@ On Windows, I want to use the "Apps" key as Super.
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
+  (use-package color-theme-sanityinc-solarized
+  :config
+  (load-theme 'sanityinc-solarized-dark))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
   (use-package editorconfig
     :diminish
     (editorconfig-mode . "")
@@ -126,9 +150,9 @@ On Windows, I want to use the "Apps" key as Super.
     ("C-c p" . 'projectile-command-map)
     :config
     (projectile-register-project-type 'bazel '("WORKSPACE")
-                                      "bazel build //placeholder:target"
-                                      "bazel test //placeholder:target"
-                                      "bazel run //placeholder:target")
+                                      :compile "bazel build //placeholder:target"
+                                      :test "bazel test //placeholder:target"
+                                      :run "bazel run //placeholder:target")
     (projectile-global-mode))
 #+END_SRC
 
@@ -140,6 +164,8 @@ On Windows, I want to use the "Apps" key as Super.
 
 #+BEGIN_SRC emacs-lisp
   (use-package hl-line
+    :custom-face
+    (hl-line ((t (:background "#073642"))))
     :config
     (global-hl-line-mode 1))
 #+END_SRC
@@ -148,6 +174,7 @@ On Windows, I want to use the "Apps" key as Super.
   (define-globalized-minor-mode my-global-goto-address-mode goto-address-mode
     (lambda () (goto-address-mode 1)))
   (my-global-goto-address-mode 1)
+  (setq goto-address-highlight-p t)
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -180,6 +207,7 @@ On Windows, I want to use the "Apps" key as Super.
   ;; flycheck stuff
   (use-package flycheck
     :config
+    (setq flycheck-flake8-maximum-line-length 100)
     (global-flycheck-mode)
     (add-hook 'c++-mode-hook
               (lambda ()
@@ -268,81 +296,91 @@ Emacs likes to make backup files, in ~filename~~ files. This is fine, but inside
                  (t))))
 #+END_SRC
 
+** Customizations
+
+Load my customizations. This needs to come before the Org section below, because it sets up some face stuff that the Org stuff depends on. But it needs to happen after the color theme is loaded, up above.
+
+#+BEGIN_SRC emacs-lisp
+(setq custom-file (expand-file-name "custom.el" bcox-elisp-dir))
+(load-file custom-file)
+#+END_SRC
+
 * Org Mode
 
 #+BEGIN_SRC emacs-lisp
   (use-package org
     :bind
-    ("C-c l" . org-store-link)
-    ("C-c C-l" . org-insert-link)
-    ("C-c a" . org-agenda)
-    ("C-c c" . org-capture)
-    :custom
-    (org-startup-indented t)
-    (org-confirm-babel-evaluate nil)
-    (org-src-fontify-natively t)
-    (org-src-tab-acts-natively t)
-    (org-hide-emphasis-markers t)
-    (org-tags-column 0)
-    :custom-face
-    (variable-pitch ((t (:family "Source Sans Pro" :height 102 :weight light))))
-    (fixed-pitch ((t (:family "Fira Code" :weight normal :height 102 :width normal))))
-    (org-indent ((t (:inherit (org-hide fixed-pitch)))))
-    (org-block ((t (:inherit fixed-pitch :background "#002028" :foreground unspecified))))
-    :hook
-    (org-babel-after-execute . org-redisplay-inline-images)
-    (org-mode . visual-line-mode)
-    (org-mode . variable-pitch-mode)
-    :config
-    (org-babel-do-load-languages
-     'org-babel-load-languages
-     '((emacs-lisp . t)
-       (python . t)
-       (haskell . t)
-       (ditaa . t)
-       (shell . t)
-       (plantuml . t)
-       (dot . t)
-       (js . t)))
-    (setq org-directory (concat bcox-dropbox-dir "/org")
-          org-default-notes-file (concat org-directory "/notes.org")
-          org-agenda-include-diary t
-          diary-file (concat org-directory "/diary")
-          org-agenda-files (list org-default-notes-file
-                                 (concat org-directory "/work.org")
-                                 (concat org-directory "/agenda.org"))
-          org-link-abbrev-alist '(("phab" . "https://aurora.phacility.com/%s")
-                                  ("jira" . "https://jira.int.aurora.tech/browse/%s")
-                                  ("google" . "http://www.google.com/search?q="))
-          org-tag-alist '(("BUG" . ?G)
-                          (:startgroup . nil)
-                          ("Work" . ?W) ("Personal" . ?P) ("SPM" . ?S)
-                          (:endgroup . nil))
-          org-drawers '("PROPERTIES" "CLOCK" "LOGBOOK" "RESULTS" "NOTES"))
-    (let* ((variable-tuple '(:font "Source Sans Pro"))
-            ;; (cond ((x-list-fonts   "Source Sans Pro") '(:font   "Source Sans Pro"))
-            ;;       ((x-list-fonts   "Lucida Grande")   '(:font   "Lucida Grande"))
-            ;;       ((x-list-fonts   "Verdana")         '(:font   "Verdana"))
-            ;;       ((x-family-fonts "Sans Serif")      '(:family "Sans Serif"))
-            ;;       (nil (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))))
-           (base-font-color (face-foreground 'default nil 'default))
-           (lilheadline    `(:inherit default :weight normal :foreground ,base-font-color))
-           (medheadline    `(:inherit default :weight semi-bold :foreground ,base-font-color))
-           (bigheadline    `(:inherit default :weight bold :foreground ,base-font-color)))
-      (custom-theme-set-faces
-       'user
-       `(org-level-8        ((t (,@lilheadline ,@variable-tuple))))
-       `(org-level-7        ((t (,@lilheadline ,@variable-tuple))))
-       `(org-level-6        ((t (,@lilheadline ,@variable-tuple))))
-       `(org-level-5        ((t (,@lilheadline ,@variable-tuple))))
-       `(org-level-4        ((t (,@lilheadline ,@variable-tuple))))
-       `(org-level-3        ((t (,@medheadline ,@variable-tuple))))
-       `(org-level-2        ((t (,@medheadline ,@variable-tuple :height 1.1))))
-       `(org-level-1        ((t (,@medheadline ,@variable-tuple :height 1.2))))
-       `(org-document-title ((t (,@bigheadline ,@variable-tuple :height 1.3 :underline nil))))))
-    (eval-after-load 'face-remap '(diminish 'buffer-face-mode))
-    (eval-after-load 'simple '(diminish 'visual-line-mode))
-  )
+     ("C-c l" . org-store-link)
+     ("C-c C-l" . org-insert-link)
+     ("C-c a" . org-agenda)
+     ("C-c c" . org-capture)
+     :custom
+     (org-startup-indented t)
+     (org-confirm-babel-evaluate nil)
+     (org-src-fontify-natively t)
+     (org-src-tab-acts-natively t)
+     (org-hide-emphasis-markers t)
+     (org-tags-column 0)
+     (org-special-ctrl-a/e t)
+     :custom-face
+     (variable-pitch ((t (:family "Source Sans Pro" :height 120 :weight normal))))
+     (fixed-pitch ((t (:family "Fira Code" :weight normal :height 102 :width normal))))
+     (org-indent ((t (:inherit (org-hide fixed-pitch)))))
+     (org-block ((t (:inherit fixed-pitch :background "#002028" :foreground unspecified))))
+     :hook
+     (org-babel-after-execute . org-redisplay-inline-images)
+     (org-mode . visual-line-mode)
+     (org-mode . variable-pitch-mode)
+     :config
+     (org-babel-do-load-languages
+      'org-babel-load-languages
+      '((emacs-lisp . t)
+        (python . t)
+        (haskell . t)
+        (ditaa . t)
+        (shell . t)
+        (plantuml . t)
+        (dot . t)
+        (js . t)))
+     (setq org-directory (concat bcox-dropbox-dir "/org")
+           org-default-notes-file (concat org-directory "/notes.org")
+           org-agenda-include-diary t
+           diary-file (concat org-directory "/diary")
+           org-agenda-files (list org-default-notes-file
+                                  (concat org-directory "/work.org")
+                                  (concat org-directory "/agenda.org"))
+           org-link-abbrev-alist '(("phab" . "https://aurora.phacility.com/%s")
+                                   ("jira" . "https://jira.int.aurora.tech/browse/%s")
+                                   ("google" . "http://www.google.com/search?q="))
+           org-tag-alist '(("BUG" . ?G)
+                           (:startgroup . nil)
+                           ("Work" . ?W) ("Personal" . ?P) ("SPM" . ?S)
+                           (:endgroup . nil))
+           org-drawers '("PROPERTIES" "CLOCK" "LOGBOOK" "RESULTS" "NOTES"))
+     (let* ((variable-tuple '(:font "Source Sans Pro"))
+            (base-font-color (face-foreground 'default nil 'default))
+            (lilheadline    `(:inherit default :weight normal :foreground ,base-font-color))
+            (medheadline    `(:inherit default :weight semi-bold :foreground ,base-font-color))
+            (bigheadline    `(:inherit default :weight bold :foreground ,base-font-color)))
+       (custom-theme-set-faces
+        'user
+        `(org-level-8        ((t (,@lilheadline ,@variable-tuple))) t)
+        `(org-level-7        ((t (,@lilheadline ,@variable-tuple))) t)
+        `(org-level-6        ((t (,@lilheadline ,@variable-tuple))) t)
+        `(org-level-5        ((t (,@lilheadline ,@variable-tuple))) t)
+        `(org-level-4        ((t (,@lilheadline ,@variable-tuple))) t)
+        `(org-level-3        ((t (,@medheadline ,@variable-tuple))) t)
+        `(org-level-2        ((t (,@medheadline ,@variable-tuple :height 1.1))) t)
+        `(org-level-1        ((t (,@medheadline ,@variable-tuple :height 1.2))) t)
+        `(org-document-title ((t (,@bigheadline ,@variable-tuple :height 1.3 :underline nil))) t)
+        '(org-block ((t (:inherit fixed-pitch :background "#002028" :foreground unspecified))) t)
+        '(org-table ((t (:inherit fixed-pitch :background "#002028"))) t)
+        '(org-code ((t (:inherit fixed-pitch :foreground unspecified))) t)
+        '(org-tag ((t (:foreground "#268bd2"))) t)
+        '(org-indent ((t (:inherit (org-hide fixed-pitch)))) t)
+        ))
+     (eval-after-load 'face-remap '(diminish 'buffer-face-mode))
+     (eval-after-load 'simple '(diminish 'visual-line-mode)))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -453,12 +491,18 @@ You can use display tables to make certain characters display in different faces
   (add-hook 'lisp-interaction-mode-hook
             '(lambda ()
                (setq c-tab-always-indent nil)))
+  (setq rst-indent-comment 4
+        rst-indent-field 4
+        rst-indent-literal-minimized 4
+        rst-indent-literal-normal 4
+        rst-indent-width 4)
   (add-hook 'rst-mode-hook
             '(lambda ()
                (setq indent-tabs-mode nil)))
   (add-hook 'go-mode-hook
             '(lambda ()
                (setq tab-width 4
+                     indent-tabs-mode t
                      buffer-display-table go-display-table)))
 #+END_SRC
 
@@ -776,6 +820,7 @@ Some random key preferences.
     ("C-x f" . auto-fill-mode)
     ;; ("M-o" . overwrite-mode)
     ("C-x %" . query-replace-regexp)
+    ("C-z" . undo)
     ("<delete>" . delete-char)
     ("<end>" . end-of-line)
     ("<home>" . beginning-of-line)
