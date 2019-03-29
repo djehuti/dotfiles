@@ -14,9 +14,7 @@
   "The directory where my custom elisp files live.")
 
 (add-to-list 'load-path bcox-elisp-dir)
-(setq custom-file (expand-file-name "custom.el" bcox-elisp-dir))
 (org-babel-load-file (expand-file-name "emacs-config.org" bcox-elisp-dir))
-(load-file custom-file)
 
 ;;; emacs ends here
 
