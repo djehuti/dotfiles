@@ -333,6 +333,8 @@ Load my customizations. This needs to come before the Org section below, because
      (org-hide-emphasis-markers t)
      (org-tags-column 0)
      (org-special-ctrl-a/e t)
+     (org-agenda-sticky t)
+     (org-agenda-todo-ignore-scheduled 'future)
      :custom-face
      (variable-pitch ((t (:family "Source Sans Pro" :height 120 :weight normal))))
      (fixed-pitch ((t (:family "Fira Code" :weight normal :height 102 :width normal))))
@@ -858,6 +860,11 @@ Some random key preferences.
     ("C-x g" . magit-status))
   (bind-keys :map text-mode-map
     ("C-c f" . fundamental-mode))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (when (fboundp 'windmove-default-keybindings)
+    (windmove-default-keybindings))
 #+END_SRC
 
 Put Oblique Strategies on ~C-c o~:
