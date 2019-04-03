@@ -20,6 +20,7 @@ Set up some very basic Emacs behavior options: no startup message/screen, no ini
         inhibit-startup-screen t
         initial-scratch-message nil
         ring-bell-function 'ignore
+        use-dialog-box nil
         column-number-mode t
         line-number-mode nil
         scroll-conservatively 500
@@ -68,6 +69,16 @@ This section sets up my personal info for sending mail and such.
             smtpmail-mail-server "smtp.fastmail.com")
     (setq user-mail-address "bcox@aurora.tech"
           smtpmail-mail-server "smtp.gmail.com"))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (setq gnus-select-method '(nnnil "")
+        gnus-secondary-select-methods
+        '((nntp "news.gmane.org")
+          (nnimap "imap.gmail.com"
+                  (nnimap-authinfo-file "~/.authinfo.gpg"))
+          (nnimap "imap.fastmail.com"
+                  (nnimap-authinfo-file "~/.authinfo.gpg"))))
 #+END_SRC
 
 On Windows, I want to use the "Apps" key as Super.
