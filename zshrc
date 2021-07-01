@@ -16,7 +16,7 @@ if [ "`uname`" = "Darwin" ]; then
     alias run='open -a'
 fi
 
-cdpath=( ${HOME} ${HOME}/src ${HOME}/Vagrants ${HOME}/Vagrants/UATC /vagrant /vagrant/src ${HOME}/Dropbox/src )
+cdpath=( ${HOME} ${HOME}/src ${HOME}/projects ${HOME}/projects/siri ${HOME}/projects/siri/platform )
 
 PS1='%F{green}%!%f %B%F{blue}%1~%#%f%b '
 
