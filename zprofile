@@ -60,13 +60,6 @@ pathmunge /usr/X11R6/bin after
 
 unset LS_COLORS
 
-if [ $MANPATH ]; then
-    MANPATH=$MANPATH:/usr/local/man:/opt/local/share/man
-else
-    MANPATH=/usr/share/man:/usr/bin/man:/usr/local/man:/usr/local/share/man
-fi
-export MANPATH
-
 if [ -f ${HOME}/.ansible_hosts ]; then
     export ANSIBLE_INVENTORY=${HOME}/.ansible_hosts
 fi
