@@ -26,4 +26,3 @@ if [ -d ${HOME}/.zinit.d/ ]; then
     done
     unset f
 fi
-

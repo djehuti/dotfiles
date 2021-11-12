@@ -1,11 +1,11 @@
 [user]
 	name = Ben Cox
-	email = cox@djehuti.com
+	email = bcox@apple.com
 [color]
 	ui = auto
 [core]
-	excludesfile = /home/bcox/.gitignore
-	editor = /home/bcox/bin/editor
+	excludesfile = /Users/bcox/.gitignore
+	editor = /Users/bcox/bin/editor
 [mergetool "meld"]
     cmd = meld \"$LOCAL\" \"$MERGED\" \"$REMOTE\" --output \"$MERGED\"
     #cmd = meld \"$LOCAL\" \"$BASE\" \"$REMOTE\" --output \"$MERGED\"
@@ -13,7 +13,7 @@
 	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
 	trustexitcode = true
 [merge]
-	tool = meld
+	tool = Kaleidoscope
 	conflictstyle = diff3
 [difftool "meld"]
     cmd = meld \"$LOCAL\" \"$REMOTE\"
@@ -24,7 +24,7 @@
 [mergetool]
 	prompt = false
 [diff]
-	tool = meld
+	tool = Kaleidoscope
 [push]
 	default = simple
 [fetch]
@@ -34,3 +34,12 @@
 [rerere]
 	enabled = 1
 
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+[pull]
+	rebase = true
+[init]
+	defaultBranch = main
