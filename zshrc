@@ -9,14 +9,14 @@ alias j=jobs
 alias siri="sudo"
 alias tags="tools/actions/generate_compile_commands_json.py"
 
-eval $(dircolors ~/.dircolors)
+[[ -d /opt/brew/share/zsh/site-functions/ ]] && fpath+=(/opt/brew/share/zsh/site-functions/)
 
 if [ "`uname`" = "Darwin" ]; then
-    compctl -f -x 'p[2]' -s "`/bin/ls -d1 /Applications/*/*.app /Applications/*.app | sed 's|^.*/\([^/]*\)\.app.*|\\1|;s/ /\\\\ /g'`" -- open
+    compctl -f -x 'p[2]' -s "`/bin/ls -d1 /Applications/*.app | sed 's|^.*/\([^/]*\)\.app.*|\\1|;s/ /\\\\ /g'`" -- open
     alias run='open -a'
 fi
 
-cdpath=( ${HOME} ${HOME}/src ${HOME}/Vagrants ${HOME}/Vagrants/UATC /vagrant /vagrant/src ${HOME}/Dropbox/src )
+cdpath=( ${HOME} ${HOME}/src ${HOME}/projects ${HOME}/projects/siri ${HOME}/projects/siri/platform )
 
 PS1='%F{green}%!%f %B%F{blue}%1~%#%f%b '
 
@@ -26,4 +26,3 @@ if [ -d ${HOME}/.zinit.d/ ]; then
     done
     unset f
 fi
-
