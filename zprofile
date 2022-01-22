@@ -58,6 +58,11 @@ pathmunge /usr/local/bin after
 pathmunge /opt/local/bin after
 pathmunge /usr/X11R6/bin after
 
+HOMEBREW_DIR="/opt/homebrew"
+if [ -d "${HOMEBREW_DIR}" ]; then
+    eval "$(${HOMEBREW_DIR}/bin/brew shellenv)"
+fi
+
 unset LS_COLORS
 
 if [ $MANPATH ]; then
