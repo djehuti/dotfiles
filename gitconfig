@@ -4,7 +4,7 @@
 [color]
 	ui = auto
 [core]
-	excludesfile = /Users/bcox/.gitignore
+	excludesfile = /Users/bcox/.gitignore.global
 	editor = /Users/bcox/bin/editor
 [mergetool "meld"]
     cmd = meld \"$LOCAL\" \"$MERGED\" \"$REMOTE\" --output \"$MERGED\"

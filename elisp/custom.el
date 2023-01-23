@@ -77,7 +77,7 @@
    '(("melpa-stable" . "http://stable.melpa.org/packages/")
      ("melpa" . "http://melpa.org/packages/")))
  '(package-selected-packages
-   '(swift-mode org-gcal ag org-bullets which-key csound-mode bazel-mode json-mode markdown-mode ## yaml-mode rtags projectile php-mode magit flx-ido editorconfig color-theme-sanityinc-solarized cmake-mode use-package))
+   '(haskell-mode swift-mode org-gcal ag org-bullets which-key csound-mode bazel-mode json-mode markdown-mode ## yaml-mode rtags projectile php-mode magit flx-ido editorconfig color-theme-sanityinc-solarized cmake-mode use-package))
  '(partial-completion-mode nil)
  '(safe-local-variable-values
    '((flycheck-clang-language-standard "c++11")
@@ -101,7 +101,7 @@
  '(font-lock-variable-name-face ((t (:foreground "#268bd2"))))
  '(font-lock-warning-face ((t (:foreground "#dc322f" :bold t))))
  '(header-line ((t (:foreground "#073642" :weight bold))))
- '(hl-line ((t (:background "#eee8d5"))))
+ '(hl-line ((t (:background "#073642"))))
  '(isearch ((t (:background "#859900" :foreground "#fdf6e3"))))
  '(italic ((t (:family "Source Code Variable" :foundry "outline" :slant oblique :weight normal :height 140 :width normal))))
  '(line-number ((t (:foreground "#839496" :background "#eee8d5"))))

@@ -75,3 +75,13 @@ export MANPATH
 if [ -f ${HOME}/.ansible_hosts ]; then
     export ANSIBLE_INVENTORY=${HOME}/.ansible_hosts
 fi
+
+
+# Added by Toolbox App
+export PATH="$PATH:/Users/bcox/Library/Application Support/JetBrains/Toolbox/scripts"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/bcox/Library/Mobile Documents/com~apple~CloudDocs/src/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/bcox/Library/Mobile Documents/com~apple~CloudDocs/src/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/bcox/Library/Mobile Documents/com~apple~CloudDocs/src/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/bcox/Library/Mobile Documents/com~apple~CloudDocs/src/google-cloud-sdk/completion.zsh.inc'; fi
