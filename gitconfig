@@ -3,6 +3,7 @@
 	email = bcox@apple.com
 [color]
 	ui = auto
+	branch = always
 [core]
 	excludesfile = /Users/bcox/.gitignore
 	editor = /Users/bcox/bin/editor
@@ -33,7 +34,6 @@
 	statusHints = false
 [rerere]
 	enabled = 1
-
 [filter "lfs"]
 	required = true
 	clean = git-lfs clean -- %f
@@ -41,5 +41,6 @@
 	process = git-lfs filter-process
 [pull]
 	rebase = true
+	ff = only
 [init]
 	defaultBranch = main

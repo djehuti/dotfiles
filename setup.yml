@@ -46,4 +46,3 @@
         - { src: 'waitfor',              dest: 'waitfor' }
         - { src: 'check_workspaces',     dest: 'check_workspaces' }
         - { src: 'git_workspace_status', dest: 'git_workspace_status' }
-        - { src: 'git-new-workdir',      dest: 'git-new-workdir' }

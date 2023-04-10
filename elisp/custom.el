@@ -12,11 +12,11 @@
      (concat
       (propertize
        (abbreviate-file-name
-        (eshell/pwd))
+	(eshell/pwd))
        'face
        `(:foreground ,(face-foreground 'eshell-ls-directory)))
       (propertize "$ " 'face
-                  `(:foreground ,(face-foreground 'default))))))
+		  `(:foreground ,(face-foreground 'default))))))
  '(eshell-prompt-regexp "^[^#$
 ]* ?[#$] ")
  '(fringe-mode '(12 . 12) nil (fringe))
@@ -42,7 +42,7 @@
       (and
        (derived-mode . text-mode)
        (not
-        (starred-name))))
+	(starred-name))))
      ("TeX"
       (or
        (derived-mode . tex-mode)
@@ -114,18 +114,6 @@
  '(my-org-bullets-face ((t (:family "Sans Serif"))) t)
  '(org-block ((t (:inherit fixed-pitch :background "#eee8d5" :foreground unspecified))))
  '(org-code ((t (:inherit fixed-pitch :foreground unspecified))))
- '(org-document-title ((t (:inherit default :weight bold :foreground "#839496" :font "Source Sans Pro" :height 1.3 :underline nil))))
- '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
- '(org-level-1 ((t (:inherit default :weight semi-bold :foreground "#839496" :font "Source Sans Pro" :height 1.2))))
- '(org-level-2 ((t (:inherit default :weight semi-bold :foreground "#839496" :font "Source Sans Pro" :height 1.1))))
- '(org-level-3 ((t (:inherit default :weight semi-bold :foreground "#839496" :font "Source Sans Pro"))))
- '(org-level-4 ((t (:inherit default :weight normal :foreground "#839496" :font "Source Sans Pro"))))
- '(org-level-5 ((t (:inherit default :weight normal :foreground "#839496" :font "Source Sans Pro"))))
- '(org-level-6 ((t (:inherit default :weight normal :foreground "#839496" :font "Source Sans Pro"))))
- '(org-level-7 ((t (:inherit default :weight normal :foreground "#839496" :font "Source Sans Pro"))))
- '(org-level-8 ((t (:inherit default :weight normal :foreground "#839496" :font "Source Sans Pro"))))
- '(org-table ((t (:inherit fixed-pitch :background "#002028"))))
- '(org-tag ((t (:foreground "#268bd2"))))
- '(variable-pitch ((t (:family "Source Sans Pro" :height 150 :weight normal)))))
+ '(org-document-title ((t (:inherit default :weight bold :foreground "#839496" :font "Source Sans Pro" :height 1.3 :underline nil)))))
 
 ;;; custom.el ends here
