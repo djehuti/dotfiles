@@ -1,12 +1,12 @@
 [user]
 	name = Ben Cox
-	email = bcox@apple.com
+	email = bcox@aurora.tech
 [color]
 	ui = auto
 	branch = always
 [core]
 	excludesfile = /Users/bcox/.gitignore.global
-	editor = /Users/bcox/bin/editor
+	editor = vim
 [mergetool "meld"]
     cmd = meld \"$LOCAL\" \"$MERGED\" \"$REMOTE\" --output \"$MERGED\"
     #cmd = meld \"$LOCAL\" \"$BASE\" \"$REMOTE\" --output \"$MERGED\"
