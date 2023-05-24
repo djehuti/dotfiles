@@ -139,7 +139,7 @@ On Windows, I want to use the "Apps" key as Super.
 #+BEGIN_SRC emacs-lisp
   (use-package hl-line
     :custom-face
-    (hl-line ((t (:background "#073642"))))
+    (hl-line ((t (:background "#eee8d5"))))
     :config
     (global-hl-line-mode 1))
 #+END_SRC
@@ -232,7 +232,7 @@ Load my customizations. This needs to come before the Org section below, because
      (org-agenda-todo-ignore-scheduled 'future)
      :custom-face
      (variable-pitch ((t (:family "Source Sans Pro" :height 150 :weight normal))))
-     (fixed-pitch ((t (:family "Fira Code" :weight normal :height 140 :width normal))))
+     (fixed-pitch ((t (:family "Fira Code" :weight normal :height 110 :width normal))))
      (org-indent ((t (:inherit (org-hide fixed-pitch)))))
      (org-block ((t (:inherit fixed-pitch :background "#eee8d5" :foreground unspecified))))
      :hook
