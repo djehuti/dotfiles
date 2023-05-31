@@ -139,7 +139,7 @@ On Windows, I want to use the "Apps" key as Super.
 #+BEGIN_SRC emacs-lisp
   (use-package hl-line
     :custom-face
-    (hl-line ((t (:background "#073642"))))
+    (hl-line ((t (:background "#eee8d5"))))
     :config
     (global-hl-line-mode 1))
 #+END_SRC

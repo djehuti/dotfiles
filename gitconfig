@@ -16,6 +16,7 @@
 [merge]
 	tool = Kaleidoscope
 	conflictstyle = diff3
+	autostash = true
 [difftool "meld"]
     cmd = meld \"$LOCAL\" \"$REMOTE\"
 [difftool "Kaleidoscope"]

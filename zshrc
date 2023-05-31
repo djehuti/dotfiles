@@ -9,7 +9,7 @@ alias j=jobs
 alias siri="sudo"
 alias tags="tools/actions/generate_compile_commands_json.py"
 
-[[ -d /opt/brew/share/zsh/site-functions/ ]] && fpath+=(/opt/brew/share/zsh/site-functions/)
+[[ -d /opt/homebrew/share/zsh/site-functions/ ]] && fpath+=(/opt/homebrew/share/zsh/site-functions/)
 
 if [ "`uname`" = "Darwin" ]; then
     compctl -f -x 'p[2]' -s "`/bin/ls -d1 /Applications/*.app | sed 's|^.*/\([^/]*\)\.app.*|\\1|;s/ /\\\\ /g'`" -- open
