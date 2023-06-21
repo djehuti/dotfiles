@@ -16,12 +16,14 @@
         - { src: 'gitignore',        dest: 'gitignore' }
         - { src: 'inputrc',          dest: 'inputrc' }
         - { src: 'iterm2_tmux.conf', dest: 'iterm2_tmux.conf' }
+        - { src: 'prezto',           dest: 'zprezto' }
         - { src: 'screenrc',         dest: 'screenrc' }
+        - { src: 'tmux.conf',        dest: 'tmux.conf' }
+        - { src: 'tmux',             dest: 'tmux' }
         - { src: 'zshenv',           dest: 'zshenv' }
         - { src: 'zshrc',            dest: 'zshrc' }
         - { src: 'zprofile',         dest: 'zprofile' }
         - { src: 'zpreztorc',        dest: 'zpreztorc' }
-        - { src: 'prezto',           dest: 'zprezto' }
     - name: create .zinit.d directory
       file: path=~/.zinit.d state=directory
     - name: link zinit.d files to home
