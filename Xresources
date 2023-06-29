@@ -4,8 +4,6 @@ Xft.rgba: rgb
 Xft.hinting: true
 Xft.hintstyle: hintslight
 
-emacs.font: 7x14
-
 XTerm*faceName: Menlo
 XTerm*faceSize: 10
 XTerm*cursorColor: #ff0000

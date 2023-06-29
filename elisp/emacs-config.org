@@ -35,7 +35,7 @@ Set up some very basic Emacs behavior options: no startup message/screen, no ini
   (menu-bar-mode -1)
   (tool-bar-mode -1)
   (blink-cursor-mode -1)
-  ;;(set-scroll-bar-mode nil)
+  (set-scroll-bar-mode nil)
 
   (setq-default line-move-visual nil)
 
@@ -67,8 +67,8 @@ On Windows, I want to use the "Apps" key as Super.
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-  (add-to-list 'default-frame-alist '(width  . 108))
-  (add-to-list 'default-frame-alist '(height .  50))
+  (add-to-list 'default-frame-alist '(width  . 100))
+  (add-to-list 'default-frame-alist '(height .  32))
 #+END_SRC
 
 ** Miscellaneous packages and prefs
@@ -232,7 +232,7 @@ Load my customizations. This needs to come before the Org section below, because
      (org-agenda-todo-ignore-scheduled 'future)
      :custom-face
      (variable-pitch ((t (:family "Source Sans Pro" :height 150 :weight normal))))
-     (fixed-pitch ((t (:family "Fira Code" :weight normal :height 140 :width normal))))
+     (fixed-pitch ((t (:family "Fira Code" :weight normal :height 110 :width normal))))
      (org-indent ((t (:inherit (org-hide fixed-pitch)))))
      (org-block ((t (:inherit fixed-pitch :background "#eee8d5" :foreground unspecified))))
      :hook
@@ -644,7 +644,6 @@ Some random key preferences.
     ("C-x f" . auto-fill-mode)
     ;; ("M-o" . overwrite-mode)
     ("C-x %" . query-replace-regexp)
-    ("C-z" . undo)
     ("<delete>" . delete-char)
     ("<end>" . end-of-line)
     ("<home>" . beginning-of-line)
