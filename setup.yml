@@ -31,6 +31,7 @@
         - { src: '20scriptlib',                 dest: '20scriptlib' }
         - { src: '50pythonpath',                dest: '50pythonpath' }
         - { src: '90prezto',                    dest: '90prezto' }
+        - { src: '91dircolors',                 dest: '91dircolors' }
         - { src: '99_iterm2_shell_integration', dest: '99_iterm2_shell_integration' }
     - name: create bin directory
       file: path=~/bin state=directory
