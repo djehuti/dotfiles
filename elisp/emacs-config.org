@@ -459,7 +459,7 @@ You can use display tables to make certain characters display in different faces
 
 #+BEGIN_SRC emacs-lisp
   (global-font-lock-mode 1)
-  (global-prettify-symbols-mode 1)
+;;  (global-prettify-symbols-mode 1)
 #+END_SRC
 
 ** Using Fira Code
@@ -537,8 +537,8 @@ I used the [[https://github.com/tonsky/FiraCode/wiki/Emacs-instructions][instruc
 *** Activate it automatically
 
 #+BEGIN_SRC emacs-lisp
-  (add-hook 'prog-mode-hook #'(lambda () (fira-code-mode 1)))
-  (add-hook 'c-mode-common-hook #'(lambda () (fira-code-mode 1)))
+  ;;(add-hook 'prog-mode-hook #'(lambda () (fira-code-mode 1)))
+  ;;(add-hook 'c-mode-common-hook #'(lambda () (fira-code-mode 1)))
 #+END_SRC
 
 * Miscellaneous Utility Stuff
