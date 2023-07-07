@@ -67,8 +67,8 @@ On Windows, I want to use the "Apps" key as Super.
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-  (add-to-list 'default-frame-alist '(width  . 108))
-  (add-to-list 'default-frame-alist '(height .  50))
+  (add-to-list 'default-frame-alist '(width  . 100))
+  (add-to-list 'default-frame-alist '(height .  32))
 #+END_SRC
 
 ** Miscellaneous packages and prefs
@@ -644,7 +644,6 @@ Some random key preferences.
     ("C-x f" . auto-fill-mode)
     ;; ("M-o" . overwrite-mode)
     ("C-x %" . query-replace-regexp)
-    ("C-z" . undo)
     ("<delete>" . delete-char)
     ("<end>" . end-of-line)
     ("<home>" . beginning-of-line)
