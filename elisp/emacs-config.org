@@ -118,16 +118,16 @@ On Windows, I want to use the "Apps" key as Super.
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-  (use-package projectile
-    :bind
-    ("s-p" . 'projectile-command-map)
-    ("C-c p" . 'projectile-command-map)
-    :config
-    (projectile-register-project-type 'bazel '("WORKSPACE")
-                                      :compile "bazel build //placeholder:target"
-                                      :test "bazel test //placeholder:target"
-                                      :run "bazel run //placeholder:target")
-    (projectile-global-mode))
+  ;; (use-package projectile
+  ;;   :bind
+  ;;   ("s-p" . 'projectile-command-map)
+  ;;   ("C-c p" . 'projectile-command-map)
+  ;;   :config
+  ;;   (projectile-register-project-type 'bazel '("WORKSPACE")
+  ;;                                     :compile "bazel build //placeholder:target"
+  ;;                                     :test "bazel test //placeholder:target"
+  ;;                                     :run "bazel run //placeholder:target")
+  ;;   (projectile-global-mode))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
