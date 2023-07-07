@@ -35,7 +35,7 @@ Set up some very basic Emacs behavior options: no startup message/screen, no ini
   (menu-bar-mode -1)
   (tool-bar-mode -1)
   (blink-cursor-mode -1)
-  ;;(set-scroll-bar-mode nil)
+  (set-scroll-bar-mode nil)
 
   (setq-default line-move-visual nil)
 
