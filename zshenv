@@ -1,7 +1,15 @@
-# -*-mode:shell-script-*-
-# ~/Dropbox/dotfiles/zprofile
-
-# User specific environment and startup programs
+#---------------------------
+# ZSH startup:
+#
+# 1g. /etc/zsh/zshenv
+# 1u. ~/.zshenv                      <==========
+# 2g. IF LOGIN: /etc/zsh/zprofile
+# 2u. IF LOGIN: ~/.zprofile
+# 3g. IF INTERACTIVE: /etc/zsh/zshrc
+# 3u. IF INTERACTIVE: ~/.zshrc
+# 4g. IF LOGIN: /etc/zsh/zlogin
+# 4u. IF LOGIN: ~/.zlogin
+#---------------------------
 
 case $(uname -s) in
     Darwin) QARG="-q" ;;
@@ -19,7 +27,7 @@ pathmunge () {
         doit="yes"
     fi
     if [ $doit = "yes" ]; then
-        if ! echo $PATH | egrep $QARG "(^|:)$1($|:)" ; then
+        if ! echo $PATH | grep -E $QARG "(^|:)$1($|:)" ; then
             if [ "$2" = "after" ] ; then
                 PATH=$PATH:$1
             else
@@ -30,23 +38,14 @@ pathmunge () {
 }
 
 EDITOR='emacsclient -a= -c'
-#EDITOR=emacsclient
-if [ -f /usr/bin/gedit ]; then
-    EDITOR=gedit
-else
-    EDITOR=emacs
-fi
 BINTYPE=$(echo ${OSTYPE}-${MACHTYPE} | sed -e 's/gnu-i.86/gnu-x86/')
 USERNAME=""
 PAGER=less
 LESS="-XRFM"
 CCACHE_PREFIX=icecc
 
-export USERNAME PATH PS1 EDITOR
+export USERNAME PATH EDITOR
 export PAGER LESS HOSTNAME CCACHE_PREFIX
-
-GOPATH=${HOME}/gocode
-export GOPATH
 
 pathmunge $HOME/bin
 pathmunge $HOME/bin/$BINTYPE
@@ -58,6 +57,11 @@ pathmunge /usr/local/bin after
 pathmunge /opt/local/bin after
 pathmunge /usr/X11R6/bin after
 
+HOMEBREW_DIR="/opt/homebrew"
+if [ -d "${HOMEBREW_DIR}" ]; then
+    eval "$(${HOMEBREW_DIR}/bin/brew shellenv)"
+fi
+
 unset LS_COLORS
 
 if [ $MANPATH ]; then
@@ -67,12 +71,14 @@ else
 fi
 export MANPATH
 
-if [ -f ${HOME}/.ansible_hosts ]; then
+[[ -f ${HOME}/.ansible_hosts ]] && {
     export ANSIBLE_INVENTORY=${HOME}/.ansible_hosts
-fi
+}
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/bcox/src/google-cloud-sdk/path.zsh.inc' ]; then . '/home/bcox/src/google-cloud-sdk/path.zsh.inc'; fi
+[[ -f "${HOME}/.cargo/env" ]] && {
+. "$HOME/.cargo/env"
+}
 
-# The next line enables shell command completion for gcloud.
-if [ -f '/home/bcox/src/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/bcox/src/google-cloud-sdk/completion.zsh.inc'; fi
+[[ -v XDG_RUNTIME_DIR ]] && [[ -S ${XDG_RUNTIME_DIR}/gcr/ssh ]] && {
+    export SSH_AUTH_SOCK=${XDG_RUNTIME_DIR}/gcr/ssh
+}
