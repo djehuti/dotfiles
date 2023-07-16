@@ -200,6 +200,9 @@ Emacs likes to make backup files, in ~filename~~ files. This is fine, but inside
                  ((string-equal "/usr/tmp/" (substring name 0 9)) nil)
                  ((is-file-under-git name) nil)
                  (t))))
+
+  ;; Except just don't.
+  (setq make-backup-files nil)
 #+END_SRC
 
 ** Customizations
@@ -585,11 +588,14 @@ I used the [[https://github.com/tonsky/FiraCode/wiki/Emacs-instructions][instruc
   (global-set-key "\C-cw" 'swap-windows)
   (global-set-key "\C-cq" 'bury-buffer)
 
-  (defun bens-fix-tty-colors ()
+  (defun bens-fix-tty-colors (&optional frame))
     "Fix the colors on the TTY."
     (interactive)
-    (unless (display-graphic-p (selected-frame))
-      (set-face-background 'default "unspecified-bg" (selected-frame))))
+    (or frame (setq frame (selected-frame)))
+    (unless (display-graphic-p frame)
+      (set-face-background 'default "unspecified-bg" frame))
+
+  (add-hook 'after-make-frame-hook 'bens-fix-tty-colors)
 #+END_SRC
 
 * SSH and Mosh
