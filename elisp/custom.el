@@ -77,7 +77,7 @@
    '(("melpa-stable" . "http://stable.melpa.org/packages/")
      ("melpa" . "http://melpa.org/packages/")))
  '(package-selected-packages
-   '(go-mode haskell-mode swift-mode org-gcal ag org-bullets which-key csound-mode bazel-mode json-mode markdown-mode ## yaml-mode rtags projectile php-mode magit flx-ido editorconfig color-theme-sanityinc-solarized cmake-mode use-package))
+   '(typescript-mode go-mode haskell-mode swift-mode org-gcal ag org-bullets which-key csound-mode bazel-mode json-mode markdown-mode ## yaml-mode rtags projectile php-mode magit flx-ido editorconfig color-theme-sanityinc-solarized cmake-mode use-package))
  '(partial-completion-mode nil)
  '(safe-local-variable-values
    '((flycheck-clang-language-standard "c++11")
