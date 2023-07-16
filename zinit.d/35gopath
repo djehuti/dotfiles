@@ -1,0 +1,2 @@
+export GOPATH="${HOME}/src/go"
+PATH="${GOPATH}/bin:${PATH}"

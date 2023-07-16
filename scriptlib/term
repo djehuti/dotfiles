@@ -1,0 +1,66 @@
+# djehuti::term
+# Part of djehuti/scriptlib
+
+# Use these in place of `tput` in scripts (more readable).
+
+function djehuti::term::clear() {
+    tput clear
+}
+
+function djehuti::term::begin_altscreen() {
+    tput smcup
+}
+
+function djehuti::term::end_altscreen() {
+    tput rmcup
+}
+
+function djehuti::term::brightcursor() {
+    tput cvvis
+}
+
+function djehuti::term::hidecursor() {
+    tput civis
+}
+
+function djehuti::term::normcursor() {
+    tput cnorm
+}
+
+function djehuti::term::gotoxy() {
+    tput cup $2 $1
+}
+
+function djehuti::term::placestring() {
+    djehuti::term::gotoxy $1 $2
+    echo -n "$3"
+}
+
+# Returns a string with the specific termcap capability as a prefix
+# and a return to normal suffix. Don't use directly; instead use
+# the convenience functions below, which use this.
+function djehuti::term::_stringcap() {
+    local cap="$1"
+    local text="$2"
+    echo -n "$(tput ${cap})${text}$(tput sgr0)"
+}
+
+function djehuti::term::embolden() {
+    djehuti::term::_stringcap "bold" "$1"
+}
+
+function djehuti::term::makereverse() {
+    djehuti::term::_stringcap "smso" "$1"
+}
+
+# Read a single keystroke (and return it).
+function djehuti::term::getch() {
+    # This only gets one byte, even if the user types a key that has
+    # multiple characters (like an arrow or function key).
+    local keystroke=""
+    local extra=""
+    stty -icanon -echo
+    read -n 1 "$@" keystroke
+    read -t0.001 extra
+    echo -n "${keystroke}${extra}"
+}

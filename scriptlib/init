@@ -1,0 +1,29 @@
+# djehuti::init
+# Part of djehuti/scriptlib
+
+function djehuti::init::find_scriptlib() {
+    if [[ -n "${ZSH_VERSION}" ]]; then
+        echo "$( cd -- "$( dirname -- "${(%):-%x}" )" &> /dev/null && /bin/pwd)"
+    else
+        echo "$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)"
+    fi
+}
+
+# install_scriptlib
+# If DJEHUTI_SCRIPTLIB is already set, nothing happens.
+# If it is not set, it is set _and exported_.
+function djehuti::init::install_scriptlib() {
+    if [[ -z "${DJEHUTI_SCRIPTLIB}" ]]; then
+        DJEHUTI_SCRIPTLIB="$(djehuti::init::find_scriptlib)"
+        export DJEHUTI_SCRIPTLIB
+    fi
+}
+
+function djehuti::load() {
+    . "$(djehuti::init::find_scriptlib)/$1"
+}
+
+# Reloads this script.
+function djehuti::reinit() {
+    djehuti::load init
+}
