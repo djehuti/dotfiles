@@ -118,16 +118,16 @@ On Windows, I want to use the "Apps" key as Super.
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-  (use-package projectile
-    :bind
-    ("s-p" . 'projectile-command-map)
-    ("C-c p" . 'projectile-command-map)
-    :config
-    (projectile-register-project-type 'bazel '("WORKSPACE")
-                                      :compile "bazel build //placeholder:target"
-                                      :test "bazel test //placeholder:target"
-                                      :run "bazel run //placeholder:target")
-    (projectile-global-mode))
+  ;; (use-package projectile
+  ;;   :bind
+  ;;   ("s-p" . 'projectile-command-map)
+  ;;   ("C-c p" . 'projectile-command-map)
+  ;;   :config
+  ;;   (projectile-register-project-type 'bazel '("WORKSPACE")
+  ;;                                     :compile "bazel build //placeholder:target"
+  ;;                                     :test "bazel test //placeholder:target"
+  ;;                                     :run "bazel run //placeholder:target")
+  ;;   (projectile-global-mode))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -339,10 +339,10 @@ You can use display tables to make certain characters display in different faces
 #+BEGIN_SRC emacs-lisp
   ;; Display tab characters with an alternate background color, except in Go.
   (progn (make-face 'tab-face)
-         (set-face-background 'tab-face "#859900")
+         (set-face-background 'tab-face "#eee8d5")
          (make-face 'cr-face)
-         (set-face-foreground 'cr-face "#002b36")
-         (set-face-background 'cr-face "#859900")
+         (set-face-foreground 'cr-face "#ff0000")
+         (set-face-background 'cr-face "#eee8d5")
          (defvar colortab-display-table (make-display-table)
            "Display table for coloring CR and tab characters.")
          (aset colortab-display-table 9
@@ -388,27 +388,27 @@ You can use display tables to make certain characters display in different faces
   (setq c-default-style "cox")
 
   (add-hook 'c-mode-common-hook
-            '(lambda ()
-               (setq c-tab-always-indent nil
-                     show-trailing-whitespace t
-                     indent-tabs-mode nil
-                     truncate-lines t)))
+            #'(lambda ()
+                (setq c-tab-always-indent nil
+                      show-trailing-whitespace t
+                      indent-tabs-mode nil
+                      truncate-lines t)))
   (add-hook 'lisp-interaction-mode-hook
-            '(lambda ()
-               (setq c-tab-always-indent nil)))
+            #'(lambda ()
+                (setq c-tab-always-indent nil)))
   (setq rst-indent-comment 4
         rst-indent-field 4
         rst-indent-literal-minimized 4
         rst-indent-literal-normal 4
         rst-indent-width 4)
   (add-hook 'rst-mode-hook
-            '(lambda ()
-               (setq indent-tabs-mode nil)))
+            #'(lambda ()
+                (setq indent-tabs-mode nil)))
   (add-hook 'go-mode-hook
-            '(lambda ()
-               (setq tab-width 4
-                     indent-tabs-mode t
-                     buffer-display-table go-display-table)))
+            #'(lambda ()
+                (setq tab-width 4
+                      indent-tabs-mode t
+                      buffer-display-table go-display-table)))
 #+END_SRC
 
 ** Miscellaneous Functions for Editing In Specific Modes
@@ -459,7 +459,7 @@ You can use display tables to make certain characters display in different faces
 
 #+BEGIN_SRC emacs-lisp
   (global-font-lock-mode 1)
-  (global-prettify-symbols-mode 1)
+;;  (global-prettify-symbols-mode 1)
 #+END_SRC
 
 ** Using Fira Code
@@ -537,8 +537,8 @@ I used the [[https://github.com/tonsky/FiraCode/wiki/Emacs-instructions][instruc
 *** Activate it automatically
 
 #+BEGIN_SRC emacs-lisp
-  (add-hook 'prog-mode-hook #'(lambda () (fira-code-mode 1)))
-  (add-hook 'c-mode-common-hook #'(lambda () (fira-code-mode 1)))
+  ;;(add-hook 'prog-mode-hook #'(lambda () (fira-code-mode 1)))
+  ;;(add-hook 'c-mode-common-hook #'(lambda () (fira-code-mode 1)))
 #+END_SRC
 
 * Miscellaneous Utility Stuff

@@ -1,0 +1,3 @@
+source "${DJEHUTI_SCRIPTDIR:-"${HOME}/.scriptlib"}/init"
+
+djehuti::init::install_scriptlib
