@@ -20,7 +20,6 @@
         - { src: 'scriptlib',        dest: 'scriptlib' }
         - { src: 'zshenv',           dest: 'zshenv' }
         - { src: 'zshrc',            dest: 'zshrc' }
-        - { src: 'zprofile',         dest: 'zprofile' }
         - { src: 'zpreztorc',        dest: 'zpreztorc' }
         - { src: 'prezto',           dest: 'zprezto' }
     - name: create .zinit.d directory
