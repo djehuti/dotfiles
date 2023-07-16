@@ -13,7 +13,7 @@
         - { src: 'elisp',            dest: 'elisp' }
         - { src: 'emacs',            dest: 'emacs' }
         - { src: 'gitconfig',        dest: 'gitconfig' }
-        - { src: 'gitignore.global', dest: 'gitignore.global' }
+        - { src: 'gitignore',        dest: 'gitignore.global' }
         - { src: 'inputrc',          dest: 'inputrc' }
         - { src: 'iterm2_tmux.conf', dest: 'iterm2_tmux.conf' }
         - { src: 'prezto',           dest: 'zprezto' }
