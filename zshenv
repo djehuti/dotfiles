@@ -37,15 +37,15 @@ pathmunge () {
     fi
 }
 
-EDITOR=vim
+EDITOR=emacsclient
+ALTERNATE_EDITOR=""
+export EDITOR ALTERNATE_EDITOR
+
 BINTYPE=$(echo ${OSTYPE}-${MACHTYPE} | sed -e 's/gnu-i.86/gnu-x86/')
-USERNAME=""
 PAGER=less
 LESS="-XRFM"
-CCACHE_PREFIX=icecc
 
-export USERNAME PATH EDITOR
-export PAGER LESS HOSTNAME CCACHE_PREFIX
+export PAGER LESS
 
 pathmunge $HOME/bin
 pathmunge $HOME/bin/$BINTYPE
@@ -56,6 +56,8 @@ pathmunge /usr/local/sbin after
 pathmunge /usr/local/bin after
 pathmunge /opt/local/bin after
 pathmunge /usr/X11R6/bin after
+
+export PATH
 
 HOMEBREW_DIR="/opt/homebrew"
 if [ -d "${HOMEBREW_DIR}" ]; then
