@@ -21,6 +21,7 @@
         - { src: 'scriptlib',        dest: 'scriptlib' }
         - { src: 'tmux.conf',        dest: 'tmux.conf' }
         - { src: 'tmux',             dest: 'tmux' }
+        - { src: 'vim',              dest: 'vim' }
         - { src: 'zshenv',           dest: 'zshenv' }
         - { src: 'zshrc',            dest: 'zshrc' }
         - { src: 'zpreztorc',        dest: 'zpreztorc' }
@@ -36,7 +37,6 @@
         - { src: '50pythonpath',                dest: '50pythonpath' }
         - { src: '90prezto',                    dest: '90prezto' }
         - { src: '91dircolors',                 dest: '91dircolors' }
-        - { src: '99_iterm2_shell_integration', dest: '99_iterm2_shell_integration' }
     - name: create bin directory
       file: path=~/bin state=directory
     - name: link bin files into home

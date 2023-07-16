@@ -106,7 +106,7 @@ On Windows, I want to use the "Apps" key as Super.
 #+BEGIN_SRC emacs-lisp
   (use-package color-theme-sanityinc-solarized
   :config
-  (load-theme 'sanityinc-solarized-light))
+  (load-theme 'sanityinc-solarized-dark))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -139,7 +139,7 @@ On Windows, I want to use the "Apps" key as Super.
 #+BEGIN_SRC emacs-lisp
   (use-package hl-line
     :custom-face
-    (hl-line ((t (:background "#eee8d5"))))
+    (hl-line ((t (:background "#073642"))))
     :config
     (global-hl-line-mode 1))
 #+END_SRC
@@ -200,6 +200,9 @@ Emacs likes to make backup files, in ~filename~~ files. This is fine, but inside
                  ((string-equal "/usr/tmp/" (substring name 0 9)) nil)
                  ((is-file-under-git name) nil)
                  (t))))
+
+  ;; Except just don't.
+  (setq make-backup-files nil)
 #+END_SRC
 
 ** Customizations
@@ -234,7 +237,7 @@ Load my customizations. This needs to come before the Org section below, because
      (variable-pitch ((t (:family "Source Sans Pro" :height 150 :weight normal))))
      (fixed-pitch ((t (:family "Fira Code" :weight normal :height 110 :width normal))))
      (org-indent ((t (:inherit (org-hide fixed-pitch)))))
-     (org-block ((t (:inherit fixed-pitch :background "#eee8d5" :foreground unspecified))))
+     (org-block ((t (:inherit fixed-pitch :background "#073642" :foreground unspecified))))
      :hook
      (org-babel-after-execute . org-redisplay-inline-images)
      (org-mode . visual-line-mode)
@@ -585,11 +588,14 @@ I used the [[https://github.com/tonsky/FiraCode/wiki/Emacs-instructions][instruc
   (global-set-key "\C-cw" 'swap-windows)
   (global-set-key "\C-cq" 'bury-buffer)
 
-  (defun bens-fix-tty-colors ()
+  (defun bens-fix-tty-colors (&optional frame))
     "Fix the colors on the TTY."
     (interactive)
-    (unless (display-graphic-p (selected-frame))
-      (set-face-background 'default "unspecified-bg" (selected-frame))))
+    (or frame (setq frame (selected-frame)))
+    (unless (display-graphic-p frame)
+      (set-face-background 'default "unspecified-bg" frame))
+
+  (add-hook 'after-make-frame-hook 'bens-fix-tty-colors)
 #+END_SRC
 
 * SSH and Mosh
