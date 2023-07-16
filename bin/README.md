@@ -27,16 +27,6 @@ repeatedly runs `check_workspaces` and then `git fetch --all --prune`,
 then waits a while and does it again. This keeps your repo up-to-date
 (without actually updating any local branches) constantly.
 
-  * `git-new-workdir`
-
-This is the `git-new-workdir` script from the official Git source
-repo. Run it with no arguments to see its usage. tl;dr: cd to the
-parent of your project repo and run `git-new-workdir proj proj2 master`
-and it will create a `proj2` working directory (with `master` checked out
-on it) that is a peer of `proj`, and its `.git/*` subdirectories are
-(mostly) symlinked to `../../proj/.git/*` so they share all of the same
-local state. See [this link][gnw] or Google for more info on this.
-
   * `ctw`
   * `gbv`
 
@@ -83,5 +73,4 @@ In Window 3:
 
 This builds the three trees sequentially.
 
-[gnw]: http://nuclearsquid.com/writings/git-new-workdir/
 [dotfiles]: https://github.com/djehuti/dotfiles
