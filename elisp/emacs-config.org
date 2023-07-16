@@ -106,7 +106,7 @@ On Windows, I want to use the "Apps" key as Super.
 #+BEGIN_SRC emacs-lisp
   (use-package color-theme-sanityinc-solarized
   :config
-  (load-theme 'sanityinc-solarized-light))
+  (load-theme 'sanityinc-solarized-dark))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -139,7 +139,7 @@ On Windows, I want to use the "Apps" key as Super.
 #+BEGIN_SRC emacs-lisp
   (use-package hl-line
     :custom-face
-    (hl-line ((t (:background "#eee8d5"))))
+    (hl-line ((t (:background "#073642"))))
     :config
     (global-hl-line-mode 1))
 #+END_SRC
@@ -234,7 +234,7 @@ Load my customizations. This needs to come before the Org section below, because
      (variable-pitch ((t (:family "Source Sans Pro" :height 150 :weight normal))))
      (fixed-pitch ((t (:family "Fira Code" :weight normal :height 110 :width normal))))
      (org-indent ((t (:inherit (org-hide fixed-pitch)))))
-     (org-block ((t (:inherit fixed-pitch :background "#eee8d5" :foreground unspecified))))
+     (org-block ((t (:inherit fixed-pitch :background "#073642" :foreground unspecified))))
      :hook
      (org-babel-after-execute . org-redisplay-inline-images)
      (org-mode . visual-line-mode)
