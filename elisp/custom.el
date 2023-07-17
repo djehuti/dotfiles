@@ -77,7 +77,7 @@
    '(("melpa-stable" . "http://stable.melpa.org/packages/")
      ("melpa" . "http://melpa.org/packages/")))
  '(package-selected-packages
-   '(typescript-mode go-mode haskell-mode swift-mode org-gcal ag org-bullets which-key csound-mode bazel-mode json-mode markdown-mode ## yaml-mode rtags projectile php-mode magit flx-ido editorconfig color-theme-sanityinc-solarized cmake-mode use-package))
+   '(bazel typescript-mode go-mode haskell-mode swift-mode org-gcal ag org-bullets which-key csound-mode bazel-mode json-mode markdown-mode ## yaml-mode rtags projectile php-mode magit flx-ido editorconfig color-theme-sanityinc-solarized cmake-mode use-package))
  '(partial-completion-mode nil)
  '(safe-local-variable-values
    '((flycheck-clang-language-standard "c++11")
@@ -91,7 +91,7 @@
  '(cursor ((t (:background "#ff0000"))))
  '(fixed-pitch ((t (:family "Fira Code" :weight normal :height 110 :width normal))))
  '(font-lock-builtin-face ((t (:foreground "#859900"))))
- '(font-lock-comment-face ((t (:foreground "#93a1a1" :italic t :family "Source Code Variable"))))
+ '(font-lock-comment-face ((t (:foreground "#839496" :height 1.06 :weight bold :family "Courier"))))
  '(font-lock-constant-face ((t (:foreground "#2aa198"))))
  '(font-lock-function-name-face ((t (:foreground "#268bd2"))))
  '(font-lock-keyword-face ((t (:foreground "#859900"))))
@@ -103,7 +103,7 @@
  '(header-line ((t (:foreground "#073642" :weight bold))))
  '(hl-line ((t (:background "#073642"))))
  '(isearch ((t (:background "#859900" :foreground "#fdf6e3"))))
- '(italic ((t (:family "Source Code Variable" :foundry "outline" :slant oblique :weight normal :height 110 :width normal))))
+ '(italic ((t (:slant oblique :weight normal :width normal))))
  '(line-number ((t (:foreground "#839496" :background "#073642"))))
  '(line-number-current-line ((t (:background "#073642" :foreground "#eee8d5"))))
  '(link ((t (:foreground "#268bd2" :underline t))))

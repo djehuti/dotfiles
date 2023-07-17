@@ -84,7 +84,9 @@ On Windows, I want to use the "Apps" key as Super.
   (require 'package)
   (customize-set-variable 'package-archives
                           '(("melpa-stable" . "http://stable.melpa.org/packages/")
-                            ("melpa" . "http://melpa.org/packages/")))
+                            ("melpa" . "http://melpa.org/packages/")
+                            ("gnu-devel" . "https://elpa.gnu.org/devel/")
+                            ))
   (package-initialize)
 
   (when (not package-archive-contents)
@@ -100,7 +102,6 @@ On Windows, I want to use the "Apps" key as Super.
   (eval-when-compile
     (require 'use-package))
   (require 'bind-key)
-  (require 'diminish)
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -111,8 +112,6 @@ On Windows, I want to use the "Apps" key as Super.
 
 #+BEGIN_SRC emacs-lisp
   (use-package editorconfig
-    :diminish
-    (editorconfig-mode . "")
     :config
     (editorconfig-mode 1))
 #+END_SRC
@@ -234,9 +233,10 @@ Load my customizations. This needs to come before the Org section below, because
      (org-agenda-sticky t)
      (org-agenda-todo-ignore-scheduled 'future)
      :custom-face
-     (variable-pitch ((t (:family "Source Sans Pro" :height 150 :weight normal))))
+     (variable-pitch ((t (:family "Source Sans Pro" :height 120 :weight normal))))
      (fixed-pitch ((t (:family "Fira Code" :weight normal :height 110 :width normal))))
      (org-indent ((t (:inherit (org-hide fixed-pitch)))))
+     (org-meta-line ((t (:family "Courier" :slant normal :weight normal :height 90 :width condensed :background "#002b36" :foreground "#6c71c4"))))
      (org-block ((t (:inherit fixed-pitch :background "#073642" :foreground unspecified))))
      :hook
      (org-babel-after-execute . org-redisplay-inline-images)
@@ -286,15 +286,12 @@ Load my customizations. This needs to come before the Org section below, because
         '(org-code ((t (:inherit fixed-pitch :foreground unspecified))) t)
         '(org-tag ((t (:foreground "#268bd2"))) t)
         '(org-indent ((t (:inherit (org-hide fixed-pitch)))) t)
-        ))
-     (eval-after-load 'face-remap '(diminish 'buffer-face-mode))
-     (eval-after-load 'simple '(diminish 'visual-line-mode)))
+        )))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
   (use-package org-indent
-    :ensure nil
-    :diminish)
+    :ensure nil)
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -333,6 +330,7 @@ I like to highlight ~TODO~ comments in my code.
 
 #+BEGIN_SRC emacs-lisp
   (add-hook 'prog-mode-hook 'display-line-numbers-mode)
+  (setq-default display-line-numbers-width-start 500)
 #+END_SRC
 
 ** Tabs and CR/LF line-endings
@@ -342,10 +340,13 @@ You can use display tables to make certain characters display in different faces
 #+BEGIN_SRC emacs-lisp
   ;; Display tab characters with an alternate background color, except in Go.
   (progn (make-face 'tab-face)
-         (set-face-background 'tab-face "#eee8d5")
+         (set-face-foreground 'tab-face "#b58900")
+         (set-face-background 'tab-face "#073642")
+         (set-face-attribute 'tab-face nil :box 't)
          (make-face 'cr-face)
-         (set-face-foreground 'cr-face "#ff0000")
-         (set-face-background 'cr-face "#eee8d5")
+         (set-face-foreground 'cr-face "#b58900")
+         (set-face-background 'cr-face "#073642")
+         (set-face-attribute 'cr-face nil :box 't)
          (defvar colortab-display-table (make-display-table)
            "Display table for coloring CR and tab characters.")
          (aset colortab-display-table 9
@@ -469,7 +470,7 @@ You can use display tables to make certain characters display in different faces
 
 [[https://github.com/tonsky/FiraCode][Fira Code]] is a monospaced font with programming ligatures, which I like a fair bit.  Unfortunately setting up ligatures in Emacs is non-trivial (unlike in VS Code and CLion/IntelliJ, where you just check a box).
 
-Unfortunately Emacs doesn't seem to be able to display /italics/ with Fira Code, so I also use Source Code Variable for italic faces (like for comments and such).
+Unfortunately Emacs doesn't seem to be able to display /italics/ with Fira Code, so I also use Source Code Pro for italic faces (like for comments and such).
 
 I used the [[https://github.com/tonsky/FiraCode/wiki/Emacs-instructions][instructions on this page]] to get this working.
 
@@ -588,14 +589,14 @@ I used the [[https://github.com/tonsky/FiraCode/wiki/Emacs-instructions][instruc
   (global-set-key "\C-cw" 'swap-windows)
   (global-set-key "\C-cq" 'bury-buffer)
 
-  (defun bens-fix-tty-colors (&optional frame))
-    "Fix the colors on the TTY."
-    (interactive)
+  ;; https://stackoverflow.com/questions/19054228/emacs-disable-theme-background-color-in-terminal
+  (defun set-background-for-terminal (&optional frame)
     (or frame (setq frame (selected-frame)))
+    "unsets the background color in terminal mode"
     (unless (display-graphic-p frame)
-      (set-face-background 'default "unspecified-bg" frame))
-
-  (add-hook 'after-make-frame-hook 'bens-fix-tty-colors)
+      (set-face-background 'default "unspecified-bg" frame)))
+  (add-hook 'after-make-frame-functions 'set-background-for-terminal)
+  (add-hook 'window-setup-hook 'set-background-for-terminal)
 #+END_SRC
 
 * SSH and Mosh
@@ -637,7 +638,6 @@ If I start hitting a key sequence and pause, this gives me a little hint window 
 #+BEGIN_SRC emacs-lisp
   (use-package which-key
     :defer nil
-    :diminish which-key-mode
     :config
     (which-key-mode))
 #+END_SRC
