@@ -209,8 +209,19 @@ Emacs likes to make backup files, in ~filename~~ files. This is fine, but inside
 Load my customizations. This needs to come before the Org section below, because it sets up some face stuff that the Org stuff depends on. But it needs to happen after the color theme is loaded, up above.
 
 #+BEGIN_SRC emacs-lisp
-(setq custom-file (expand-file-name "custom.el" bcox-elisp-dir))
-(load-file custom-file)
+  (setq custom-file (expand-file-name "custom.el" bcox-elisp-dir))
+  (load-file custom-file)
+
+  ;; And now we have to fix up the font-lock-comment-face face, because
+  ;; Fira Code doesn't have an Italic variant, and if we don't specify one
+  ;; Emacs will just find any old italic font, and comments look like shit.
+  (defun find-first-available-font-family (family-list)
+    "Find the first font family from the given list that is available."
+    (let ((allfonts (font-family-list)))
+      (seq-find #'(lambda (s) (member s allfonts)) family-list)))
+  (setq bens-courier-font (find-first-available-font-family ["Courier" "Courier 10 Pitch"]))
+  (setq bens-courier-weight (if (equal bens-courier-font "Courier 10 Pitch") 'normal 'bold))
+  (set-face-attribute 'font-lock-comment-face nil :height 1.06 :weight bens-courier-weight :family bens-courier-font)
 #+END_SRC
 
 * Org Mode
@@ -236,7 +247,7 @@ Load my customizations. This needs to come before the Org section below, because
      (variable-pitch ((t (:family "Source Sans Pro" :height 120 :weight normal))))
      (fixed-pitch ((t (:family "Fira Code" :weight normal :height 110 :width normal))))
      (org-indent ((t (:inherit (org-hide fixed-pitch)))))
-     (org-meta-line ((t (:family "Courier" :slant normal :weight normal :height 90 :width condensed :background "#002b36" :foreground "#6c71c4"))))
+     (org-meta-line ((t (:family bens-courier-font :slant normal :weight normal :height 90 :width condensed :background "#002b36" :foreground "#6c71c4"))))
      (org-block ((t (:inherit fixed-pitch :background "#073642" :foreground unspecified))))
      :hook
      (org-babel-after-execute . org-redisplay-inline-images)

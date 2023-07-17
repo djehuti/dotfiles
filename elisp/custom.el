@@ -91,7 +91,7 @@
  '(cursor ((t (:background "#ff0000"))))
  '(fixed-pitch ((t (:family "Fira Code" :weight normal :height 110 :width normal))))
  '(font-lock-builtin-face ((t (:foreground "#859900"))))
- '(font-lock-comment-face ((t (:foreground "#839496" :height 1.06 :weight bold :family "Courier"))))
+ '(font-lock-comment-face ((t (:foreground "#839496"))))
  '(font-lock-constant-face ((t (:foreground "#2aa198"))))
  '(font-lock-function-name-face ((t (:foreground "#268bd2"))))
  '(font-lock-keyword-face ((t (:foreground "#859900"))))
