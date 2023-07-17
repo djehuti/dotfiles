@@ -35,6 +35,8 @@
         - { src: '20scriptlib',                 dest: '20scriptlib' }
         - { src: '35gopath',                    dest: '35gopath' }
         - { src: '50pythonpath',                dest: '50pythonpath' }
+        - { src: '51nvm',                       dest: '51nvm' }
+        - { src: '55direnv',                    dest: '55direnv' }
         - { src: '90prezto',                    dest: '90prezto' }
         - { src: '91dircolors',                 dest: '91dircolors' }
     - name: create bin directory
