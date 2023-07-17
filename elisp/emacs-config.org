@@ -494,7 +494,7 @@ I used the [[https://github.com/tonsky/FiraCode/wiki/Emacs-instructions][instruc
 
   (defconst fira-code-mode--ligatures
     '("www" "**" "***" "**/" "*>" "*/" "\\\\" "\\\\\\"
-      "{DONOTWANT-" "[]" "::" ":::" ":=" "!!" "!=" "!==" "-}"
+      "{-" "[]" "::" ":::" ":=" "!!" "!=" "!==" "-}"
       "--" "---" "-->" "->" "->>" "-<" "-<<" "-~"
       "#{" "#[" "##" "###" "####" "#(" "#?" "#_" "#_("
       ".-" ".=" ".." "..<" "..." "?=" "??" ";;" "/*"
@@ -505,7 +505,7 @@ I used the [[https://github.com/tonsky/FiraCode/wiki/Emacs-instructions][instruc
       "<$" "<$>" "<!--" "<-" "<--" "<->" "<+" "<+>" "<="
       "<==" "<=>" "<=<" "<>" "<<" "<<-" "<<=" "<<<" "<~"
       "<~~" "</" "</>" "~@" "~-" "~=" "~>" "~~" "~~>" "%%"
-      "xDONOTWANTx" ":" "+" "+" "*"))
+      "x" ":" "+" "+" "*"))
 
   (defvar fira-code-mode--old-prettify-alist)
 
@@ -541,8 +541,8 @@ I used the [[https://github.com/tonsky/FiraCode/wiki/Emacs-instructions][instruc
 *** Activate it automatically
 
 #+BEGIN_SRC emacs-lisp
-  ;;(add-hook 'prog-mode-hook #'(lambda () (fira-code-mode 1)))
-  ;;(add-hook 'c-mode-common-hook #'(lambda () (fira-code-mode 1)))
+  (add-hook 'prog-mode-hook #'(lambda () (fira-code-mode 1)))
+  (add-hook 'c-mode-common-hook #'(lambda () (fira-code-mode 1)))
 #+END_SRC
 
 * Miscellaneous Utility Stuff
