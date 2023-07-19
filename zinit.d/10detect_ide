@@ -1,0 +1,14 @@
+# Detect JetBrains IDEs
+[[ "${TERMINAL_EMULATOR}" == "JetBrains-JediTerm" ]] && {
+    export INSIDE_IDE=1
+}
+
+# Now check for VS Code
+[[ "${TERM_PROGRAM}" == "vscode" ]] && {
+    export INSIDE_IDE=1
+}
+
+# Now check for Emacs
+[[ "${TERM}" == "dumb" ]] || [[ "${TERM}" == "eterm-color" ]] && {
+    export INSIDE_IDE=1
+}

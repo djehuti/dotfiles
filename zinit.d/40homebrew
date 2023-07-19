@@ -1,0 +1,12 @@
+brew_dir="/opt/homebrew"
+[[ -d "${brew_dir}" ]] && {
+    eval "$(${brew_dir}/bin/brew shellenv)"
+
+    site_funcs="${brew_dir}/share/zsh/site-functions/"
+    [[ -d "${site_funcs}" ]] && {
+        fpath+=("${site_funcs}")
+    }
+}
+
+unset site_funcs
+unset brew_dir

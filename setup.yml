@@ -30,10 +30,10 @@
     - name: link zinit.d files to home
       file: src={{ dotfiles }}/zinit.d/{{ item.src }} dest=~/.zinit.d/{{ item.dest }} state=link
       with_items:
-        - { src: '10detect_jetbrains',          dest: '10detect_jetbrains' }
-        - { src: '15-git-rprompt',              dest: '-15-git-rprompt' }
+        - { src: '10detect_ide',                dest: '10detect_ide' }
         - { src: '20scriptlib',                 dest: '20scriptlib' }
         - { src: '35gopath',                    dest: '35gopath' }
+        - { src: '40homebrew',                  dest: '40homebrew' }
         - { src: '50pythonpath',                dest: '50pythonpath' }
         - { src: '51nvm',                       dest: '51nvm' }
         - { src: '55direnv',                    dest: '55direnv' }

@@ -1,3 +1,0 @@
-env | grep -e '^\(APP\|GIO_LAUNCHED_DESKTOP\)' | grep -q -i jetbr && {
-    export INSIDE_JETBRAINS_IDE=1
-}
