@@ -90,9 +90,9 @@ Set up the default window size.
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-  (use-package color-theme-sanityinc-solarized
-  :config
-  (load-theme 'sanityinc-solarized-dark))
+;;  (use-package color-theme-sanityinc-solarized
+;;  :config
+;;  (load-theme 'sanityinc-solarized-dark))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -109,8 +109,6 @@ Set up the default window size.
 
 #+BEGIN_SRC emacs-lisp
   (use-package hl-line
-    :custom-face
-    (hl-line ((t (:background "#073642"))))
     :config
     (global-hl-line-mode 1))
 #+END_SRC
@@ -182,17 +180,6 @@ Load my customizations. This needs to come before the Org section below, because
 #+BEGIN_SRC emacs-lisp
   (setq custom-file (expand-file-name "custom.el" bcox-elisp-dir))
   (load-file custom-file)
-
-  ;; And now we have to fix up the font-lock-comment-face face, because
-  ;; Fira Code doesn't have an Italic variant, and if we don't specify one
-  ;; Emacs will just find any old italic font, and comments look like shit.
-  (defun find-first-available-font-family (family-list)
-    "Find the first font family from the given list that is available."
-    (let ((allfonts (font-family-list)))
-      (seq-find #'(lambda (s) (member s allfonts)) family-list)))
-  (setq bens-courier-font (find-first-available-font-family ["Courier" "Courier 10 Pitch"]))
-  (setq bens-courier-weight (if (equal bens-courier-font "Courier 10 Pitch") 'normal 'bold))
-  (set-face-attribute 'font-lock-comment-face nil :height 1.06 :weight bens-courier-weight :family bens-courier-font)
 #+END_SRC
 
 * Org Mode
@@ -214,17 +201,10 @@ Load my customizations. This needs to come before the Org section below, because
      (org-special-ctrl-a/e t)
      (org-agenda-sticky t)
      (org-agenda-todo-ignore-scheduled 'future)
-     :custom-face
-     (variable-pitch ((t (:family "Source Sans Pro" :height 120 :weight normal))))
-     (fixed-pitch ((t (:family "Fira Code" :weight normal :height 110 :width normal))))
-     (org-indent ((t (:inherit (org-hide fixed-pitch)))))
-     (org-meta-line ((t (:family bens-courier-font :slant normal :weight normal :height 90 :width condensed :background "#002b36" :foreground "#6c71c4"))))
-     (org-block ((t (:inherit fixed-pitch :background "#073642" :foreground unspecified))))
      :hook
      (org-babel-after-execute . org-redisplay-inline-images)
      (org-mode . visual-line-mode)
-     (org-mode . variable-pitch-mode)
-     :config
+       :config
      (org-babel-do-load-languages
       'org-babel-load-languages
       '((emacs-lisp . t)
@@ -246,46 +226,7 @@ Load my customizations. This needs to come before the Org section below, because
                            (:startgroup . nil)
                            ("Work" . ?W) ("Personal" . ?P) ("SPM" . ?S)
                            (:endgroup . nil))
-           org-drawers '("PROPERTIES" "CLOCK" "LOGBOOK" "RESULTS" "NOTES"))
-     (let* ((variable-tuple '(:font "Source Sans Pro"))
-            (base-font-color (face-foreground 'default nil 'default))
-            (lilheadline    `(:inherit default :weight normal :foreground ,base-font-color))
-            (medheadline    `(:inherit default :weight semi-bold :foreground ,base-font-color))
-            (bigheadline    `(:inherit default :weight bold :foreground ,base-font-color)))
-       (custom-theme-set-faces
-        'user
-        `(org-level-8        ((t (,@lilheadline ,@variable-tuple))) t)
-        `(org-level-7        ((t (,@lilheadline ,@variable-tuple))) t)
-        `(org-level-6        ((t (,@lilheadline ,@variable-tuple))) t)
-        `(org-level-5        ((t (,@lilheadline ,@variable-tuple))) t)
-        `(org-level-4        ((t (,@lilheadline ,@variable-tuple))) t)
-        `(org-level-3        ((t (,@medheadline ,@variable-tuple))) t)
-        `(org-level-2        ((t (,@medheadline ,@variable-tuple :height 1.1))) t)
-        `(org-level-1        ((t (,@medheadline ,@variable-tuple :height 1.2))) t)
-        `(org-document-title ((t (,@bigheadline ,@variable-tuple :height 1.3 :underline nil))) t)
-        '(org-block ((t (:inherit fixed-pitch :background "#eee8d5" :foreground unspecified))) t)
-        '(org-table ((t (:inherit fixed-pitch :background "#eee8d5"))) t)
-        '(org-code ((t (:inherit fixed-pitch :foreground unspecified))) t)
-        '(org-tag ((t (:foreground "#268bd2"))) t)
-        '(org-indent ((t (:inherit (org-hide fixed-pitch)))) t)
-        )))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-  (use-package org-indent
-    :ensure nil)
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-  (make-face 'my-org-bullets-face)
-  (use-package org-bullets
-    :after org
-    :custom
-    (org-bullets-face-name 'my-org-bullets-face)
-    :custom-face
-    (my-org-bullets-face ((t (:family "Sans Serif"))))
-    :hook
-    (org-mode . (lambda () (org-bullets-mode 1))))
+           org-drawers '("PROPERTIES" "CLOCK" "LOGBOOK" "RESULTS" "NOTES")))
 #+END_SRC
 
 * Programming Mode Stuff
@@ -523,8 +464,8 @@ I used the [[https://github.com/tonsky/FiraCode/wiki/Emacs-instructions][instruc
 *** Activate it automatically
 
 #+BEGIN_SRC emacs-lisp
-  (add-hook 'prog-mode-hook #'(lambda () (fira-code-mode 1)))
-  (add-hook 'c-mode-common-hook #'(lambda () (fira-code-mode 1)))
+  ;;(add-hook 'prog-mode-hook #'(lambda () (fira-code-mode 1)))
+  ;;(add-hook 'c-mode-common-hook #'(lambda () (fira-code-mode 1)))
 #+END_SRC
 
 * Miscellaneous Utility Stuff
@@ -613,15 +554,6 @@ I used the [[https://github.com/tonsky/FiraCode/wiki/Emacs-instructions][instruc
 
 * Key Bindings
 
-If I start hitting a key sequence and pause, this gives me a little hint window about what things I could type next. Handy!
-
-#+BEGIN_SRC emacs-lisp
-  (use-package which-key
-    :defer nil
-    :config
-    (which-key-mode))
-#+END_SRC
-
 Some random key preferences.
 
 #+BEGIN_SRC emacs-lisp
@@ -656,20 +588,6 @@ Some random key preferences.
     ("C-x g" . magit-status))
   (bind-keys :map text-mode-map
     ("C-c f" . fundamental-mode))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-  (when (fboundp 'windmove-default-keybindings)
-    (windmove-default-keybindings))
-#+END_SRC
-
-Put Oblique Strategies on ~C-c o~:
-
-#+BEGIN_SRC emacs-lisp
-  ;; Eno's Oblique Strategies.
-  (autoload 'os-insert "oblique" nil t)
-  ; C-c o is a user key.
-  (bind-keys :map text-mode-map ("C-c o" . os-insert))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
