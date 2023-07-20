@@ -24,23 +24,6 @@
  '(icomplete-mode t nil (icomplete))
  '(mouse-avoidance-mode 'jump nil (avoid))
  '(mouse-wheel-mode t)
- '(package-archives '(("melpa-stable" . "http://stable.melpa.org/packages/")))
- '(package-selected-packages
-   '(cmake-mode
-     ;; csound-mode
-     editorconfig
-     flx-ido
-     go-mode 
-     ;; haskell-mode
-     json-mode
-     magit
-     markdown-mode
-     php-mode 
-     solarized-theme
-     swift-mode
-     typescript-mode
-     use-package 
-     yaml-mode))
  '(partial-completion-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

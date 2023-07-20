@@ -90,27 +90,33 @@ Set up the default window size.
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-;;  (use-package color-theme-sanityinc-solarized
-;;  :config
-;;  (load-theme 'sanityinc-solarized-dark))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
   (use-package editorconfig
     :config
     (editorconfig-mode 1))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
   (use-package ido
     :config
     (ido-mode t))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
+  (use-package flx-ido)
   (use-package hl-line
     :config
     (global-hl-line-mode 1))
+  (use-package midnight
+    :defer 3
+    :config
+    (setq midnight-period 7200)
+    (midnight-mode 1))
+  (use-package subword
+    :config
+    (global-subword-mode 1))
+  (use-package solarized-theme)
+  (use-package cmake-mode)
+  (use-package go-mode)
+  (use-package json-mode)
+  (use-package markdown-mode)
+  (use-package php-mode)
+  (use-package swift-mode)
+  (use-package typescript-mode)
+  (use-package yaml-mode)
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -118,20 +124,6 @@ Set up the default window size.
     (lambda () (goto-address-mode 1)))
   (my-global-goto-address-mode 1)
   (setq goto-address-highlight-p t)
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-  (use-package midnight
-    :defer 3
-    :config
-    (setq midnight-period 7200)
-    (midnight-mode 1))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-  (use-package subword
-    :config
-    (global-subword-mode 1))
 #+END_SRC
 
 ** Making Backups
