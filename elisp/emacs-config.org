@@ -167,7 +167,7 @@ Emacs likes to make backup files, in ~filename~~ files. This is fine, but inside
 
 ** Customizations
 
-Load my customizations. This needs to come before the Org section below, because it sets up some face stuff that the Org stuff depends on. But it needs to happen after the color theme is loaded, up above.
+Load my customizations.
 
 #+BEGIN_SRC emacs-lisp
   (setq custom-file (expand-file-name "custom.el" bcox-elisp-dir))
@@ -374,11 +374,10 @@ You can use display tables to make certain characters display in different faces
 #+END_SRC
 
 * Fonts and such
-** Global Font-Lock and Prettify Symbols
+** Global Font-Lock
 
 #+BEGIN_SRC emacs-lisp
   (global-font-lock-mode 1)
-  (global-prettify-symbols-mode 1)
 #+END_SRC
 
 * Miscellaneous Utility Stuff
