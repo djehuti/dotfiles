@@ -446,7 +446,7 @@ You can use display tables to make certain characters display in different faces
      (list (read-from-minibuffer "mosh " nil nil nil 'my-mosh-history)))
     (let* ((switches (split-string-and-unquote args))
            (name (concat "mosh " args))
-           (termbuf (apply 'make-term name "/usr/local/bin/mosh" nil switches)))
+           (termbuf (apply 'make-term name "/usr/bin/mosh" nil switches)))
       (set-buffer termbuf)
       (term-mode)
       (term-char-mode)
