@@ -6,3 +6,4 @@ xcuserdata
 .idea
 *.iml
 .nova
+.dir-locals.el

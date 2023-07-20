@@ -11,7 +11,6 @@
         - { src: 'dircolors',        dest: 'dircolors' }
         - { src: 'editorconfig',     dest: 'editorconfig' }
         - { src: 'elisp',            dest: 'elisp' }
-        - { src: 'emacs',            dest: 'emacs' }
         - { src: 'gitconfig',        dest: 'gitconfig' }
         - { src: 'gitignore',        dest: 'gitignore.global' }
         - { src: 'inputrc',          dest: 'inputrc' }
@@ -25,6 +24,8 @@
         - { src: 'zshenv',           dest: 'zshenv' }
         - { src: 'zshrc',            dest: 'zshrc' }
         - { src: 'zpreztorc',        dest: 'zpreztorc' }
+    - name: copy .emacs to home
+      copy: src={{ dotfiles }}/emacs dest=~/.emacs backup=true
     - name: create .zinit.d directory
       file: path=~/.zinit.d state=directory
     - name: link zinit.d files to home

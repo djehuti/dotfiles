@@ -58,13 +58,7 @@ Set up some very basic Emacs behavior options: no startup message/screen, no ini
   (setq-default indicate-empty-lines t)
 #+END_SRC
 
-On Windows, I want to use the "Apps" key as Super.
-
-#+BEGIN_SRC emacs-lisp
-  (if (eq system-type 'windows-nt)
-      (progn
-        (setq w32-apps-modifier 'super)))
-#+END_SRC
+Set up the default window size.
 
 #+BEGIN_SRC emacs-lisp
   (add-to-list 'default-frame-alist '(width  . 100))
@@ -74,18 +68,9 @@ On Windows, I want to use the "Apps" key as Super.
 ** Miscellaneous packages and prefs
 
 #+BEGIN_SRC emacs-lisp
-  (defvar bcox-copyright-org (if (eq bcox-emacs-mode 'home)
-                               "Ben Cox"
-                             "Apple, Inc.")
-    "Copyright owner to insert in copyright notices.")
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
   (require 'package)
   (customize-set-variable 'package-archives
                           '(("melpa-stable" . "http://stable.melpa.org/packages/")
-                            ("melpa" . "http://melpa.org/packages/")
-                            ("gnu-devel" . "https://elpa.gnu.org/devel/")
                             ))
   (package-initialize)
 
@@ -114,19 +99,6 @@ On Windows, I want to use the "Apps" key as Super.
   (use-package editorconfig
     :config
     (editorconfig-mode 1))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-  ;; (use-package projectile
-  ;;   :bind
-  ;;   ("s-p" . 'projectile-command-map)
-  ;;   ("C-c p" . 'projectile-command-map)
-  ;;   :config
-  ;;   (projectile-register-project-type 'bazel '("WORKSPACE")
-  ;;                                     :compile "bazel build //placeholder:target"
-  ;;                                     :test "bazel test //placeholder:target"
-  ;;                                     :run "bazel run //placeholder:target")
-  ;;   (projectile-global-mode))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -193,7 +165,6 @@ Emacs likes to make backup files, in ~filename~~ files. This is fine, but inside
   (setq backup-enable-predicate
         '(lambda (name)
            (cond ((< (length name) 5) t)
-                 ;; TODO(bcox): Make the /tmp things work on Windows.
                  ((string-equal "/tmp/" (substring name 0 5)) nil)
                  ((< (length name) 9) t)
                  ((string-equal "/usr/tmp/" (substring name 0 9)) nil)
@@ -462,7 +433,7 @@ You can use display tables to make certain characters display in different faces
         (goto-char (point-min))
         (insert
          (format
-          "Copyright %s, %d, All rights reserved.\n"
+          bcox-copyright-format
           bcox-copyright-org
           current-year))
         (comment-region (point-min) (point)))))
@@ -619,7 +590,6 @@ I used the [[https://github.com/tonsky/FiraCode/wiki/Emacs-instructions][instruc
     "Connect to a remote host with mosh, prompting in minibuffer for ARGS."
     (interactive
      (list (read-from-minibuffer "mosh " nil nil nil 'my-mosh-history)))
-    ;; TODO(bcox): Make this work on Windows too.
     (let* ((switches (split-string-and-unquote args))
            (name (concat "mosh " args))
            (termbuf (apply 'make-term name "/usr/local/bin/mosh" nil switches)))
@@ -632,7 +602,6 @@ I used the [[https://github.com/tonsky/FiraCode/wiki/Emacs-instructions][instruc
     "Connect to a remote host with ssh, prompting in minibuffer for ARGS."
     (interactive
      (list (read-from-minibuffer "ssh " nil nil nil 'my-ssh-history)))
-    ;; TODO(bcox): Make this work on Windows too.
     (let* ((switches `("-A" . ,(split-string-and-unquote args)))
            (name (concat "ssh " args))
            (termbuf (apply 'make-term name "/usr/bin/ssh" nil switches)))
