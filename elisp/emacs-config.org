@@ -378,86 +378,7 @@ You can use display tables to make certain characters display in different faces
 
 #+BEGIN_SRC emacs-lisp
   (global-font-lock-mode 1)
-;;  (global-prettify-symbols-mode 1)
-#+END_SRC
-
-** Using Fira Code
-
-[[https://github.com/tonsky/FiraCode][Fira Code]] is a monospaced font with programming ligatures, which I like a fair bit.  Unfortunately setting up ligatures in Emacs is non-trivial (unlike in VS Code and CLion/IntelliJ, where you just check a box).
-
-Unfortunately Emacs doesn't seem to be able to display /italics/ with Fira Code, so I also use Source Code Pro for italic faces (like for comments and such).
-
-I used the [[https://github.com/tonsky/FiraCode/wiki/Emacs-instructions][instructions on this page]] to get this working.
-
-#+BEGIN_SRC emacs-lisp
-  (defun fira-code-mode--make-alist (list)
-    "Generate prettify-symbols alist from LIST."
-    (let ((idx -1))
-      (mapcar
-       (lambda (s)
-         (setq idx (1+ idx))
-         (let* ((code (+ #Xe100 idx))
-            (width (string-width s))
-            (prefix ())
-            (suffix '(?\s (Br . Br)))
-            (n 1))
-       (while (< n width)
-         (setq prefix (append prefix '(?\s (Br . Bl))))
-         (setq n (1+ n)))
-       (cons s (append prefix suffix (list (decode-char 'ucs code))))))
-       list)))
-
-  (defconst fira-code-mode--ligatures
-    '("www" "**" "***" "**/" "*>" "*/" "\\\\" "\\\\\\"
-      "{-" "[]" "::" ":::" ":=" "!!" "!=" "!==" "-}"
-      "--" "---" "-->" "->" "->>" "-<" "-<<" "-~"
-      "#{" "#[" "##" "###" "####" "#(" "#?" "#_" "#_("
-      ".-" ".=" ".." "..<" "..." "?=" "??" ";;" "/*"
-      "/**" "/=" "/==" "/>" "//" "///" "&&" "||" "||="
-      "|=" "|>" "^=" "$>" "++" "+++" "+>" "=:=" "=="
-      "===" "==>" "=>" "=>>" "<=" "=<<" "=/=" ">-" ">="
-      ">=>" ">>" ">>-" ">>=" ">>>" "<*" "<*>" "<|" "<|>"
-      "<$" "<$>" "<!--" "<-" "<--" "<->" "<+" "<+>" "<="
-      "<==" "<=>" "<=<" "<>" "<<" "<<-" "<<=" "<<<" "<~"
-      "<~~" "</" "</>" "~@" "~-" "~=" "~>" "~~" "~~>" "%%"
-      "x" ":" "+" "+" "*"))
-
-  (defvar fira-code-mode--old-prettify-alist)
-
-  (defun fira-code-mode--enable ()
-    "Enable Fira Code ligatures in current buffer."
-    (setq-local fira-code-mode--old-prettify-alist prettify-symbols-alist)
-    (setq-local prettify-symbols-alist
-                (append (fira-code-mode--make-alist fira-code-mode--ligatures)
-                        fira-code-mode--old-prettify-alist))
-    (prettify-symbols-mode t))
-
-  (defun fira-code-mode--disable ()
-    "Disable Fira Code ligatures in current buffer."
-    (setq-local prettify-symbols-alist fira-code-mode--old-prettify-alist)
-    (prettify-symbols-mode -1))
-
-  (define-minor-mode fira-code-mode
-    "Fira Code ligatures minor mode"
-    :lighter " Fira"
-    (setq-local prettify-symbols-unprettify-at-point 'right-edge)
-    (if fira-code-mode
-        (fira-code-mode--enable)
-      (fira-code-mode--disable)))
-
-  (defun fira-code-mode--setup ()
-    "Setup Fira Code Symbols"
-    (set-fontset-font t '(#Xe100 . #Xe16f) "Fira Code Symbol"))
-  (fira-code-mode--setup)
-
-  (provide 'fira-code-mode)
-#+END_SRC
-
-*** Activate it automatically
-
-#+BEGIN_SRC emacs-lisp
-  ;;(add-hook 'prog-mode-hook #'(lambda () (fira-code-mode 1)))
-  ;;(add-hook 'c-mode-common-hook #'(lambda () (fira-code-mode 1)))
+  (global-prettify-symbols-mode 1)
 #+END_SRC
 
 * Miscellaneous Utility Stuff
@@ -587,7 +508,7 @@ Some random key preferences.
   (defun set-n-columns (n)
     "Make the current frame N columns wide."
     (interactive "p")
-    (if (= n 1) (setq n 80))
+    (if (= n 1) (setq n 100))
     (modify-frame-parameters (selected-frame) (list (cons 'width n))))
   (defun set-n-rows (n)
     "Make the current frame N rows high."
