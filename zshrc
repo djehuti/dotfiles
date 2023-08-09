@@ -19,22 +19,16 @@ set -o emacs
 alias a=alias
 alias h=history
 alias j=jobs
-alias siri="sudo"
-alias tags="tools/actions/generate_compile_commands_json.py"
 
 PAGER=less
 LESS="-XRFM"
 
 export PAGER LESS
 
-if [ "`uname`" = "Darwin" ]; then
-    compctl -f -x 'p[2]' -s "`/bin/ls -d1 /Applications/*.app | sed 's|^.*/\([^/]*\)\.app.*|\\1|;s/ /\\\\ /g'`" -- open
-    alias run='open -a'
-fi
+cdpath=( "${HOME}" "${HOME}/src" )
+cdpath+=( "${HOME}/src/github.com" "${HOME}/src/github.com/djehuti" )
 
-cdpath=( ${HOME} ${HOME}/src ${HOME}/source )
-
-#PS1='%F{green}%!%f %B%F{blue}%1~%#%f%b '
+PS1='%F{green}%!%f %B%F{blue}%1~%#%f%b '
 
 if [ -d ${HOME}/.zinit.d/ ]; then
     for f in ${HOME}/.zinit.d/[0-9]* ; do
