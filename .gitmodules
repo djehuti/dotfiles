@@ -1,9 +1,6 @@
 [submodule "tmux/plugins/maglev"]
 	path = tmux/plugins/maglev
 	url = https://git::@github.com/caiogondim/maglev
-[submodule "tmux/plugins/tmux-copycat"]
-	path = tmux/plugins/tmux-copycat
-	url = https://git::@github.com/tmux-plugins/tmux-copycat
 [submodule "tmux/plugins/tpm"]
 	path = tmux/plugins/tpm
 	url = https://github.com/tmux-plugins/tpm
