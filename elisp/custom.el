@@ -7,7 +7,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes '(solarized-dark))
+ '(custom-enabled-themes '(solarized-light))
  '(eshell-prompt-function
    (lambda nil
      (concat
@@ -24,13 +24,15 @@
  '(icomplete-mode t nil (icomplete))
  '(mouse-avoidance-mode 'jump nil (avoid))
  '(mouse-wheel-mode t)
+ '(package-selected-packages
+   '(rust-mode sudo-edit yaml-mode typescript-mode swift-mode php-mode markdown-mode json-mode go-mode cmake-mode solarized-theme flx-ido editorconfig use-package))
  '(partial-completion-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:height 110 :family "Noto Mono"))))
+ '(default ((t (:height 120 :family "Iosevka"))))
  '(cursor ((t (:background "#ff0000")))))
 
 ;;; custom.el ends here
