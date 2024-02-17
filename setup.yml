@@ -15,14 +15,12 @@
         - { src: 'gitconfig',        dest: 'gitconfig' }
         - { src: 'gitignore.global', dest: 'gitignore.global' }
         - { src: 'inputrc',          dest: 'inputrc' }
-        - { src: 'prezto',           dest: 'zprezto' }
         - { src: 'scriptlib',        dest: 'scriptlib' }
         - { src: 'tmux.conf',        dest: 'tmux.conf' }
         - { src: 'tmux',             dest: 'tmux' }
         - { src: 'vim',              dest: 'vim' }
         - { src: 'zshenv',           dest: 'zshenv' }
         - { src: 'zshrc',            dest: 'zshrc' }
-        - { src: 'zpreztorc',        dest: 'zpreztorc' }
     - name: copy .emacs to home
       copy: src={{ dotfiles }}/emacs dest=~/.emacs backup=true
     - name: create .zinit.d directory

@@ -1,4 +1,4 @@
-set completion-ignore-case off
+set completion-ignore-case on
 "\C-xp": "PATH=${PATH}\e\C-e\C-a\ef\C-f"
 "\C-xv": "\C-a\C-k$\C-y\M-\C-e\C-a\C-y="
 "\e[5C": forward-word
