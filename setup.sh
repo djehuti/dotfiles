@@ -2,8 +2,6 @@
 
 set -euo pipefail
 
-source ./setup-platform.sh
-
 # The name of the ansible-playbook command.
 ANS=ansible-playbook
 
