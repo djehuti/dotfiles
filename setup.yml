@@ -2,21 +2,20 @@
 - hosts: localhost
   user: bcox
   tasks:
+    - name: link ... to dotfile repo
+      file: src={{ dotfiles }} dest=~/... state=link
     - name: link dotfiles to home
-      file: src={{ dotfiles }}/{{ item.src }} dest=~/.{{ item.dest }} state=link
+      file: src=.../{{ item.src }} dest=~/.{{ item.dest }} state=link
       with_items:
-        - { src: 'Xresources',       dest: 'Xresources' }
         - { src: 'bash_profile',     dest: 'bash_profile' }
         - { src: 'bashrc',           dest: 'bashrc' }
         - { src: 'dircolors',        dest: 'dircolors' }
         - { src: 'editorconfig',     dest: 'editorconfig' }
         - { src: 'elisp',            dest: 'elisp' }
         - { src: 'gitconfig',        dest: 'gitconfig' }
-        - { src: 'gitignore',        dest: 'gitignore.global' }
+        - { src: 'gitignore.global', dest: 'gitignore.global' }
         - { src: 'inputrc',          dest: 'inputrc' }
-        - { src: 'iterm2_tmux.conf', dest: 'iterm2_tmux.conf' }
         - { src: 'prezto',           dest: 'zprezto' }
-        - { src: 'screenrc',         dest: 'screenrc' }
         - { src: 'scriptlib',        dest: 'scriptlib' }
         - { src: 'tmux.conf',        dest: 'tmux.conf' }
         - { src: 'tmux',             dest: 'tmux' }
@@ -28,8 +27,10 @@
       copy: src={{ dotfiles }}/emacs dest=~/.emacs backup=true
     - name: create .zinit.d directory
       file: path=~/.zinit.d state=directory
+    - name: link zinit.d/... to repo
+      file: src=../.../zinit.d dest=~/.zinit.d/... state=link
     - name: link zinit.d files to home
-      file: src={{ dotfiles }}/zinit.d/{{ item.src }} dest=~/.zinit.d/{{ item.dest }} state=link
+      file: src=.../{{ item.src }} dest=~/.zinit.d/{{ item.dest }} state=link
       with_items:
         - { src: '10detect_ide',                dest: '10detect_ide' }
         - { src: '20scriptlib',                 dest: '20scriptlib' }
@@ -41,9 +42,9 @@
         - { src: '90prezto',                    dest: '90prezto' }
         - { src: '91dircolors',                 dest: '91dircolors' }
     - name: create bin directory
-      file: path=~/bin state=directory
+      file: path=~/.local/bin state=directory
     - name: link bin files into home
-      file: src={{ dotfiles }}/bin/{{ item.src }} dest=~/bin/{{ item.dest }} state=link
+      file: src={{ dotfiles }}/bin/{{ item.src }} dest=~/.local/bin/{{ item.dest }} state=link
       with_items:
         - { src: 'python',               dest: 'python' }
         - { src: 'launch',               dest: 'launch' }

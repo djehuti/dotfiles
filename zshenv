@@ -1,3 +1,4 @@
+# -*-mode:shell-script-*-
 #---------------------------
 # ZSH startup:
 #
@@ -11,7 +12,7 @@
 # 4u. IF LOGIN: ~/.zlogin
 #---------------------------
 
-PATH="${HOME}/bin:${PATH}"
+PATH="${HOME}/.local/bin:${PATH}"
 
 EDITOR=emacsclient
 ALTERNATE_EDITOR=""
@@ -24,9 +25,5 @@ unset LS_COLORS
 }
 
 [[ -f "${HOME}/.cargo/env" ]] && {
-. "$HOME/.cargo/env"
-}
-
-[[ -v XDG_RUNTIME_DIR ]] && [[ -S ${XDG_RUNTIME_DIR}/gcr/ssh ]] && {
-    export SSH_AUTH_SOCK=${XDG_RUNTIME_DIR}/gcr/ssh
+    . "$HOME/.cargo/env"
 }

@@ -1,6 +1,4 @@
 # -*-mode:shell-script-*-
-# ~/Dropbox/dotfiles/zshrc
-
 #---------------------------
 # ZSH startup:
 #
