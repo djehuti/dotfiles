@@ -28,7 +28,11 @@ export PAGER LESS
 cdpath=( "${HOME}" "${HOME}/src" )
 cdpath+=( "${HOME}/src/github.com" "${HOME}/src/github.com/djehuti" )
 
-PS1='%F{green}%!%f %B%F{blue}%1~%#%f%b '
+if [ -n "${CONTAINER_ID}" ]; then
+    PS1='%F{green}%!%f %B%F{red}['"${CONTAINER_ID}"']%f%b %B%F{blue}%1~%#%f%b '
+else
+    PS1='%F{green}%!%f %B%F{blue}%1~%#%f%b '
+fi
 
 if [ -d ${HOME}/.zinit.d/ ]; then
     for f in ${HOME}/.zinit.d/[0-9]* ; do
@@ -36,3 +40,5 @@ if [ -d ${HOME}/.zinit.d/ ]; then
     done
     unset f
 fi
+
+echo $(hostname):$(uptime)
