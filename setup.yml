@@ -34,7 +34,6 @@
         - { src: '20scriptlib',                 dest: '20scriptlib' }
         - { src: '35gopath',                    dest: '35gopath' }
         - { src: '40homebrew',                  dest: '40homebrew' }
-        - { src: '50pythonpath',                dest: '50pythonpath' }
         - { src: '51nvm',                       dest: '51nvm' }
         - { src: '55direnv',                    dest: '55direnv' }
         - { src: '90prezto',                    dest: '90prezto' }
@@ -44,11 +43,8 @@
     - name: link bin files into home
       file: src={{ dotfiles }}/bin/{{ item.src }} dest=~/.local/bin/{{ item.dest }} state=link
       with_items:
-        - { src: 'python',               dest: 'python' }
         - { src: 'launch',               dest: 'launch' }
         - { src: 'ctw',                  dest: 'ctw' }
         - { src: 'gbv',                  dest: 'gbv' }
         - { src: 'signal',               dest: 'signal' }
         - { src: 'waitfor',              dest: 'waitfor' }
-        - { src: 'check_workspaces',     dest: 'check_workspaces' }
-        - { src: 'git_workspace_status', dest: 'git_workspace_status' }

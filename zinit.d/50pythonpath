@@ -1,5 +1,0 @@
-# Add ~/bin/python to PYTHONPATH
-
-MYPYTHONDIR="${HOME}/bin/python"
-PYTHONPATH="${MYPYTHONDIR}${PYTHONPATH+:}${PYTHONPATH}"
-export PYTHONPATH
