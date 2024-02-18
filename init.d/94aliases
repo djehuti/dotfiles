@@ -1,0 +1,10 @@
+# -*-mode:shell-script-*-
+alias a=alias
+alias h=history
+alias j=jobs
+
+alias ls='ls -NF --color=auto'
+
+alias l=ls
+alias ll='ls -l'
+alias la='ll -A'

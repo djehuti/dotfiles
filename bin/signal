@@ -2,6 +2,16 @@
 
 pipe=/tmp/signalpipe
 
+# Usage:
+#   signal [PIPENAME [MESSAGE]]
+# Sends the message "MESSAGE" (default "quit") to the named pipe
+# named PIPENAME (default /tmp/signalpipe), which must exist.
+#
+# In one terminal:
+#     make; signal buildisdone
+# In another:
+#     waitfor buildisdone; tput bel
+
 if [[ "$1" ]]; then
     pipe="$1"
     shift

@@ -1,2 +1,3 @@
+# -*-mode:shell-script-*-
 export GOPATH="${HOME}/src/go"
 PATH="${GOPATH}/bin:${PATH}"

@@ -1,0 +1,2 @@
+# -*-mode:shell-script-*-
+PATH="${HOME}/.local/bin:${PATH}"

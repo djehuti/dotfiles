@@ -1,0 +1,4 @@
+# -*-mode:shell-script-*-
+[[ -f "${HOME}/.cargo/env" ]] && {
+    . "$HOME/.cargo/env"
+}

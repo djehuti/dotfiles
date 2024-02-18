@@ -2,6 +2,17 @@
 
 pipe=/tmp/signalpipe
 
+# Usage:
+#     waitfor [PIPENAME]
+# Creates the named pipe named PIPENAME, and waits for a message on it.
+# If the message it receives is "quit" then it exits with status 0 (success).
+# If the message is anything else, it exits with status 1 (failure).
+#
+# In one terminal:
+#     make; signal buildisdone
+# In another:
+#     waitfor buildisdone; tput bel
+
 if [[ "$1" ]] ; then
     pipe="$1"
     shift

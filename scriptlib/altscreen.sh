@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# This is a dumb example script using the djehuti::term library.
+
 source "${DJEHUTI_SCRIPTLIB:-"${HOME}/.scriptlib"}/init"
 
 djehuti::load term
@@ -36,7 +38,7 @@ djehuti::term::end_altscreen
 escapedkey="$(echo -ne "${keystroke}" | sed -e $'s/\e/\\\\e/g')"
 echo "You pressed '${escapedkey}'."
 
-# cub1 doesn't work because `tput cub1` returns `\b`.
+# Can't do left arrow: cub1 doesn't work because `tput cub1` returns `\b`.
 if [[ "${keystroke}" == "$(tput cuf1)" ]]; then
     echo "It was the right arrow key, wasn't it?"
 fi

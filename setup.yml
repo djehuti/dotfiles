@@ -4,6 +4,7 @@
   tasks:
     - name: link ... to dotfile repo
       file: src={{ dotfiles }} dest=~/... state=link
+
     - name: link dotfiles to home
       file: src=.../{{ item.src }} dest=~/.{{ item.dest }} state=link
       with_items:
@@ -19,25 +20,36 @@
         - { src: 'tmux.conf',        dest: 'tmux.conf' }
         - { src: 'tmux',             dest: 'tmux' }
         - { src: 'vim',              dest: 'vim' }
-        - { src: 'zshenv',           dest: 'zshenv' }
         - { src: 'zshrc',            dest: 'zshrc' }
+
     - name: copy .emacs to home
       copy: src={{ dotfiles }}/emacs dest=~/.emacs backup=true
-    - name: create .zinit.d directory
-      file: path=~/.zinit.d state=directory
-    - name: link zinit.d/... to repo
-      file: src=../.../zinit.d dest=~/.zinit.d/... state=link
-    - name: link zinit.d files to home
-      file: src=.../{{ item.src }} dest=~/.zinit.d/{{ item.dest }} state=link
+
+    - name: create .local/share/shell
+      file: path=~/.local/share/shell state=directory
+
+    - name: create .init.d directory
+      file: path=~/.init.d state=directory
+    - name: link ~/.init.d/... to repo
+      file: src=../.../init.d dest=~/.init.d/... state=link
+    - name: link init.d files to home
+      file: src=.../{{ item.src }} dest=~/.init.d/{{ item.dest }} state=link
       with_items:
+        - { src: '00locale',                    dest: '00locale' }
+        - { src: '00path',                      dest: '00path' }
+        - { src: '01editor',                    dest: '01editor' }
+        - { src: '02env',                       dest: '02env' }
+        - { src: '03history',                   dest: '03history' }
         - { src: '10detect_ide',                dest: '10detect_ide' }
         - { src: '20scriptlib',                 dest: '20scriptlib' }
         - { src: '35gopath',                    dest: '35gopath' }
-        - { src: '40homebrew',                  dest: '40homebrew' }
+        - { src: '51ansible',                   dest: '51ansible' }
+        - { src: '51cargo',                     dest: '51cargo' }
         - { src: '51nvm',                       dest: '51nvm' }
         - { src: '55direnv',                    dest: '55direnv' }
-        - { src: '90prezto',                    dest: '90prezto' }
         - { src: '91dircolors',                 dest: '91dircolors' }
+        - { src: '94aliases',                   dest: '94aliases' }
+
     - name: create bin directory
       file: path=~/.local/bin state=directory
     - name: link bin files into home

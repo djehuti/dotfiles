@@ -1,0 +1,18 @@
+# -*-mode:shell-script-*-
+this_shell=$(basename $(ps -p $$ -o exe=))
+case "${this_shell}" in
+  zsh)
+    HISTSIZE=10000
+    SAVEHIST=10000
+    HISTFILE=~/.zsh_history
+    setopt appendhistory
+    ;;
+  bash)
+    HISTSIZE=100000
+    HISTFILE=~/.bash_history
+    shopt -s histappend
+    ;;
+  *)
+    ;;
+esac
+unset this_shell

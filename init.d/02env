@@ -1,0 +1,4 @@
+# -*-mode:shell-script-*-
+PAGER=less
+LESS="-XRFM"
+export PAGER LESS

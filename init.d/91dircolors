@@ -1,3 +1,4 @@
+# -*-mode:shell-script-*-
 hash dircolors >/dev/null 2>&1 && {
 	eval $(dircolors ~/.dircolors)
 }

@@ -1,0 +1,4 @@
+# -*-mode:shell-script-*-
+[[ -f ${HOME}/.ansible_hosts ]] && {
+    export ANSIBLE_INVENTORY=${HOME}/.ansible_hosts
+}

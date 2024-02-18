@@ -1,0 +1,5 @@
+# -*-mode:shell-script-*-
+set -o emacs
+EDITOR=emacsclient
+ALTERNATE_EDITOR=""
+export EDITOR ALTERNATE_EDITOR

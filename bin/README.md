@@ -2,31 +2,6 @@
 
 This directory contains a few posibly-useful things.
 
-  * `check_workspaces`
-  * `git_workspace_status`
-
-These are a couple of Python scripts for managing multiple
-workspaces, which depend on the `djehuti.git` package from my
-[`dotfiles` repo][dotfiles]. (TODO: Move that into this repo, or merge these
-repos altogether.)
-
-The `check_workspaces` script should be run from within a git repo
-working directory. It will find the root of the repo (if this is a
-`git-new-workdir` repo, it will change to root of the main copy of the
-repo) and run `git branch -vv` there, which lists all of the local
-branches, their upstreams, and their ahead/behind statuses. It then
-prints a summary of all of the working directories for this repo
-(assuming they are all sibling subdirectories of a common directory)
-and which branch they have checked out. (This is so you can avoid
-checking the same branch out on two workdirs at once, which can lead
-to a confusing situation.)
-
-The `git_workspace_status` script is intended to be run in a separate
-window and left open all the time (maybe in a tmux session...). It
-repeatedly runs `check_workspaces` and then `git fetch --all --prune`,
-then waits a while and does it again. This keeps your repo up-to-date
-(without actually updating any local branches) constantly.
-
   * `ctw`
   * `gbv`
 
@@ -40,6 +15,7 @@ it will cut it off at 80 columns instead of wrapping. `gbv` just runs
 
 Running `launch X` is the same as running
 `(nohup X < /dev/null > /dev/null 2>&1 &)`.
+except that it does dbus stuff.
 Handy for running gnome apps from your terminal and detaching them.
 
   * `waitfor`

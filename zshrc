@@ -12,28 +12,22 @@
 # 4u. IF LOGIN: ~/.zlogin
 #---------------------------
 
-set -o emacs
-
-alias a=alias
-alias h=history
-alias j=jobs
-
-PAGER=less
-LESS="-XRFM"
-
-export PAGER LESS
-
 cdpath=( "${HOME}" "${HOME}/src" )
 cdpath+=( "${HOME}/src/github.com" "${HOME}/src/github.com/djehuti" )
 
-if [ -n "${CONTAINER_ID}" ]; then
-    PS1='%F{green}%!%f %B%F{red}['"${CONTAINER_ID}"']%f%b %B%F{blue}%1~%#%f%b '
+if [ "${TERM}" = "dumb" ]; then
+    PS1='%! %1~%# '
 else
-    PS1='%F{green}%!%f %B%F{blue}%1~%#%f%b '
+    if [ -n "${CONTAINER_ID}" ]; then
+        PS1='%F{green}%!%f %B%F{red}['"${CONTAINER_ID}"']%f%b %B%F{blue}%1~%#%f%b '
+    else
+        # green history number; bold blue path (last component) and % (or #)
+        PS1='%F{green}%!%f %B%F{blue}%1~%#%f%b '
+    fi
 fi
 
-if [ -d ${HOME}/.zinit.d/ ]; then
-    for f in ${HOME}/.zinit.d/[0-9]* ; do
+if [ -d ${HOME}/.init.d/ ]; then
+    for f in ${HOME}/.init.d/[0-9]* ; do
         source "$f"
     done
     unset f

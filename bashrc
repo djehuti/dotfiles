@@ -2,20 +2,23 @@
 
 # This is invoked for interactive non-login shells.
 
+CDPATH="${HOME}:${HOME}/src:${HOME}/src/github.com:${HOME}/src/github.com/djehuti"
+
 if [ "${TERM}" == "dumb" ]; then
-    export PS1='${HOSTNAME%%.*}\$ '
+    PS1='\! \W\$ '
 else
-    export PS1='\[\e[34;1m\]\W\$\[\e[0m\] '
+    if [ -n "${CONTAINER_ID}" ]; then
+        PS1='\[\e[32m\]\!\[\e[0m\] \[\e[31;1m\][${CONTAINER_ID}]\[\e[0m\] \[\e[34;1m\]\W\$\[\e[0m\] '
+    else
+        PS1='\[\e[32m\]\!\[\e[0m\] \[\e[34;1m\]\W\$\[\e[0m\] '
+    fi
 fi
 
-export HISTSIZE=100000
-shopt -s histappend
+if [ -d ${HOME}/.init.d/ ]; then
+    for f in ${HOME}/.init.d/[0-9]* ; do
+        source "$f"
+    done
+    unset f
+fi
 
-alias a=alias
-alias h=history
-alias j=jobs
-
-alias l="ls -NF --color=tty"
-alias ls="ls -NF --color=tty"
-alias la="ls -AF --color=tty"
-alias ll="ls -lNF --color=tty"
+echo $(hostname):$(uptime)

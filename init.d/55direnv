@@ -1,0 +1,5 @@
+# -*-mode:shell-script-*-
+if type direnv > /dev/null; then
+    this_shell=$(basename $(ps -p $$ -o exe=))
+    eval "$(direnv hook $(basename "${this_shell}"))"
+fi
