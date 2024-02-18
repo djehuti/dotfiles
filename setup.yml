@@ -25,9 +25,6 @@
     - name: copy .emacs to home
       copy: src={{ dotfiles }}/emacs dest=~/.emacs backup=true
 
-    - name: create .local/share/shell
-      file: path=~/.local/share/shell state=directory
-
     - name: create .init.d directory
       file: path=~/.init.d state=directory
     - name: link ~/.init.d/... to repo
