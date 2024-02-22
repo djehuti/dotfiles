@@ -20,5 +20,3 @@ if [ -d ${HOME}/.init.d/ ]; then
     done
     unset f
 fi
-
-echo $(hostname):$(uptime)

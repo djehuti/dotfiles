@@ -30,7 +30,7 @@
     - name: link ~/.init.d/... to repo
       file: src=../.../init.d dest=~/.init.d/... state=link
     - name: link init.d files to home
-      file: src=.../{{ item.src }} dest=~/.init.d/{{ item.dest }} state=link
+      file: src=.../{{ item.src }} dest=~/.init.d/{{ item.dest }} state=link force=yes
       with_items:
         - { src: '00locale',                    dest: '00locale' }
         - { src: '00path',                      dest: '00path' }

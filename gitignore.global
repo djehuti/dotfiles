@@ -7,3 +7,4 @@ xcuserdata
 *.iml
 .nova
 .dir-locals.el
+.user-local-files
