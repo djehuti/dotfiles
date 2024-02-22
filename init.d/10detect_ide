@@ -14,3 +14,7 @@
 [[ "${TERM}" == "dumb" ]] || [[ "${TERM}" == "eterm-color" ]] && {
     export INSIDE_IDE=1
 }
+
+[[ "${INSIDE_IDE}" = "1" ]] && {
+    unset EDITOR
+}
