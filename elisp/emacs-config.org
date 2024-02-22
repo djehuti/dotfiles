@@ -472,7 +472,7 @@ Some random key preferences.
   (bind-keys*
     ("C-x C-b" . ibuffer)
     ("C-x f" . auto-fill-mode)
-    ;; ("M-o" . overwrite-mode)
+    ("M-o" . overwrite-mode)
     ("C-x %" . query-replace-regexp)
     ("<delete>" . delete-char)
     ("<end>" . end-of-line)

@@ -6,7 +6,6 @@
 	branch = always
 [core]
 	excludesfile = /home/bcox/.gitignore.global
-	editor = emacsclient
 [mergetool "meld"]
     cmd = meld \"$LOCAL\" \"$MERGED\" \"$REMOTE\" --output \"$MERGED\"
     #cmd = meld \"$LOCAL\" \"$BASE\" \"$REMOTE\" --output \"$MERGED\"
