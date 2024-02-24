@@ -5,29 +5,6 @@ Host *
     SendEnv TERM_PROGRAM
     SendEnv COLORTERM
 
-Host djehuti.com
-    User djehuti
-
-Host netpi.home.djehuti.com
+Host *pi *pi.local *pi.home.djehuti.com *pi-wifi.home.djehuti.com
     User pi
 
-Host netpi-wifi.home.djehuti.com
-    User pi
-
-Host netpi
-    User pi
-
-Host netpi-wifi
-    User pi
-
-Host minerpi.home.djehuti.com
-    User pi
-
-Host minerpi-wifi.home.djehuti.com
-    User pi
-
-Host minerpi
-    User pi
-
-Host minerpi-wifi
-    User pi

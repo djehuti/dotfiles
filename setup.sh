@@ -8,10 +8,6 @@ ANS=ansible-playbook
 DOTFILES_DIRECTORY="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # echo "Dotfile directory is at '${DOTFILES_DIRECTORY}'."
 
-hash zsh 2>/dev/null || {
-    echo "You don't seem to have zsh installed; don't forget to do that."
-}
-
 hash $ANS 2>/dev/null || {
     echo "This script requires that $ANS be installed and on path."
     echo "You should probably 'sudo pip install ansible'."
