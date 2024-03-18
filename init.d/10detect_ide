@@ -1,20 +1,20 @@
 # -*-mode:shell-script-*-
 
+export INSIDE_IDE="false"
+
 # Detect JetBrains IDEs
 [[ "${TERMINAL_EMULATOR}" == "JetBrains-JediTerm" ]] && {
-    export INSIDE_IDE=1
+    INSIDE_IDE="jetbrains"
+    unset EDITOR
 }
 
 # Now check for VS Code
 [[ "${TERM_PROGRAM}" == "vscode" ]] && {
-    export INSIDE_IDE=1
+    INSIDE_IDE="code"
+    EDITOR="code --wait"
 }
 
 # Now check for Emacs
 [[ "${TERM}" == "dumb" ]] || [[ "${TERM}" == "eterm-color" ]] && {
-    export INSIDE_IDE=1
-}
-
-[[ "${INSIDE_IDE}" = "1" ]] && {
-    unset EDITOR
+    INSIDE_IDE="emacs"
 }

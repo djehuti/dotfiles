@@ -25,7 +25,21 @@
  '(mouse-avoidance-mode 'jump nil (avoid))
  '(mouse-wheel-mode t)
  '(package-selected-packages
-   '(terraform-mode rust-mode sudo-edit yaml-mode typescript-mode swift-mode php-mode markdown-mode json-mode go-mode cmake-mode solarized-theme flx-ido editorconfig use-package))
+   '(cmake-mode
+     editorconfig
+     flx-ido
+     go-mode
+     json-mode
+     markdown-mode
+     php-mode
+     rust-mode
+     solarized-theme
+     sudo-edit
+     swift-mode
+     terraform-mode
+     typescript-mode
+     use-package
+     yaml-mode))
  '(partial-completion-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

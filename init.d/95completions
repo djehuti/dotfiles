@@ -1,0 +1,30 @@
+# -*-mode: shell-script-*-
+
+_basedir="/usr/share/bash-completion"
+_compdir="${_basedir}/completions"
+
+_install_completion() {
+    local compfile="$1"
+    local resolved="${_compdir}/${compfile}"
+    [[ -f "${resolved}" ]] && {
+        source "${resolved}"
+    }
+}
+
+[[ -d "${_basedir}" ]] && {
+    source "${_basedir}/bash_completion"
+    
+    _install_completion apt
+    _install_completion code
+    _install_completion git
+    _install_completion gh
+    _install_completion jq
+    _install_completion man
+    _install_completion python
+    _install_completion ssh
+    _install_completion sysctl
+}
+
+unset _basedir
+unset _compdir
+unset -f _install_completion

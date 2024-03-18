@@ -255,8 +255,8 @@ You can use display tables to make certain characters display in different faces
 #+BEGIN_SRC emacs-lisp
   ;; Display tab characters with an alternate background color, except in Go.
   (progn (make-face 'tab-face)
-         (set-face-foreground 'tab-face "#b58900")
-         (set-face-background 'tab-face "#073642")
+         (set-face-foreground 'tab-face "#eee8d5")
+         (set-face-background 'tab-face "#eee8d5")
          (set-face-attribute 'tab-face nil :box 't)
          (make-face 'cr-face)
          (set-face-foreground 'cr-face "#b58900")
