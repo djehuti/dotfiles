@@ -22,7 +22,7 @@ Set up some very basic Emacs behavior options: no startup message/screen, no ini
         ring-bell-function 'ignore
         use-dialog-box nil
         column-number-mode t
-        line-number-mode nil
+        line-number-mode t
         scroll-conservatively 500
         enable-recursive-minibuffers t
         minibuffer-max-depth nil
@@ -35,7 +35,7 @@ Set up some very basic Emacs behavior options: no startup message/screen, no ini
   (menu-bar-mode -1)
   (tool-bar-mode -1)
   (blink-cursor-mode -1)
-  (set-scroll-bar-mode nil)
+  (set-scroll-bar-mode 't)
 
   (setq-default line-move-visual nil)
 
@@ -61,63 +61,11 @@ Set up some very basic Emacs behavior options: no startup message/screen, no ini
 Set up the default window size.
 
 #+BEGIN_SRC emacs-lisp
-  (add-to-list 'default-frame-alist '(width  . 100))
-  (add-to-list 'default-frame-alist '(height .  50))
+  (add-to-list 'default-frame-alist '(width  . 120))
+  (add-to-list 'default-frame-alist '(height .  40))
 #+END_SRC
 
 ** Miscellaneous packages and prefs
-
-#+BEGIN_SRC emacs-lisp
-  (require 'package)
-  (customize-set-variable 'package-archives
-                          '(("melpa-stable" . "http://stable.melpa.org/packages/")
-                            ))
-  (package-initialize)
-
-  (when (not package-archive-contents)
-    (package-refresh-contents))
-
-  ;; manually install use-package package manager
-  (when (not (package-installed-p 'use-package))
-    (package-install 'use-package))
-
-  ;; configure use-package
-  (setq use-package-always-ensure t)  ;; always download and install packages
-  (setq use-package-always-pin "melpa-stable")  ;; prefer stable
-  (eval-when-compile
-    (require 'use-package))
-  (require 'bind-key)
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-  (use-package editorconfig
-    :config
-    (editorconfig-mode 1))
-  (use-package ido
-    :config
-    (ido-mode t))
-  (use-package flx-ido)
-  (use-package hl-line
-    :config
-    (global-hl-line-mode 1))
-  (use-package midnight
-    :defer 3
-    :config
-    (setq midnight-period 7200)
-    (midnight-mode 1))
-  (use-package subword
-    :config
-    (global-subword-mode 1))
-  (use-package solarized-theme)
-  (use-package cmake-mode)
-  (use-package go-mode)
-  (use-package json-mode)
-  (use-package markdown-mode)
-  (use-package php-mode)
-  (use-package swift-mode)
-  (use-package typescript-mode)
-  (use-package yaml-mode)
-#+END_SRC
 
 #+BEGIN_SRC emacs-lisp
   (define-globalized-minor-mode my-global-goto-address-mode goto-address-mode
@@ -255,12 +203,11 @@ You can use display tables to make certain characters display in different faces
 #+BEGIN_SRC emacs-lisp
   ;; Display tab characters with an alternate background color, except in Go.
   (progn (make-face 'tab-face)
-         (set-face-foreground 'tab-face "#eee8d5")
+         (set-face-foreground 'tab-face "#b58900")
          (set-face-background 'tab-face "#eee8d5")
-         (set-face-attribute 'tab-face nil :box 't)
          (make-face 'cr-face)
          (set-face-foreground 'cr-face "#b58900")
-         (set-face-background 'cr-face "#073642")
+         (set-face-background 'cr-face "#eee8d5")
          (set-face-attribute 'cr-face nil :box 't)
          (defvar colortab-display-table (make-display-table)
            "Display table for coloring CR and tab characters.")

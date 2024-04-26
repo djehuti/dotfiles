@@ -2,7 +2,7 @@
 
 # This is invoked for interactive non-login shells.
 
-CDPATH="${HOME}:${HOME}/src:${HOME}/src/github.com:${HOME}/src/github.com/djehuti"
+CDPATH=".:${HOME}:${HOME}/src:${HOME}/src/github.com:${HOME}/src/github.com/djehuti:${HOME}/src/github.com/X16Community"
 
 if [ "${TERM}" == "dumb" ]; then
     PS1='\! \W\$ '
