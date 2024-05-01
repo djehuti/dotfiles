@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+config="${HOME}/.config/user-dirs.dirs"
+
+[[ -f "${config}" ]] && {
+   source "${config}"
+}
+
+docs="${XDG_DOCUMENTS_DIR:-"${HOME}/doc"}"
+export X16DIR="${docs}/hobby/retrocomputing/x16"
+
+EMU="${HOME}/src/github.com/djehuti/x16-emulator/x16emu"
+ROM="${HOME}/src/github.com/djehuti/x16-rom/build/x16/rom.bin"
+NVRAM="${X16DIR}/nvram.bin"
+
+args=(
+    -ram 2048
+    -rtc
+    -scale 3
+    -quality best
+    -rom "${ROM}"
+    -nvram "${NVRAM}"
+    -joy1
+)
+
+if [[ ! " $* " =~ [[:space:]]-fsroot[[:space:]] ]]; then
+    args+=(-fsroot "${FSROOT:-${HOME}}")
+fi
+
+exec "${EMU}" "${args[@]}" "$@"
