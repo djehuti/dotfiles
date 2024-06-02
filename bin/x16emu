@@ -17,14 +17,16 @@ args=(
     -ram 2048
     -rtc
     -scale 3
-    -quality best
+    -quality nearest
+    -debug
     -rom "${ROM}"
     -nvram "${NVRAM}"
     -joy1
 )
 
-if [[ ! " $* " =~ [[:space:]]-fsroot[[:space:]] ]]; then
+[[ ! " $* " =~ [[:space:]]-fsroot[[:space:]] ]] && {
     args+=(-fsroot "${FSROOT:-${HOME}}")
-fi
+}
 
+set -x
 exec "${EMU}" "${args[@]}" "$@"

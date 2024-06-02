@@ -61,7 +61,7 @@ Set up some very basic Emacs behavior options: no startup message/screen, no ini
 Set up the default window size.
 
 #+BEGIN_SRC emacs-lisp
-  (add-to-list 'default-frame-alist '(width  . 120))
+  (add-to-list 'default-frame-alist '(width  . 100))
   (add-to-list 'default-frame-alist '(height .  40))
 #+END_SRC
 
