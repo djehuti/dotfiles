@@ -1,6 +1,7 @@
 # -*-mode:shell-script-*-
 alias a=alias
 alias e='"${EDITOR:-${VISUAL:-emacsclient}}"'
+alias E='emacsclient -cn'
 alias h=history
 alias j=jobs
 
