@@ -24,7 +24,7 @@
  '(mouse-avoidance-mode 'jump nil (avoid))
  '(mouse-wheel-mode t)
  '(package-selected-packages
-   '(kotlin-mode haskell-mode cmake-mode editorconfig flx-ido go-mode json-mode magit markdown-mode php-mode rust-mode solarized-theme sudo-edit swift-mode terraform-mode typescript-mode use-package yaml-mode))
+   '(monokai-theme kotlin-mode haskell-mode cmake-mode editorconfig flx-ido go-mode json-mode magit markdown-mode php-mode rust-mode solarized-theme sudo-edit swift-mode terraform-mode typescript-mode use-package yaml-mode))
  '(partial-completion-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -33,10 +33,6 @@
  ;; If there is more than one, they won't work right.
  '(default ((t (:height 135 :family "Iosevka"))))
  '(cursor ((t (:background "#ff0000"))))
- '(line-number ((t (:foreground "#fdf6e3" :background "#ddd7c8"))))
- '(line-number-current-line ((t (:foreground "#839496" :background "#eee8d5"))))
- '(mode-line ((t (:foreground "#fdf6e3" :background "#839496" :box nil :underline nil :overline nil))))
- '(mode-line-buffer-id ((t (:foreground "#fdf6e3" :underline nil))))
- '(mode-line-inactive ((t (:foreground "#b8c0c4" :background "#93a1a1" :box nil :underline nil :overline nil)))))
+ )
 
 ;;; custom.el ends here
