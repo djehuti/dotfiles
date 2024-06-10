@@ -8,3 +8,5 @@ Host *
 Host *pi *pi.local *pi.home.djehuti.com *pi-wifi.home.djehuti.com
     User pi
 
+Host terpsichore
+    User core
