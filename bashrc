@@ -16,7 +16,9 @@ fi
 
 if [ -d ${HOME}/.init.d/ ]; then
     for f in ${HOME}/.init.d/[0-9]* ; do
-        source "$f"
+        if readlink -e "$f" >/dev/null ; then
+            source "$f"
+        fi
     done
     unset f
 fi
