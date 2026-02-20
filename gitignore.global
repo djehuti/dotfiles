@@ -8,3 +8,5 @@ xcuserdata
 .nova
 .dir-locals.el
 .user-local-files
+.wine
+.wine32

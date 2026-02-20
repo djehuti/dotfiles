@@ -32,6 +32,7 @@ doclock "${tempfile}" &
 
 keystroke="$(djehuti::term::getch -t60)"
 
+djehuti::term::clear
 djehuti::term::normcursor
 djehuti::term::end_altscreen
 
