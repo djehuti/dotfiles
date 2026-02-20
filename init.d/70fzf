@@ -1,0 +1,12 @@
+# -*-mode:shell-script-*-
+
+if type fzf >/dev/null 2>&1; then
+    this_shell=$(basename $(ps -p $$ -o exe=))
+    source <(fzf "--${this_shell}")
+fi
+
+FZF_CTRL_T_OPTS="
+  --walker-skip .cargo,.git,node_modules,build,.vscode-server
+  --tiebreak=index"
+
+export FZF_CTRL_T_OPTS

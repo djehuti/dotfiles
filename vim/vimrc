@@ -2,6 +2,7 @@
 
 syntax on
 set foldmethod=syntax
+set foldlevel=99
 set number
 set numberwidth=6
 set laststatus=1

@@ -2,3 +2,6 @@
 [[ -f "${HOME}/.cargo/env" ]] && {
     . "$HOME/.cargo/env"
 }
+[[ -d "${HOME}/.cargo/bin" ]] && {
+   PATH="${PATH}:${HOME}/.cargo/bin"
+}
